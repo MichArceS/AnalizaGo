@@ -44,7 +44,6 @@ print(len(reservada)) #30
 
 token = token + tuple(reservada.values())
 print(len(token)) #61
-print(token)
 
 #expresiones regulares para tokens simples
 t_ignore = r' \t'
@@ -111,10 +110,10 @@ def getTokens(lexer):
 
 #crear el analizador lexico:
 lexer = lex.lex()
-linea=" "
-while linea!="":
-    linea=input(">>")
-    lexer.input(linea)
-    getTokens(lexer)
-# Tokenize
+# linea=" "
+# while linea!="":
+#     linea=input(">>")
+#     lexer.input(linea)
+#     getTokens(lexer)
+# # Tokenize
 print("Succesfull")
