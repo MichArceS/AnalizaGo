@@ -4,4 +4,5 @@ Proyecto de Lenguajes de Programación.
 - Definición de palabras reservadas
 - Creación de expresiones regulares para tokens simples
 - Creación de función comentarios, número, id, error, nuevaLinea y getTokens
+- Corrección del problema con analizador léxico lexer
 

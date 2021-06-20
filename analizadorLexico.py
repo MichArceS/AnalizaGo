@@ -1,11 +1,11 @@
 import ply.lex as lex
 
 #lista de tokens
-token = ("NUMERO", "MAS", "MENOS", "MULTIPLICADOR", "DIVISOR", "MOD_DIVISION", "PARENT_IZQ","PARENT_DER",
+tokens = ("NUMERO", "MAS", "MENOS", "MULTIPLICADOR", "DIVISOR", "MOD_DIVISION", "PARENT_IZQ","PARENT_DER",
            "CORCHETE_IZQ", "CORCHETE_DER", "LLAVE_IZQ", "LLAVE_DER", "PUNTO", "DOS_PUNTOS", "COMA","COMILLA",
-           "DOBLE_COMILLA","COMENT_BLOQUE_IZQ", "COMENT_BLOQUE_DER", "COMENT_LINEA", "FIN_SENTENCIA", "ID", "ASIGNACION",
+           "DOBLE_COMILLA","COMMENT_BLOQUE_IZQ", "COMMENT_BLOQUE_DER", "COMMENT_LINEA", "FIN_SENTENCIA", "ID", "ASIGNACION",
            "ESPACIADO", "CADENA", "MENOR", "MAYOR", "IGUALDAD", "VACIO", "MENOR_IGU", "MAYOR_IGU")
-print(len(token)) #31
+print(len(tokens)) #31
 
 #lista de palabras reservadas
 reservada = {
@@ -38,15 +38,21 @@ reservada = {
     'io': 'IO',
     'log': 'LOG',
     'os': 'OS',
-    'main': 'MAIN'
+    'make': 'MAKE',
+    'main': 'MAIN',
+    'int': 'INT',
+    'float64': 'FLOAT64',
+    'string': 'STRING',
+    'true': 'TRUE',
+    'false': 'FALSE'
 }
 print(len(reservada)) #30
 
-token = token + tuple(reservada.values())
-print(len(token)) #61
+tokens = tokens + tuple(reservada.values())
+print(len(tokens)) #61
 
 #expresiones regulares para tokens simples
-t_ignore = r' \t'
+t_ignore = ' \t'
 t_MAS = r'\+'
 t_MENOS = r'-'
 t_MULTIPLICADOR = r'\*'
@@ -71,7 +77,6 @@ t_MENOR = r'\<'
 t_MAYOR = r'\>'
 t_MENOR_IGU = r'\<='
 t_MAYOR_IGU = r'\>='
-t_ESPACIADO = r' '
 
 #funcion para reconocer identificadores
 def t_ID(t):
@@ -84,10 +89,25 @@ def t_COMMENT(t):
     r'(\#.*)|(\/\*.*\*\/)'
     pass
 
-#función para reconocer números
-def t_NUMBER(t):
+#función para reconocer número
+def t_NUMERO(t):
     r'\d+'
     t.value = int(t.value)
+    return t
+
+#función para reconocer cadena
+def t_CADENA(t):
+    r'(\'.*\')|(".*")'
+    return t
+
+#función para reconocer boolean
+def t_BOOLEAN(t):
+    r'true|false'
+    return t;
+
+#función para reconocer flotantes
+def t_FLOAT(t):
+    r'[0-9]+\.[0-9]+'
     return t
 
 #función para conocer el número de linea donde me encuentro
@@ -107,13 +127,10 @@ def getTokens(lexer):
         if not tok:
             break  # No more input
         print(tok)
-
-#crear el analizador lexico:
+# Build the lexer
 lexer = lex.lex()
-# linea=" "
-# while linea!="":
-#     linea=input(">>")
-#     lexer.input(linea)
-#     getTokens(lexer)
-# # Tokenize
-print("Succesfull")
+linea=" "
+while linea!="":
+    linea=input(">>")
+    lexer.input(linea)
+    getTokens(lexer)
