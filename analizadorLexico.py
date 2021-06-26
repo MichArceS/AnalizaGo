@@ -1,11 +1,10 @@
 import ply.lex as lex
-
 # lista de tokens
 tokens = ("NUMERO", "CADENA", "MAS", "MENOS", "MULTIPLICADOR", "DIVISOR", "MOD_DIVISION", "PARENT_IZQ", "PARENT_DER",
           "CORCHETE_IZQ", "CORCHETE_DER", "LLAVE_IZQ", "LLAVE_DER", "PUNTO", "DOS_PUNTOS", "COMA", "COMILLA",
           "DOBLE_COMILLA", "COMMENT_BLOQUE_IZQ", "COMMENT_BLOQUE_DER", "COMMENT_LINEA", "FIN_SENTENCIA", "ID", "ASIGNACION",
           "ESPACIADO", "MENOR", "MAYOR", "IGUALDAD", "VACIO", "MENOR_IGU", "MAYOR_IGU", "BOOLEAN", "DESIGUALDAD", "INCREMENTO", 
-          "DECREMENTO", "PIPE", "AMPERSAND")
+          "DECREMENTO", "PIPE", "AMPERSAND", "FMT", "PRINT")
 print(len(tokens))  # 31
 
 # lista de palabras reservadas
@@ -140,8 +139,9 @@ def getTokens(lexer):
 
 # Build the lexer
 lexer = lex.lex()
-linea = " "
-while linea != "":
-    linea = input(">>")
-    lexer.input(linea)
-    getTokens(lexer)
+
+# linea = " "
+# while linea != "":
+#     linea = input("Go >>")
+#     lexer.input(linea)
+#     getTokens(lexer)

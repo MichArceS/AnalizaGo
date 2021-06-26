@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8d3d453-9202-4624-b950-59a50c8a0691" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/analizadorSintactico.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analizadorLexico.py" beforeDir="false" afterPath="$PROJECT_DIR$/analizadorLexico.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analizadorSintactico.py" beforeDir="false" afterPath="$PROJECT_DIR$/analizadorSintactico.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,12 +47,13 @@
     <session id="-182274469">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="2" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.14" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -59,25 +61,26 @@
           <entry key="md" value="4" />
           <entry key="py" value="4" />
           <entry key="tcl" value="1" />
+          <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Markdown" value="4" />
-          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="PLAIN_TEXT" value="2" />
           <entry key="Python" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="md" value="301" />
-          <entry key="py" value="1136" />
+          <entry key="py" value="1534" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Markdown" value="301" />
-          <entry key="Python" value="1136" />
+          <entry key="Python" value="1534" />
         </counts>
       </usages-collector>
     </session>
@@ -90,8 +93,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/analizadorLexico.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="87" lean-forward="true" selection-start-line="3" selection-start-column="75" selection-end-line="3" selection-end-column="87" />
+            <state>
+              <caret column="21" selection-start-column="21" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -99,11 +102,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/analizadorSintactico.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="24" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="24" />
+            <state relative-caret-position="15">
+              <caret line="1" column="35" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="35" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
-                <marker date="1624663179200" expanded="true" signature="1342:1368" ph="..." />
+                <marker date="1624683390199" expanded="true" signature="1512:1536" ph="..." />
+                <marker date="1624683390199" expanded="true" signature="1622:1648" ph="..." />
               </folding>
             </state>
           </provider>
@@ -125,10 +129,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/calculadoraBase.py" />
-        <option value="$PROJECT_DIR$/analizadorLexico.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/venv/analizadorSintactico.py" />
         <option value="$PROJECT_DIR$/analizadorSintactico.py" />
+        <option value="$PROJECT_DIR$/analizadorLexico.py" />
       </list>
     </option>
   </component>
@@ -186,7 +190,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="DOS_PUNTOS&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="39&#9;FILE&#9;file://C:/Users/ADMIN/AppData/Local/Programs/Python/Python37-32/Lib/test/test_email/data/msg_39.txt&#10;DOS_PUNTOS&#9;null&#9;null" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
@@ -309,6 +313,25 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49822065" weight="0.14785373" />
+      <window_info id="Structure" order="1" sideWeight="0.5017794" side_tool="true" weight="0.14785373" />
+      <window_info id="Favorites" order="2" sideWeight="0.5017794" side_tool="true" weight="0.14785373" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.23131673" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3291815" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32740214" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49822065" visible="true" weight="0.14785373" />
       <window_info id="Structure" order="1" sideWeight="0.5017794" side_tool="true" weight="0.14785373" />
       <window_info id="Favorites" order="2" sideWeight="0.5017794" side_tool="true" weight="0.14785373" />
@@ -326,7 +349,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -366,20 +389,24 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/analizadorSintactico.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/test/test_email/data/msg_39.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/analizadorLexico.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="87" lean-forward="true" selection-start-line="3" selection-start-column="75" selection-end-line="3" selection-end-column="87" />
+        <state>
+          <caret column="21" selection-start-column="21" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/analizadorSintactico.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="24" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="24" />
+        <state relative-caret-position="15">
+          <caret line="1" column="35" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="35" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <marker date="1624663179200" expanded="true" signature="1342:1368" ph="..." />
+            <marker date="1624683390199" expanded="true" signature="1512:1536" ph="..." />
+            <marker date="1624683390199" expanded="true" signature="1622:1648" ph="..." />
           </folding>
         </state>
       </provider>
