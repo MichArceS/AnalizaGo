@@ -4,7 +4,7 @@ tokens = ("NUMERO", "CADENA", "MAS", "MENOS", "MULTIPLICADOR", "DIVISOR", "MOD_D
           "CORCHETE_IZQ", "CORCHETE_DER", "LLAVE_IZQ", "LLAVE_DER", "PUNTO", "DOS_PUNTOS", "COMA", "COMILLA",
           "DOBLE_COMILLA", "COMMENT_BLOQUE_IZQ", "COMMENT_BLOQUE_DER", "COMMENT_LINEA", "FIN_SENTENCIA", "ID", "ASIGNACION",
           "ESPACIADO", "MENOR", "MAYOR", "IGUALDAD", "VACIO", "MENOR_IGU", "MAYOR_IGU", "BOOLEAN", "DESIGUALDAD", "INCREMENTO", 
-          "DECREMENTO", "PIPE", "AMPERSAND", "FMT", "PRINT")
+          "DECREMENTO", "PIPE", "AMPERSAND", "FMT", "PRINT", "IGUAL", "LEN", "VAR", "ARRPUNTOS")
 print(len(tokens))  # 31
 
 # lista de palabras reservadas
@@ -55,9 +55,10 @@ t_PUNTO = r'\.'
 t_DOS_PUNTOS = r'\:'
 t_VACIO = r'\_'
 t_ASIGNACION = r'\:?\='
+t_IGUAL = r'\='
 t_IGUALDAD = r'=='
 t_FIN_SENTENCIA = r';'
-t_COMA = r','
+t_COMA = r'\,'
 t_COMILLA = r'\''
 t_DOBLE_COMILLA = r'\"'
 t_MENOR = r'\<'
@@ -69,6 +70,7 @@ t_INCREMENTO = r'\+{2}'
 t_DECREMENTO = r'\-{2}'
 t_PIPE = r'\|'
 t_AMPERSAND = '\&'
+t_ARRPUNTOS = '\.\.\.'
 # funcion para reconocer identificadores
 
 

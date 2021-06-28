@@ -10,13 +10,67 @@ precedence = (
 )
 
 def p_programa(p):
-    """programa : expression
-                |impresion
-                |sentencia """
+    '''programa : expression
+                | impresion
+                | sentencia 
+                | asignacion
+                | longvariable
+                | boolcadena
+                | companum
+                | compaid
+                | sentenciafor
+                | arreglo
+                | slice
+                | capslice'''
 
 def p_impresion(p):
-    """impresion : FMT.PRINT PARENT_IZQ expression PARENT_DER
-                | FMT.PRINT PARENT_IZQ empty PARENT_DER"""
+    """impresion :  PARENT_IZQ expression PARENT_DER
+                | PARENT_IZQ empty PARENT_DER"""
+
+def p_longitud_variables(p):
+    '''longvariable : ID PARENT_IZQ CADENA PARENT_DER
+                        | ID PARENT_IZQ ID PARENT_DER'''
+
+def p_bool_cadena(p):
+    'boolcadena : ID PUNTO ID PARENT_IZQ factor PARENT_DER'
+
+def p_comparacion_num(p):
+    'companum : NUMERO comparacion NUMERO'
+
+def p_comparacion_id(p):
+    'compaid : ID comparacion ID'
+
+def p_asignacion_var(p):
+    '''asignacion : ID ASIGNACION factor
+                    | VAR ID ID ASIGNACION factor
+                    | VAR ID COMA ID ID ASIGNACION factor COMA factor'''
+
+def p_sentencia_for(p):
+    'sentenciafor : FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER'
+
+def p_incremento(p):
+    '''incremento : ID INCREMENTO
+                    | ID ASIGNACION ID
+                    | ID DECREMENTO'''
+
+def p_definir_arreglo(p):
+    '''arreglo : ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID 
+                    | ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER'''
+
+def p_cantidad_arreglo(p):
+    '''cantidad : NUMERO 
+                    | ARRPUNTOS'''
+
+def p_valores_arreglo(p):
+    '''valores : factor
+                    | factor COMA valores'''
+
+def p_definir_slice(p):
+    '''slice : ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+                | ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER'''
+
+def p_cap_slice(p):
+    'capslice : ID PARENT_IZQ ID PARENT_DER'
 
 def p_expression_mas(p):
     'expression : expression MAS term'
