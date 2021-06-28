@@ -5,28 +5,23 @@ Unused terminals:
     AMPERSAND
     BOOLEAN
     BREAK
-    CASE
     COMILLA
     COMMENT_BLOQUE_DER
     COMMENT_BLOQUE_IZQ
     COMMENT_LINEA
     CONST
     CONTINUE
-    DEFAULT
     DEFER
     DOBLE_COMILLA
-    DOS_PUNTOS
     ELSE
     ESPACIADO
     FALLTHROUGH
     FMT
     FUNC
     GO
-    IGUAL
     IMPORT
     INTERFACE
     LEN
-    MAP
     PIPE
     PRINT
     Package
@@ -34,7 +29,6 @@ Unused terminals:
     RETURN
     SELECT
     STRUCT
-    SWITCH
     TYPE
     VACIO
 
@@ -45,7 +39,7 @@ Rule 1     programa -> expression
 Rule 2     programa -> impresion
 Rule 3     programa -> sentencia
 Rule 4     programa -> asignacion
-Rule 5     programa -> longcadena
+Rule 5     programa -> longvariable
 Rule 6     programa -> boolcadena
 Rule 7     programa -> companum
 Rule 8     programa -> compaid
@@ -53,139 +47,187 @@ Rule 9     programa -> sentenciafor
 Rule 10    programa -> arreglo
 Rule 11    programa -> slice
 Rule 12    programa -> capslice
-Rule 13    impresion -> PARENT_IZQ expression PARENT_DER
-Rule 14    impresion -> PARENT_IZQ empty PARENT_DER
-Rule 15    longcadena -> ID PARENT_IZQ CADENA PARENT_DER
-Rule 16    boolcadena -> ID PUNTO ID PARENT_IZQ factor PARENT_DER
-Rule 17    companum -> NUMERO comparacion NUMERO
-Rule 18    compaid -> ID comparacion ID
-Rule 19    asignacion -> ID ASIGNACION factor
-Rule 20    asignacion -> VAR ID ID ASIGNACION factor
-Rule 21    asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA factor
-Rule 22    sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
-Rule 23    incremento -> ID INCREMENTO
-Rule 24    incremento -> ID ASIGNACION ID
-Rule 25    incremento -> ID DECREMENTO
-Rule 26    arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
-Rule 27    arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
-Rule 28    cantidad -> NUMERO
-Rule 29    cantidad -> ARRPUNTOS
-Rule 30    valores -> factor
-Rule 31    valores -> factor COMA valores
-Rule 32    slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
-Rule 33    slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
-Rule 34    capslice -> ID PARENT_IZQ ID PARENT_DER
-Rule 35    expression -> expression MAS term
-Rule 36    expression -> expression MENOS term
-Rule 37    expression -> term
-Rule 38    term -> term MULTIPLICADOR factor
-Rule 39    term -> term DIVISOR factor
-Rule 40    term -> term MOD_DIVISION factor
-Rule 41    term -> factor
-Rule 42    sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER
-Rule 43    comparacion -> IGUALDAD
-Rule 44    comparacion -> MAYOR
-Rule 45    comparacion -> MENOR
-Rule 46    comparacion -> MAYOR_IGU
-Rule 47    comparacion -> MENOR_IGU
-Rule 48    comparacion -> DESIGUALDAD
-Rule 49    factor -> NUMERO
-Rule 50    factor -> ID
-Rule 51    factor -> CADENA
-Rule 52    factor -> PARENT_IZQ expression PARENT_DER
-Rule 53    empty -> <empty>
+Rule 13    programa -> switch
+Rule 14    programa -> map
+Rule 15    programa -> asignar_valor_map
+Rule 16    programa -> eliminar_valor_map
+Rule 17    programa -> obtener_valor_map
+Rule 18    impresion -> PARENT_IZQ expression PARENT_DER
+Rule 19    impresion -> PARENT_IZQ empty PARENT_DER
+Rule 20    longvariable -> ID PARENT_IZQ CADENA PARENT_DER
+Rule 21    longvariable -> ID PARENT_IZQ ID PARENT_DER
+Rule 22    boolcadena -> ID PUNTO ID PARENT_IZQ factor PARENT_DER
+Rule 23    companum -> NUMERO comparacion NUMERO
+Rule 24    compaid -> ID comparacion ID
+Rule 25    asignacion -> ID ASIGNACION factor
+Rule 26    asignacion -> VAR ID ID ASIGNACION factor
+Rule 27    asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA factor
+Rule 28    sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+Rule 29    incremento -> ID INCREMENTO
+Rule 30    incremento -> ID ASIGNACION ID
+Rule 31    incremento -> ID DECREMENTO
+Rule 32    arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
+Rule 33    arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
+Rule 34    cantidad -> NUMERO
+Rule 35    cantidad -> ARRPUNTOS
+Rule 36    valores -> factor
+Rule 37    valores -> factor COMA valores
+Rule 38    slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+Rule 39    slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+Rule 40    capslice -> ID PARENT_IZQ ID PARENT_DER
+Rule 41    expression -> expression MAS term
+Rule 42    expression -> expression MENOS term
+Rule 43    expression -> term
+Rule 44    term -> term MULTIPLICADOR factor
+Rule 45    term -> term DIVISOR factor
+Rule 46    term -> term MOD_DIVISION factor
+Rule 47    term -> factor
+Rule 48    sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER
+Rule 49    comparacion -> IGUALDAD
+Rule 50    comparacion -> MAYOR
+Rule 51    comparacion -> MENOR
+Rule 52    comparacion -> MAYOR_IGU
+Rule 53    comparacion -> MENOR_IGU
+Rule 54    comparacion -> DESIGUALDAD
+Rule 55    factor -> NUMERO
+Rule 56    factor -> ID
+Rule 57    factor -> CADENA
+Rule 58    factor -> PARENT_IZQ expression PARENT_DER
+Rule 59    switch -> SWITCH ID LLAVE_IZQ cases LLAVE_DER
+Rule 60    cases -> case
+Rule 61    cases -> case default
+Rule 62    cases -> case cases
+Rule 63    case -> CASE factor DOS_PUNTOS programa
+Rule 64    default -> DEFAULT factor DOS_PUNTOS programa
+Rule 65    map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+Rule 66    map -> ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
+Rule 67    map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+Rule 68    tipo_dato -> INT
+Rule 69    tipo_dato -> STRING
+Rule 70    tipo_dato -> INT64
+Rule 71    tipo_dato -> FLOAT32
+Rule 72    tipo_dato -> FLOAT64
+Rule 73    tipo_dato -> INT32
+Rule 74    valores -> clave_valor
+Rule 75    valores -> clave_valor COMA valores
+Rule 76    clave_valor -> valor DOS_PUNTOS valor
+Rule 77    valor -> CADENA
+Rule 78    valor -> NUMERO
+Rule 79    asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor
+Rule 80    eliminar_valor_map -> DELETE PARENT_IZQ ID COMA valor PARENT_DER
+Rule 81    obtener_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER
+Rule 82    empty -> <empty>
 
 Terminals, with rules where they appear
 
 AMPERSAND            : 
-ARRPUNTOS            : 29
-ASIGNACION           : 19 20 21 22 24 26 27 32 33
+ARRPUNTOS            : 35
+ASIGNACION           : 25 26 27 28 30 32 33 38 39 67
 BOOLEAN              : 
 BREAK                : 
-CADENA               : 15 51
-CASE                 : 
-COMA                 : 21 21 31 32 33 33
+CADENA               : 20 57 77
+CASE                 : 63
+COMA                 : 27 27 37 38 39 39 75 80
 COMILLA              : 
 COMMENT_BLOQUE_DER   : 
 COMMENT_BLOQUE_IZQ   : 
 COMMENT_LINEA        : 
 CONST                : 
 CONTINUE             : 
-CORCHETE_DER         : 26 27 32 33
-CORCHETE_IZQ         : 26 27 32 33
-DECREMENTO           : 25
-DEFAULT              : 
+CORCHETE_DER         : 32 33 38 39 65 66 66 67 79 81
+CORCHETE_IZQ         : 32 33 38 39 65 67 79 81
+DECREMENTO           : 31
+DEFAULT              : 64
 DEFER                : 
-DESIGUALDAD          : 48
-DIVISOR              : 39
+DELETE               : 80
+DESIGUALDAD          : 54
+DIVISOR              : 45
 DOBLE_COMILLA        : 
-DOS_PUNTOS           : 
+DOS_PUNTOS           : 63 64 76
 ELSE                 : 
 ESPACIADO            : 
 FALLTHROUGH          : 
-FIN_SENTENCIA        : 22 22
+FIN_SENTENCIA        : 28 28
+FLOAT32              : 71
+FLOAT64              : 72
 FMT                  : 
-FOR                  : 22
+FOR                  : 28
 FUNC                 : 
 GO                   : 
-ID                   : 15 16 16 18 18 19 20 20 21 21 21 22 22 23 24 24 25 26 26 27 27 32 32 32 33 33 33 34 34 50
-IF                   : 42
-IGUAL                : 
-IGUALDAD             : 43
+ID                   : 20 21 21 22 22 24 24 25 26 26 27 27 27 28 28 29 30 30 31 32 32 33 33 38 38 38 39 39 39 40 40 56 59 65 66 67 79 80 81
+IF                   : 48
+IGUAL                : 66 79
+IGUALDAD             : 49
 IMPORT               : 
-INCREMENTO           : 23
+INCREMENTO           : 29
+INT                  : 68
+INT32                : 73
+INT64                : 70
 INTERFACE            : 
 LEN                  : 
-LLAVE_DER            : 22 27 42
-LLAVE_IZQ            : 22 27 42
-MAP                  : 
-MAS                  : 35
-MAYOR                : 44
-MAYOR_IGU            : 46
-MENOR                : 45
-MENOR_IGU            : 47
-MENOS                : 36
-MOD_DIVISION         : 40
-MULTIPLICADOR        : 38
-NUMERO               : 17 17 28 32 33 33 49
-PARENT_DER           : 13 14 15 16 32 33 34 52
-PARENT_IZQ           : 13 14 15 16 32 33 34 52
+LLAVE_DER            : 28 33 48 59 65 67
+LLAVE_IZQ            : 28 33 48 59 65 67
+MAKE                 : 66
+MAP                  : 65 66 67
+MAS                  : 41
+MAYOR                : 50
+MAYOR_IGU            : 52
+MENOR                : 51
+MENOR_IGU            : 53
+MENOS                : 42
+MOD_DIVISION         : 46
+MULTIPLICADOR        : 44
+NUMERO               : 23 23 34 38 39 39 55 78
+PARENT_DER           : 18 19 20 21 22 38 39 40 58 66 80
+PARENT_IZQ           : 18 19 20 21 22 38 39 40 58 66 80
 PIPE                 : 
 PRINT                : 
-PUNTO                : 16
+PUNTO                : 22
 Package              : 
 RANGE                : 
 RETURN               : 
 SELECT               : 
+STRING               : 69
 STRUCT               : 
-SWITCH               : 
+SWITCH               : 59
 TYPE                 : 
 VACIO                : 
-VAR                  : 20 21
+VAR                  : 26 27 65
 error                : 
 
 Nonterminals, with rules where they appear
 
 arreglo              : 10
 asignacion           : 4
+asignar_valor_map    : 15
 boolcadena           : 6
-cantidad             : 26 27
+cantidad             : 32 33
 capslice             : 12
+case                 : 60 61 62
+cases                : 59 62
+clave_valor          : 74 75
 compaid              : 8
 companum             : 7
-comparacion          : 17 18 22 42
-empty                : 14
-expression           : 1 13 35 36 52
-factor               : 16 19 20 21 21 22 22 30 31 38 39 40 41 42 42
+comparacion          : 23 24 28 48
+default              : 61
+eliminar_valor_map   : 16
+empty                : 19
+expression           : 1 18 41 42 58
+factor               : 22 25 26 27 27 28 28 36 37 44 45 46 47 48 48 63 64
 impresion            : 2
-incremento           : 22
-longcadena           : 5
-programa             : 22 42 0
+incremento           : 28
+longvariable         : 5
+map                  : 14
+obtener_valor_map    : 17
+programa             : 28 48 63 64 0
 sentencia            : 3
 sentenciafor         : 9
 slice                : 11
-term                 : 35 36 37 38 39 40
-valores              : 27 31
+switch               : 13
+term                 : 41 42 43 44 45 46
+tipo_dato            : 65 65 66 66 67 67
+valor                : 76 76 79 79 80 81
+valores              : 33 37 65 67 75
 
 Parsing method: LALR
 
@@ -196,7 +238,7 @@ state 0
     (2) programa -> . impresion
     (3) programa -> . sentencia
     (4) programa -> . asignacion
-    (5) programa -> . longcadena
+    (5) programa -> . longvariable
     (6) programa -> . boolcadena
     (7) programa -> . companum
     (8) programa -> . compaid
@@ -204,48 +246,63 @@ state 0
     (10) programa -> . arreglo
     (11) programa -> . slice
     (12) programa -> . capslice
-    (35) expression -> . expression MAS term
-    (36) expression -> . expression MENOS term
-    (37) expression -> . term
-    (13) impresion -> . PARENT_IZQ expression PARENT_DER
-    (14) impresion -> . PARENT_IZQ empty PARENT_DER
-    (42) sentencia -> . IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER
-    (19) asignacion -> . ID ASIGNACION factor
-    (20) asignacion -> . VAR ID ID ASIGNACION factor
-    (21) asignacion -> . VAR ID COMA ID ID ASIGNACION factor COMA factor
-    (15) longcadena -> . ID PARENT_IZQ CADENA PARENT_DER
-    (16) boolcadena -> . ID PUNTO ID PARENT_IZQ factor PARENT_DER
-    (17) companum -> . NUMERO comparacion NUMERO
-    (18) compaid -> . ID comparacion ID
-    (22) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
-    (26) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
-    (27) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
-    (32) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
-    (33) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
-    (34) capslice -> . ID PARENT_IZQ ID PARENT_DER
-    (38) term -> . term MULTIPLICADOR factor
-    (39) term -> . term DIVISOR factor
-    (40) term -> . term MOD_DIVISION factor
-    (41) term -> . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (13) programa -> . switch
+    (14) programa -> . map
+    (15) programa -> . asignar_valor_map
+    (16) programa -> . eliminar_valor_map
+    (17) programa -> . obtener_valor_map
+    (41) expression -> . expression MAS term
+    (42) expression -> . expression MENOS term
+    (43) expression -> . term
+    (18) impresion -> . PARENT_IZQ expression PARENT_DER
+    (19) impresion -> . PARENT_IZQ empty PARENT_DER
+    (48) sentencia -> . IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER
+    (25) asignacion -> . ID ASIGNACION factor
+    (26) asignacion -> . VAR ID ID ASIGNACION factor
+    (27) asignacion -> . VAR ID COMA ID ID ASIGNACION factor COMA factor
+    (20) longvariable -> . ID PARENT_IZQ CADENA PARENT_DER
+    (21) longvariable -> . ID PARENT_IZQ ID PARENT_DER
+    (22) boolcadena -> . ID PUNTO ID PARENT_IZQ factor PARENT_DER
+    (23) companum -> . NUMERO comparacion NUMERO
+    (24) compaid -> . ID comparacion ID
+    (28) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (32) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
+    (33) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
+    (38) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (39) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+    (40) capslice -> . ID PARENT_IZQ ID PARENT_DER
+    (59) switch -> . SWITCH ID LLAVE_IZQ cases LLAVE_DER
+    (65) map -> . VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (66) map -> . ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
+    (67) map -> . ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (79) asignar_valor_map -> . ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor
+    (80) eliminar_valor_map -> . DELETE PARENT_IZQ ID COMA valor PARENT_DER
+    (81) obtener_valor_map -> . ID CORCHETE_IZQ valor CORCHETE_DER
+    (44) term -> . term MULTIPLICADOR factor
+    (45) term -> . term DIVISOR factor
+    (46) term -> . term MOD_DIVISION factor
+    (47) term -> . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    PARENT_IZQ      shift and go to state 15
-    IF              shift and go to state 16
-    ID              shift and go to state 18
-    VAR             shift and go to state 19
-    NUMERO          shift and go to state 21
-    FOR             shift and go to state 22
-    CADENA          shift and go to state 20
+    PARENT_IZQ      shift and go to state 20
+    IF              shift and go to state 21
+    ID              shift and go to state 23
+    VAR             shift and go to state 24
+    NUMERO          shift and go to state 26
+    FOR             shift and go to state 27
+    SWITCH          shift and go to state 28
+    DELETE          shift and go to state 29
+    CADENA          shift and go to state 25
 
     programa                       shift and go to state 1
     expression                     shift and go to state 2
     impresion                      shift and go to state 3
     sentencia                      shift and go to state 4
     asignacion                     shift and go to state 5
-    longcadena                     shift and go to state 6
+    longvariable                   shift and go to state 6
     boolcadena                     shift and go to state 7
     companum                       shift and go to state 8
     compaid                        shift and go to state 9
@@ -253,8 +310,13 @@ state 0
     arreglo                        shift and go to state 11
     slice                          shift and go to state 12
     capslice                       shift and go to state 13
-    term                           shift and go to state 14
-    factor                         shift and go to state 17
+    switch                         shift and go to state 14
+    map                            shift and go to state 15
+    asignar_valor_map              shift and go to state 16
+    eliminar_valor_map             shift and go to state 17
+    obtener_valor_map              shift and go to state 18
+    term                           shift and go to state 19
+    factor                         shift and go to state 22
 
 state 1
 
@@ -265,13 +327,15 @@ state 1
 state 2
 
     (1) programa -> expression .
-    (35) expression -> expression . MAS term
-    (36) expression -> expression . MENOS term
+    (41) expression -> expression . MAS term
+    (42) expression -> expression . MENOS term
 
     $end            reduce using rule 1 (programa -> expression .)
     LLAVE_DER       reduce using rule 1 (programa -> expression .)
-    MAS             shift and go to state 23
-    MENOS           shift and go to state 24
+    DEFAULT         reduce using rule 1 (programa -> expression .)
+    CASE            reduce using rule 1 (programa -> expression .)
+    MAS             shift and go to state 30
+    MENOS           shift and go to state 31
 
 
 state 3
@@ -280,6 +344,8 @@ state 3
 
     $end            reduce using rule 2 (programa -> impresion .)
     LLAVE_DER       reduce using rule 2 (programa -> impresion .)
+    DEFAULT         reduce using rule 2 (programa -> impresion .)
+    CASE            reduce using rule 2 (programa -> impresion .)
 
 
 state 4
@@ -288,6 +354,8 @@ state 4
 
     $end            reduce using rule 3 (programa -> sentencia .)
     LLAVE_DER       reduce using rule 3 (programa -> sentencia .)
+    DEFAULT         reduce using rule 3 (programa -> sentencia .)
+    CASE            reduce using rule 3 (programa -> sentencia .)
 
 
 state 5
@@ -296,14 +364,18 @@ state 5
 
     $end            reduce using rule 4 (programa -> asignacion .)
     LLAVE_DER       reduce using rule 4 (programa -> asignacion .)
+    DEFAULT         reduce using rule 4 (programa -> asignacion .)
+    CASE            reduce using rule 4 (programa -> asignacion .)
 
 
 state 6
 
-    (5) programa -> longcadena .
+    (5) programa -> longvariable .
 
-    $end            reduce using rule 5 (programa -> longcadena .)
-    LLAVE_DER       reduce using rule 5 (programa -> longcadena .)
+    $end            reduce using rule 5 (programa -> longvariable .)
+    LLAVE_DER       reduce using rule 5 (programa -> longvariable .)
+    DEFAULT         reduce using rule 5 (programa -> longvariable .)
+    CASE            reduce using rule 5 (programa -> longvariable .)
 
 
 state 7
@@ -312,6 +384,8 @@ state 7
 
     $end            reduce using rule 6 (programa -> boolcadena .)
     LLAVE_DER       reduce using rule 6 (programa -> boolcadena .)
+    DEFAULT         reduce using rule 6 (programa -> boolcadena .)
+    CASE            reduce using rule 6 (programa -> boolcadena .)
 
 
 state 8
@@ -320,6 +394,8 @@ state 8
 
     $end            reduce using rule 7 (programa -> companum .)
     LLAVE_DER       reduce using rule 7 (programa -> companum .)
+    DEFAULT         reduce using rule 7 (programa -> companum .)
+    CASE            reduce using rule 7 (programa -> companum .)
 
 
 state 9
@@ -328,6 +404,8 @@ state 9
 
     $end            reduce using rule 8 (programa -> compaid .)
     LLAVE_DER       reduce using rule 8 (programa -> compaid .)
+    DEFAULT         reduce using rule 8 (programa -> compaid .)
+    CASE            reduce using rule 8 (programa -> compaid .)
 
 
 state 10
@@ -336,6 +414,8 @@ state 10
 
     $end            reduce using rule 9 (programa -> sentenciafor .)
     LLAVE_DER       reduce using rule 9 (programa -> sentenciafor .)
+    DEFAULT         reduce using rule 9 (programa -> sentenciafor .)
+    CASE            reduce using rule 9 (programa -> sentenciafor .)
 
 
 state 11
@@ -344,6 +424,8 @@ state 11
 
     $end            reduce using rule 10 (programa -> arreglo .)
     LLAVE_DER       reduce using rule 10 (programa -> arreglo .)
+    DEFAULT         reduce using rule 10 (programa -> arreglo .)
+    CASE            reduce using rule 10 (programa -> arreglo .)
 
 
 state 12
@@ -352,6 +434,8 @@ state 12
 
     $end            reduce using rule 11 (programa -> slice .)
     LLAVE_DER       reduce using rule 11 (programa -> slice .)
+    DEFAULT         reduce using rule 11 (programa -> slice .)
+    CASE            reduce using rule 11 (programa -> slice .)
 
 
 state 13
@@ -360,1262 +444,1216 @@ state 13
 
     $end            reduce using rule 12 (programa -> capslice .)
     LLAVE_DER       reduce using rule 12 (programa -> capslice .)
+    DEFAULT         reduce using rule 12 (programa -> capslice .)
+    CASE            reduce using rule 12 (programa -> capslice .)
 
 
 state 14
 
-    (37) expression -> term .
-    (38) term -> term . MULTIPLICADOR factor
-    (39) term -> term . DIVISOR factor
-    (40) term -> term . MOD_DIVISION factor
+    (13) programa -> switch .
 
-    MAS             reduce using rule 37 (expression -> term .)
-    MENOS           reduce using rule 37 (expression -> term .)
-    $end            reduce using rule 37 (expression -> term .)
-    PARENT_DER      reduce using rule 37 (expression -> term .)
-    LLAVE_DER       reduce using rule 37 (expression -> term .)
-    MULTIPLICADOR   shift and go to state 25
-    DIVISOR         shift and go to state 26
-    MOD_DIVISION    shift and go to state 27
+    $end            reduce using rule 13 (programa -> switch .)
+    LLAVE_DER       reduce using rule 13 (programa -> switch .)
+    DEFAULT         reduce using rule 13 (programa -> switch .)
+    CASE            reduce using rule 13 (programa -> switch .)
 
 
 state 15
 
-    (13) impresion -> PARENT_IZQ . expression PARENT_DER
-    (14) impresion -> PARENT_IZQ . empty PARENT_DER
-    (52) factor -> PARENT_IZQ . expression PARENT_DER
-    (35) expression -> . expression MAS term
-    (36) expression -> . expression MENOS term
-    (37) expression -> . term
-    (53) empty -> .
-    (38) term -> . term MULTIPLICADOR factor
-    (39) term -> . term DIVISOR factor
-    (40) term -> . term MOD_DIVISION factor
-    (41) term -> . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (14) programa -> map .
 
-    PARENT_DER      reduce using rule 53 (empty -> .)
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    $end            reduce using rule 14 (programa -> map .)
+    LLAVE_DER       reduce using rule 14 (programa -> map .)
+    DEFAULT         reduce using rule 14 (programa -> map .)
+    CASE            reduce using rule 14 (programa -> map .)
 
-    expression                     shift and go to state 29
-    empty                          shift and go to state 30
-    term                           shift and go to state 14
-    factor                         shift and go to state 17
 
 state 16
 
-    (42) sentencia -> IF . factor comparacion factor LLAVE_IZQ programa LLAVE_DER
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (15) programa -> asignar_valor_map .
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    $end            reduce using rule 15 (programa -> asignar_valor_map .)
+    LLAVE_DER       reduce using rule 15 (programa -> asignar_valor_map .)
+    DEFAULT         reduce using rule 15 (programa -> asignar_valor_map .)
+    CASE            reduce using rule 15 (programa -> asignar_valor_map .)
 
-    factor                         shift and go to state 33
 
 state 17
 
-    (41) term -> factor .
+    (16) programa -> eliminar_valor_map .
 
-    MULTIPLICADOR   reduce using rule 41 (term -> factor .)
-    DIVISOR         reduce using rule 41 (term -> factor .)
-    MOD_DIVISION    reduce using rule 41 (term -> factor .)
-    MAS             reduce using rule 41 (term -> factor .)
-    MENOS           reduce using rule 41 (term -> factor .)
-    $end            reduce using rule 41 (term -> factor .)
-    PARENT_DER      reduce using rule 41 (term -> factor .)
-    LLAVE_DER       reduce using rule 41 (term -> factor .)
+    $end            reduce using rule 16 (programa -> eliminar_valor_map .)
+    LLAVE_DER       reduce using rule 16 (programa -> eliminar_valor_map .)
+    DEFAULT         reduce using rule 16 (programa -> eliminar_valor_map .)
+    CASE            reduce using rule 16 (programa -> eliminar_valor_map .)
 
 
 state 18
 
-    (19) asignacion -> ID . ASIGNACION factor
-    (15) longcadena -> ID . PARENT_IZQ CADENA PARENT_DER
-    (16) boolcadena -> ID . PUNTO ID PARENT_IZQ factor PARENT_DER
-    (18) compaid -> ID . comparacion ID
-    (26) arreglo -> ID . ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
-    (27) arreglo -> ID . ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
-    (32) slice -> ID . ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
-    (33) slice -> ID . ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
-    (34) capslice -> ID . PARENT_IZQ ID PARENT_DER
-    (50) factor -> ID .
-    (43) comparacion -> . IGUALDAD
-    (44) comparacion -> . MAYOR
-    (45) comparacion -> . MENOR
-    (46) comparacion -> . MAYOR_IGU
-    (47) comparacion -> . MENOR_IGU
-    (48) comparacion -> . DESIGUALDAD
+    (17) programa -> obtener_valor_map .
 
-    ASIGNACION      shift and go to state 34
-    PARENT_IZQ      shift and go to state 35
-    PUNTO           shift and go to state 36
-    MULTIPLICADOR   reduce using rule 50 (factor -> ID .)
-    DIVISOR         reduce using rule 50 (factor -> ID .)
-    MOD_DIVISION    reduce using rule 50 (factor -> ID .)
-    MAS             reduce using rule 50 (factor -> ID .)
-    MENOS           reduce using rule 50 (factor -> ID .)
-    $end            reduce using rule 50 (factor -> ID .)
-    LLAVE_DER       reduce using rule 50 (factor -> ID .)
-    IGUALDAD        shift and go to state 38
-    MAYOR           shift and go to state 39
-    MENOR           shift and go to state 40
-    MAYOR_IGU       shift and go to state 41
-    MENOR_IGU       shift and go to state 42
-    DESIGUALDAD     shift and go to state 43
+    $end            reduce using rule 17 (programa -> obtener_valor_map .)
+    LLAVE_DER       reduce using rule 17 (programa -> obtener_valor_map .)
+    DEFAULT         reduce using rule 17 (programa -> obtener_valor_map .)
+    CASE            reduce using rule 17 (programa -> obtener_valor_map .)
 
-    comparacion                    shift and go to state 37
 
 state 19
 
-    (20) asignacion -> VAR . ID ID ASIGNACION factor
-    (21) asignacion -> VAR . ID COMA ID ID ASIGNACION factor COMA factor
+    (43) expression -> term .
+    (44) term -> term . MULTIPLICADOR factor
+    (45) term -> term . DIVISOR factor
+    (46) term -> term . MOD_DIVISION factor
 
-    ID              shift and go to state 44
+    MAS             reduce using rule 43 (expression -> term .)
+    MENOS           reduce using rule 43 (expression -> term .)
+    $end            reduce using rule 43 (expression -> term .)
+    PARENT_DER      reduce using rule 43 (expression -> term .)
+    LLAVE_DER       reduce using rule 43 (expression -> term .)
+    DEFAULT         reduce using rule 43 (expression -> term .)
+    CASE            reduce using rule 43 (expression -> term .)
+    MULTIPLICADOR   shift and go to state 32
+    DIVISOR         shift and go to state 33
+    MOD_DIVISION    shift and go to state 34
 
 
 state 20
 
-    (51) factor -> CADENA .
+    (18) impresion -> PARENT_IZQ . expression PARENT_DER
+    (19) impresion -> PARENT_IZQ . empty PARENT_DER
+    (58) factor -> PARENT_IZQ . expression PARENT_DER
+    (41) expression -> . expression MAS term
+    (42) expression -> . expression MENOS term
+    (43) expression -> . term
+    (82) empty -> .
+    (44) term -> . term MULTIPLICADOR factor
+    (45) term -> . term DIVISOR factor
+    (46) term -> . term MOD_DIVISION factor
+    (47) term -> . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    MULTIPLICADOR   reduce using rule 51 (factor -> CADENA .)
-    DIVISOR         reduce using rule 51 (factor -> CADENA .)
-    MOD_DIVISION    reduce using rule 51 (factor -> CADENA .)
-    MAS             reduce using rule 51 (factor -> CADENA .)
-    MENOS           reduce using rule 51 (factor -> CADENA .)
-    $end            reduce using rule 51 (factor -> CADENA .)
-    PARENT_DER      reduce using rule 51 (factor -> CADENA .)
-    IGUALDAD        reduce using rule 51 (factor -> CADENA .)
-    MAYOR           reduce using rule 51 (factor -> CADENA .)
-    MENOR           reduce using rule 51 (factor -> CADENA .)
-    MAYOR_IGU       reduce using rule 51 (factor -> CADENA .)
-    MENOR_IGU       reduce using rule 51 (factor -> CADENA .)
-    DESIGUALDAD     reduce using rule 51 (factor -> CADENA .)
-    LLAVE_DER       reduce using rule 51 (factor -> CADENA .)
-    LLAVE_IZQ       reduce using rule 51 (factor -> CADENA .)
-    FIN_SENTENCIA   reduce using rule 51 (factor -> CADENA .)
-    COMA            reduce using rule 51 (factor -> CADENA .)
+    PARENT_DER      reduce using rule 82 (empty -> .)
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
+    expression                     shift and go to state 36
+    empty                          shift and go to state 37
+    term                           shift and go to state 19
+    factor                         shift and go to state 22
 
 state 21
 
-    (17) companum -> NUMERO . comparacion NUMERO
-    (49) factor -> NUMERO .
-    (43) comparacion -> . IGUALDAD
-    (44) comparacion -> . MAYOR
-    (45) comparacion -> . MENOR
-    (46) comparacion -> . MAYOR_IGU
-    (47) comparacion -> . MENOR_IGU
-    (48) comparacion -> . DESIGUALDAD
+    (48) sentencia -> IF . factor comparacion factor LLAVE_IZQ programa LLAVE_DER
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    MULTIPLICADOR   reduce using rule 49 (factor -> NUMERO .)
-    DIVISOR         reduce using rule 49 (factor -> NUMERO .)
-    MOD_DIVISION    reduce using rule 49 (factor -> NUMERO .)
-    MAS             reduce using rule 49 (factor -> NUMERO .)
-    MENOS           reduce using rule 49 (factor -> NUMERO .)
-    $end            reduce using rule 49 (factor -> NUMERO .)
-    LLAVE_DER       reduce using rule 49 (factor -> NUMERO .)
-    IGUALDAD        shift and go to state 38
-    MAYOR           shift and go to state 39
-    MENOR           shift and go to state 40
-    MAYOR_IGU       shift and go to state 41
-    MENOR_IGU       shift and go to state 42
-    DESIGUALDAD     shift and go to state 43
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
-    comparacion                    shift and go to state 45
+    factor                         shift and go to state 40
 
 state 22
 
-    (22) sentenciafor -> FOR . ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (47) term -> factor .
 
-    ID              shift and go to state 46
+    MULTIPLICADOR   reduce using rule 47 (term -> factor .)
+    DIVISOR         reduce using rule 47 (term -> factor .)
+    MOD_DIVISION    reduce using rule 47 (term -> factor .)
+    MAS             reduce using rule 47 (term -> factor .)
+    MENOS           reduce using rule 47 (term -> factor .)
+    $end            reduce using rule 47 (term -> factor .)
+    PARENT_DER      reduce using rule 47 (term -> factor .)
+    LLAVE_DER       reduce using rule 47 (term -> factor .)
+    DEFAULT         reduce using rule 47 (term -> factor .)
+    CASE            reduce using rule 47 (term -> factor .)
 
 
 state 23
 
-    (35) expression -> expression MAS . term
-    (38) term -> . term MULTIPLICADOR factor
-    (39) term -> . term DIVISOR factor
-    (40) term -> . term MOD_DIVISION factor
-    (41) term -> . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (25) asignacion -> ID . ASIGNACION factor
+    (20) longvariable -> ID . PARENT_IZQ CADENA PARENT_DER
+    (21) longvariable -> ID . PARENT_IZQ ID PARENT_DER
+    (22) boolcadena -> ID . PUNTO ID PARENT_IZQ factor PARENT_DER
+    (24) compaid -> ID . comparacion ID
+    (32) arreglo -> ID . ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
+    (33) arreglo -> ID . ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
+    (38) slice -> ID . ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (39) slice -> ID . ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+    (40) capslice -> ID . PARENT_IZQ ID PARENT_DER
+    (66) map -> ID . IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
+    (67) map -> ID . ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (79) asignar_valor_map -> ID . CORCHETE_IZQ valor CORCHETE_DER IGUAL valor
+    (81) obtener_valor_map -> ID . CORCHETE_IZQ valor CORCHETE_DER
+    (56) factor -> ID .
+    (49) comparacion -> . IGUALDAD
+    (50) comparacion -> . MAYOR
+    (51) comparacion -> . MENOR
+    (52) comparacion -> . MAYOR_IGU
+    (53) comparacion -> . MENOR_IGU
+    (54) comparacion -> . DESIGUALDAD
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    ASIGNACION      shift and go to state 41
+    PARENT_IZQ      shift and go to state 42
+    PUNTO           shift and go to state 43
+    IGUAL           shift and go to state 46
+    CORCHETE_IZQ    shift and go to state 45
+    MULTIPLICADOR   reduce using rule 56 (factor -> ID .)
+    DIVISOR         reduce using rule 56 (factor -> ID .)
+    MOD_DIVISION    reduce using rule 56 (factor -> ID .)
+    MAS             reduce using rule 56 (factor -> ID .)
+    MENOS           reduce using rule 56 (factor -> ID .)
+    $end            reduce using rule 56 (factor -> ID .)
+    LLAVE_DER       reduce using rule 56 (factor -> ID .)
+    DEFAULT         reduce using rule 56 (factor -> ID .)
+    CASE            reduce using rule 56 (factor -> ID .)
+    IGUALDAD        shift and go to state 47
+    MAYOR           shift and go to state 48
+    MENOR           shift and go to state 49
+    MAYOR_IGU       shift and go to state 50
+    MENOR_IGU       shift and go to state 51
+    DESIGUALDAD     shift and go to state 52
 
-    term                           shift and go to state 47
-    factor                         shift and go to state 17
+    comparacion                    shift and go to state 44
 
 state 24
 
-    (36) expression -> expression MENOS . term
-    (38) term -> . term MULTIPLICADOR factor
-    (39) term -> . term DIVISOR factor
-    (40) term -> . term MOD_DIVISION factor
-    (41) term -> . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (26) asignacion -> VAR . ID ID ASIGNACION factor
+    (27) asignacion -> VAR . ID COMA ID ID ASIGNACION factor COMA factor
+    (65) map -> VAR . ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    ID              shift and go to state 53
 
-    term                           shift and go to state 48
-    factor                         shift and go to state 17
 
 state 25
 
-    (38) term -> term MULTIPLICADOR . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (57) factor -> CADENA .
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    MULTIPLICADOR   reduce using rule 57 (factor -> CADENA .)
+    DIVISOR         reduce using rule 57 (factor -> CADENA .)
+    MOD_DIVISION    reduce using rule 57 (factor -> CADENA .)
+    MAS             reduce using rule 57 (factor -> CADENA .)
+    MENOS           reduce using rule 57 (factor -> CADENA .)
+    $end            reduce using rule 57 (factor -> CADENA .)
+    PARENT_DER      reduce using rule 57 (factor -> CADENA .)
+    IGUALDAD        reduce using rule 57 (factor -> CADENA .)
+    MAYOR           reduce using rule 57 (factor -> CADENA .)
+    MENOR           reduce using rule 57 (factor -> CADENA .)
+    MAYOR_IGU       reduce using rule 57 (factor -> CADENA .)
+    MENOR_IGU       reduce using rule 57 (factor -> CADENA .)
+    DESIGUALDAD     reduce using rule 57 (factor -> CADENA .)
+    LLAVE_DER       reduce using rule 57 (factor -> CADENA .)
+    DEFAULT         reduce using rule 57 (factor -> CADENA .)
+    CASE            reduce using rule 57 (factor -> CADENA .)
+    LLAVE_IZQ       reduce using rule 57 (factor -> CADENA .)
+    FIN_SENTENCIA   reduce using rule 57 (factor -> CADENA .)
+    DOS_PUNTOS      reduce using rule 57 (factor -> CADENA .)
+    COMA            reduce using rule 57 (factor -> CADENA .)
 
-    factor                         shift and go to state 49
 
 state 26
 
-    (39) term -> term DIVISOR . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (23) companum -> NUMERO . comparacion NUMERO
+    (55) factor -> NUMERO .
+    (49) comparacion -> . IGUALDAD
+    (50) comparacion -> . MAYOR
+    (51) comparacion -> . MENOR
+    (52) comparacion -> . MAYOR_IGU
+    (53) comparacion -> . MENOR_IGU
+    (54) comparacion -> . DESIGUALDAD
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    MULTIPLICADOR   reduce using rule 55 (factor -> NUMERO .)
+    DIVISOR         reduce using rule 55 (factor -> NUMERO .)
+    MOD_DIVISION    reduce using rule 55 (factor -> NUMERO .)
+    MAS             reduce using rule 55 (factor -> NUMERO .)
+    MENOS           reduce using rule 55 (factor -> NUMERO .)
+    $end            reduce using rule 55 (factor -> NUMERO .)
+    LLAVE_DER       reduce using rule 55 (factor -> NUMERO .)
+    DEFAULT         reduce using rule 55 (factor -> NUMERO .)
+    CASE            reduce using rule 55 (factor -> NUMERO .)
+    IGUALDAD        shift and go to state 47
+    MAYOR           shift and go to state 48
+    MENOR           shift and go to state 49
+    MAYOR_IGU       shift and go to state 50
+    MENOR_IGU       shift and go to state 51
+    DESIGUALDAD     shift and go to state 52
 
-    factor                         shift and go to state 50
+    comparacion                    shift and go to state 54
 
 state 27
 
-    (40) term -> term MOD_DIVISION . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (28) sentenciafor -> FOR . ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    ID              shift and go to state 55
 
-    factor                         shift and go to state 51
 
 state 28
 
-    (52) factor -> PARENT_IZQ . expression PARENT_DER
-    (35) expression -> . expression MAS term
-    (36) expression -> . expression MENOS term
-    (37) expression -> . term
-    (38) term -> . term MULTIPLICADOR factor
-    (39) term -> . term DIVISOR factor
-    (40) term -> . term MOD_DIVISION factor
-    (41) term -> . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (59) switch -> SWITCH . ID LLAVE_IZQ cases LLAVE_DER
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    ID              shift and go to state 56
 
-    expression                     shift and go to state 52
-    term                           shift and go to state 14
-    factor                         shift and go to state 17
 
 state 29
 
-    (13) impresion -> PARENT_IZQ expression . PARENT_DER
-    (52) factor -> PARENT_IZQ expression . PARENT_DER
-    (35) expression -> expression . MAS term
-    (36) expression -> expression . MENOS term
+    (80) eliminar_valor_map -> DELETE . PARENT_IZQ ID COMA valor PARENT_DER
 
-    PARENT_DER      shift and go to state 53
-    MAS             shift and go to state 23
-    MENOS           shift and go to state 24
+    PARENT_IZQ      shift and go to state 57
 
 
 state 30
 
-    (14) impresion -> PARENT_IZQ empty . PARENT_DER
+    (41) expression -> expression MAS . term
+    (44) term -> . term MULTIPLICADOR factor
+    (45) term -> . term DIVISOR factor
+    (46) term -> . term MOD_DIVISION factor
+    (47) term -> . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    PARENT_DER      shift and go to state 54
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
+    term                           shift and go to state 58
+    factor                         shift and go to state 22
 
 state 31
 
-    (49) factor -> NUMERO .
+    (42) expression -> expression MENOS . term
+    (44) term -> . term MULTIPLICADOR factor
+    (45) term -> . term DIVISOR factor
+    (46) term -> . term MOD_DIVISION factor
+    (47) term -> . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    MULTIPLICADOR   reduce using rule 49 (factor -> NUMERO .)
-    DIVISOR         reduce using rule 49 (factor -> NUMERO .)
-    MOD_DIVISION    reduce using rule 49 (factor -> NUMERO .)
-    PARENT_DER      reduce using rule 49 (factor -> NUMERO .)
-    MAS             reduce using rule 49 (factor -> NUMERO .)
-    MENOS           reduce using rule 49 (factor -> NUMERO .)
-    IGUALDAD        reduce using rule 49 (factor -> NUMERO .)
-    MAYOR           reduce using rule 49 (factor -> NUMERO .)
-    MENOR           reduce using rule 49 (factor -> NUMERO .)
-    MAYOR_IGU       reduce using rule 49 (factor -> NUMERO .)
-    MENOR_IGU       reduce using rule 49 (factor -> NUMERO .)
-    DESIGUALDAD     reduce using rule 49 (factor -> NUMERO .)
-    $end            reduce using rule 49 (factor -> NUMERO .)
-    LLAVE_DER       reduce using rule 49 (factor -> NUMERO .)
-    LLAVE_IZQ       reduce using rule 49 (factor -> NUMERO .)
-    FIN_SENTENCIA   reduce using rule 49 (factor -> NUMERO .)
-    COMA            reduce using rule 49 (factor -> NUMERO .)
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
+    term                           shift and go to state 59
+    factor                         shift and go to state 22
 
 state 32
 
-    (50) factor -> ID .
+    (44) term -> term MULTIPLICADOR . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    MULTIPLICADOR   reduce using rule 50 (factor -> ID .)
-    DIVISOR         reduce using rule 50 (factor -> ID .)
-    MOD_DIVISION    reduce using rule 50 (factor -> ID .)
-    PARENT_DER      reduce using rule 50 (factor -> ID .)
-    MAS             reduce using rule 50 (factor -> ID .)
-    MENOS           reduce using rule 50 (factor -> ID .)
-    IGUALDAD        reduce using rule 50 (factor -> ID .)
-    MAYOR           reduce using rule 50 (factor -> ID .)
-    MENOR           reduce using rule 50 (factor -> ID .)
-    MAYOR_IGU       reduce using rule 50 (factor -> ID .)
-    MENOR_IGU       reduce using rule 50 (factor -> ID .)
-    DESIGUALDAD     reduce using rule 50 (factor -> ID .)
-    $end            reduce using rule 50 (factor -> ID .)
-    LLAVE_DER       reduce using rule 50 (factor -> ID .)
-    LLAVE_IZQ       reduce using rule 50 (factor -> ID .)
-    FIN_SENTENCIA   reduce using rule 50 (factor -> ID .)
-    COMA            reduce using rule 50 (factor -> ID .)
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
+    factor                         shift and go to state 60
 
 state 33
 
-    (42) sentencia -> IF factor . comparacion factor LLAVE_IZQ programa LLAVE_DER
-    (43) comparacion -> . IGUALDAD
-    (44) comparacion -> . MAYOR
-    (45) comparacion -> . MENOR
-    (46) comparacion -> . MAYOR_IGU
-    (47) comparacion -> . MENOR_IGU
-    (48) comparacion -> . DESIGUALDAD
+    (45) term -> term DIVISOR . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    IGUALDAD        shift and go to state 38
-    MAYOR           shift and go to state 39
-    MENOR           shift and go to state 40
-    MAYOR_IGU       shift and go to state 41
-    MENOR_IGU       shift and go to state 42
-    DESIGUALDAD     shift and go to state 43
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
-    comparacion                    shift and go to state 55
+    factor                         shift and go to state 61
 
 state 34
 
-    (19) asignacion -> ID ASIGNACION . factor
-    (26) arreglo -> ID ASIGNACION . CORCHETE_IZQ cantidad CORCHETE_DER ID
-    (27) arreglo -> ID ASIGNACION . CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
-    (32) slice -> ID ASIGNACION . ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
-    (33) slice -> ID ASIGNACION . ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (46) term -> term MOD_DIVISION . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    CORCHETE_IZQ    shift and go to state 58
-    ID              shift and go to state 56
-    NUMERO          shift and go to state 31
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
-    factor                         shift and go to state 57
+    factor                         shift and go to state 62
 
 state 35
 
-    (15) longcadena -> ID PARENT_IZQ . CADENA PARENT_DER
-    (34) capslice -> ID PARENT_IZQ . ID PARENT_DER
+    (58) factor -> PARENT_IZQ . expression PARENT_DER
+    (41) expression -> . expression MAS term
+    (42) expression -> . expression MENOS term
+    (43) expression -> . term
+    (44) term -> . term MULTIPLICADOR factor
+    (45) term -> . term DIVISOR factor
+    (46) term -> . term MOD_DIVISION factor
+    (47) term -> . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    CADENA          shift and go to state 60
-    ID              shift and go to state 59
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
+    expression                     shift and go to state 63
+    term                           shift and go to state 19
+    factor                         shift and go to state 22
 
 state 36
 
-    (16) boolcadena -> ID PUNTO . ID PARENT_IZQ factor PARENT_DER
+    (18) impresion -> PARENT_IZQ expression . PARENT_DER
+    (58) factor -> PARENT_IZQ expression . PARENT_DER
+    (41) expression -> expression . MAS term
+    (42) expression -> expression . MENOS term
 
-    ID              shift and go to state 61
+    PARENT_DER      shift and go to state 64
+    MAS             shift and go to state 30
+    MENOS           shift and go to state 31
 
 
 state 37
 
-    (18) compaid -> ID comparacion . ID
+    (19) impresion -> PARENT_IZQ empty . PARENT_DER
 
-    ID              shift and go to state 62
+    PARENT_DER      shift and go to state 65
 
 
 state 38
 
-    (43) comparacion -> IGUALDAD .
+    (55) factor -> NUMERO .
 
-    ID              reduce using rule 43 (comparacion -> IGUALDAD .)
-    NUMERO          reduce using rule 43 (comparacion -> IGUALDAD .)
-    CADENA          reduce using rule 43 (comparacion -> IGUALDAD .)
-    PARENT_IZQ      reduce using rule 43 (comparacion -> IGUALDAD .)
+    MULTIPLICADOR   reduce using rule 55 (factor -> NUMERO .)
+    DIVISOR         reduce using rule 55 (factor -> NUMERO .)
+    MOD_DIVISION    reduce using rule 55 (factor -> NUMERO .)
+    PARENT_DER      reduce using rule 55 (factor -> NUMERO .)
+    MAS             reduce using rule 55 (factor -> NUMERO .)
+    MENOS           reduce using rule 55 (factor -> NUMERO .)
+    IGUALDAD        reduce using rule 55 (factor -> NUMERO .)
+    MAYOR           reduce using rule 55 (factor -> NUMERO .)
+    MENOR           reduce using rule 55 (factor -> NUMERO .)
+    MAYOR_IGU       reduce using rule 55 (factor -> NUMERO .)
+    MENOR_IGU       reduce using rule 55 (factor -> NUMERO .)
+    DESIGUALDAD     reduce using rule 55 (factor -> NUMERO .)
+    $end            reduce using rule 55 (factor -> NUMERO .)
+    LLAVE_DER       reduce using rule 55 (factor -> NUMERO .)
+    DEFAULT         reduce using rule 55 (factor -> NUMERO .)
+    CASE            reduce using rule 55 (factor -> NUMERO .)
+    LLAVE_IZQ       reduce using rule 55 (factor -> NUMERO .)
+    FIN_SENTENCIA   reduce using rule 55 (factor -> NUMERO .)
+    DOS_PUNTOS      reduce using rule 55 (factor -> NUMERO .)
+    COMA            reduce using rule 55 (factor -> NUMERO .)
 
 
 state 39
 
-    (44) comparacion -> MAYOR .
+    (56) factor -> ID .
 
-    ID              reduce using rule 44 (comparacion -> MAYOR .)
-    NUMERO          reduce using rule 44 (comparacion -> MAYOR .)
-    CADENA          reduce using rule 44 (comparacion -> MAYOR .)
-    PARENT_IZQ      reduce using rule 44 (comparacion -> MAYOR .)
+    MULTIPLICADOR   reduce using rule 56 (factor -> ID .)
+    DIVISOR         reduce using rule 56 (factor -> ID .)
+    MOD_DIVISION    reduce using rule 56 (factor -> ID .)
+    PARENT_DER      reduce using rule 56 (factor -> ID .)
+    MAS             reduce using rule 56 (factor -> ID .)
+    MENOS           reduce using rule 56 (factor -> ID .)
+    IGUALDAD        reduce using rule 56 (factor -> ID .)
+    MAYOR           reduce using rule 56 (factor -> ID .)
+    MENOR           reduce using rule 56 (factor -> ID .)
+    MAYOR_IGU       reduce using rule 56 (factor -> ID .)
+    MENOR_IGU       reduce using rule 56 (factor -> ID .)
+    DESIGUALDAD     reduce using rule 56 (factor -> ID .)
+    $end            reduce using rule 56 (factor -> ID .)
+    LLAVE_DER       reduce using rule 56 (factor -> ID .)
+    DEFAULT         reduce using rule 56 (factor -> ID .)
+    CASE            reduce using rule 56 (factor -> ID .)
+    LLAVE_IZQ       reduce using rule 56 (factor -> ID .)
+    FIN_SENTENCIA   reduce using rule 56 (factor -> ID .)
+    DOS_PUNTOS      reduce using rule 56 (factor -> ID .)
+    COMA            reduce using rule 56 (factor -> ID .)
 
 
 state 40
 
-    (45) comparacion -> MENOR .
+    (48) sentencia -> IF factor . comparacion factor LLAVE_IZQ programa LLAVE_DER
+    (49) comparacion -> . IGUALDAD
+    (50) comparacion -> . MAYOR
+    (51) comparacion -> . MENOR
+    (52) comparacion -> . MAYOR_IGU
+    (53) comparacion -> . MENOR_IGU
+    (54) comparacion -> . DESIGUALDAD
 
-    ID              reduce using rule 45 (comparacion -> MENOR .)
-    NUMERO          reduce using rule 45 (comparacion -> MENOR .)
-    CADENA          reduce using rule 45 (comparacion -> MENOR .)
-    PARENT_IZQ      reduce using rule 45 (comparacion -> MENOR .)
+    IGUALDAD        shift and go to state 47
+    MAYOR           shift and go to state 48
+    MENOR           shift and go to state 49
+    MAYOR_IGU       shift and go to state 50
+    MENOR_IGU       shift and go to state 51
+    DESIGUALDAD     shift and go to state 52
 
+    comparacion                    shift and go to state 66
 
 state 41
 
-    (46) comparacion -> MAYOR_IGU .
+    (25) asignacion -> ID ASIGNACION . factor
+    (32) arreglo -> ID ASIGNACION . CORCHETE_IZQ cantidad CORCHETE_DER ID
+    (33) arreglo -> ID ASIGNACION . CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
+    (38) slice -> ID ASIGNACION . ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (39) slice -> ID ASIGNACION . ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+    (67) map -> ID ASIGNACION . MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    ID              reduce using rule 46 (comparacion -> MAYOR_IGU .)
-    NUMERO          reduce using rule 46 (comparacion -> MAYOR_IGU .)
-    CADENA          reduce using rule 46 (comparacion -> MAYOR_IGU .)
-    PARENT_IZQ      reduce using rule 46 (comparacion -> MAYOR_IGU .)
+    CORCHETE_IZQ    shift and go to state 69
+    ID              shift and go to state 67
+    MAP             shift and go to state 70
+    NUMERO          shift and go to state 38
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
+    factor                         shift and go to state 68
 
 state 42
 
-    (47) comparacion -> MENOR_IGU .
+    (20) longvariable -> ID PARENT_IZQ . CADENA PARENT_DER
+    (21) longvariable -> ID PARENT_IZQ . ID PARENT_DER
+    (40) capslice -> ID PARENT_IZQ . ID PARENT_DER
 
-    ID              reduce using rule 47 (comparacion -> MENOR_IGU .)
-    NUMERO          reduce using rule 47 (comparacion -> MENOR_IGU .)
-    CADENA          reduce using rule 47 (comparacion -> MENOR_IGU .)
-    PARENT_IZQ      reduce using rule 47 (comparacion -> MENOR_IGU .)
+    CADENA          shift and go to state 72
+    ID              shift and go to state 71
 
 
 state 43
 
-    (48) comparacion -> DESIGUALDAD .
+    (22) boolcadena -> ID PUNTO . ID PARENT_IZQ factor PARENT_DER
 
-    ID              reduce using rule 48 (comparacion -> DESIGUALDAD .)
-    NUMERO          reduce using rule 48 (comparacion -> DESIGUALDAD .)
-    CADENA          reduce using rule 48 (comparacion -> DESIGUALDAD .)
-    PARENT_IZQ      reduce using rule 48 (comparacion -> DESIGUALDAD .)
+    ID              shift and go to state 73
 
 
 state 44
 
-    (20) asignacion -> VAR ID . ID ASIGNACION factor
-    (21) asignacion -> VAR ID . COMA ID ID ASIGNACION factor COMA factor
+    (24) compaid -> ID comparacion . ID
 
-    ID              shift and go to state 63
-    COMA            shift and go to state 64
+    ID              shift and go to state 74
 
 
 state 45
 
-    (17) companum -> NUMERO comparacion . NUMERO
+    (79) asignar_valor_map -> ID CORCHETE_IZQ . valor CORCHETE_DER IGUAL valor
+    (81) obtener_valor_map -> ID CORCHETE_IZQ . valor CORCHETE_DER
+    (77) valor -> . CADENA
+    (78) valor -> . NUMERO
 
-    NUMERO          shift and go to state 65
+    CADENA          shift and go to state 76
+    NUMERO          shift and go to state 77
 
+    valor                          shift and go to state 75
 
 state 46
 
-    (22) sentenciafor -> FOR ID . ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (66) map -> ID IGUAL . MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
 
-    ASIGNACION      shift and go to state 66
+    MAKE            shift and go to state 78
 
 
 state 47
 
-    (35) expression -> expression MAS term .
-    (38) term -> term . MULTIPLICADOR factor
-    (39) term -> term . DIVISOR factor
-    (40) term -> term . MOD_DIVISION factor
+    (49) comparacion -> IGUALDAD .
 
-    MAS             reduce using rule 35 (expression -> expression MAS term .)
-    MENOS           reduce using rule 35 (expression -> expression MAS term .)
-    $end            reduce using rule 35 (expression -> expression MAS term .)
-    PARENT_DER      reduce using rule 35 (expression -> expression MAS term .)
-    LLAVE_DER       reduce using rule 35 (expression -> expression MAS term .)
-    MULTIPLICADOR   shift and go to state 25
-    DIVISOR         shift and go to state 26
-    MOD_DIVISION    shift and go to state 27
+    ID              reduce using rule 49 (comparacion -> IGUALDAD .)
+    NUMERO          reduce using rule 49 (comparacion -> IGUALDAD .)
+    CADENA          reduce using rule 49 (comparacion -> IGUALDAD .)
+    PARENT_IZQ      reduce using rule 49 (comparacion -> IGUALDAD .)
 
 
 state 48
 
-    (36) expression -> expression MENOS term .
-    (38) term -> term . MULTIPLICADOR factor
-    (39) term -> term . DIVISOR factor
-    (40) term -> term . MOD_DIVISION factor
+    (50) comparacion -> MAYOR .
 
-    MAS             reduce using rule 36 (expression -> expression MENOS term .)
-    MENOS           reduce using rule 36 (expression -> expression MENOS term .)
-    $end            reduce using rule 36 (expression -> expression MENOS term .)
-    PARENT_DER      reduce using rule 36 (expression -> expression MENOS term .)
-    LLAVE_DER       reduce using rule 36 (expression -> expression MENOS term .)
-    MULTIPLICADOR   shift and go to state 25
-    DIVISOR         shift and go to state 26
-    MOD_DIVISION    shift and go to state 27
+    ID              reduce using rule 50 (comparacion -> MAYOR .)
+    NUMERO          reduce using rule 50 (comparacion -> MAYOR .)
+    CADENA          reduce using rule 50 (comparacion -> MAYOR .)
+    PARENT_IZQ      reduce using rule 50 (comparacion -> MAYOR .)
 
 
 state 49
 
-    (38) term -> term MULTIPLICADOR factor .
+    (51) comparacion -> MENOR .
 
-    MULTIPLICADOR   reduce using rule 38 (term -> term MULTIPLICADOR factor .)
-    DIVISOR         reduce using rule 38 (term -> term MULTIPLICADOR factor .)
-    MOD_DIVISION    reduce using rule 38 (term -> term MULTIPLICADOR factor .)
-    MAS             reduce using rule 38 (term -> term MULTIPLICADOR factor .)
-    MENOS           reduce using rule 38 (term -> term MULTIPLICADOR factor .)
-    $end            reduce using rule 38 (term -> term MULTIPLICADOR factor .)
-    PARENT_DER      reduce using rule 38 (term -> term MULTIPLICADOR factor .)
-    LLAVE_DER       reduce using rule 38 (term -> term MULTIPLICADOR factor .)
+    ID              reduce using rule 51 (comparacion -> MENOR .)
+    NUMERO          reduce using rule 51 (comparacion -> MENOR .)
+    CADENA          reduce using rule 51 (comparacion -> MENOR .)
+    PARENT_IZQ      reduce using rule 51 (comparacion -> MENOR .)
 
 
 state 50
 
-    (39) term -> term DIVISOR factor .
+    (52) comparacion -> MAYOR_IGU .
 
-    MULTIPLICADOR   reduce using rule 39 (term -> term DIVISOR factor .)
-    DIVISOR         reduce using rule 39 (term -> term DIVISOR factor .)
-    MOD_DIVISION    reduce using rule 39 (term -> term DIVISOR factor .)
-    MAS             reduce using rule 39 (term -> term DIVISOR factor .)
-    MENOS           reduce using rule 39 (term -> term DIVISOR factor .)
-    $end            reduce using rule 39 (term -> term DIVISOR factor .)
-    PARENT_DER      reduce using rule 39 (term -> term DIVISOR factor .)
-    LLAVE_DER       reduce using rule 39 (term -> term DIVISOR factor .)
+    ID              reduce using rule 52 (comparacion -> MAYOR_IGU .)
+    NUMERO          reduce using rule 52 (comparacion -> MAYOR_IGU .)
+    CADENA          reduce using rule 52 (comparacion -> MAYOR_IGU .)
+    PARENT_IZQ      reduce using rule 52 (comparacion -> MAYOR_IGU .)
 
 
 state 51
 
-    (40) term -> term MOD_DIVISION factor .
+    (53) comparacion -> MENOR_IGU .
 
-    MULTIPLICADOR   reduce using rule 40 (term -> term MOD_DIVISION factor .)
-    DIVISOR         reduce using rule 40 (term -> term MOD_DIVISION factor .)
-    MOD_DIVISION    reduce using rule 40 (term -> term MOD_DIVISION factor .)
-    MAS             reduce using rule 40 (term -> term MOD_DIVISION factor .)
-    MENOS           reduce using rule 40 (term -> term MOD_DIVISION factor .)
-    $end            reduce using rule 40 (term -> term MOD_DIVISION factor .)
-    PARENT_DER      reduce using rule 40 (term -> term MOD_DIVISION factor .)
-    LLAVE_DER       reduce using rule 40 (term -> term MOD_DIVISION factor .)
+    ID              reduce using rule 53 (comparacion -> MENOR_IGU .)
+    NUMERO          reduce using rule 53 (comparacion -> MENOR_IGU .)
+    CADENA          reduce using rule 53 (comparacion -> MENOR_IGU .)
+    PARENT_IZQ      reduce using rule 53 (comparacion -> MENOR_IGU .)
 
 
 state 52
 
-    (52) factor -> PARENT_IZQ expression . PARENT_DER
-    (35) expression -> expression . MAS term
-    (36) expression -> expression . MENOS term
+    (54) comparacion -> DESIGUALDAD .
 
-    PARENT_DER      shift and go to state 67
-    MAS             shift and go to state 23
-    MENOS           shift and go to state 24
+    ID              reduce using rule 54 (comparacion -> DESIGUALDAD .)
+    NUMERO          reduce using rule 54 (comparacion -> DESIGUALDAD .)
+    CADENA          reduce using rule 54 (comparacion -> DESIGUALDAD .)
+    PARENT_IZQ      reduce using rule 54 (comparacion -> DESIGUALDAD .)
 
 
 state 53
 
-    (13) impresion -> PARENT_IZQ expression PARENT_DER .
-    (52) factor -> PARENT_IZQ expression PARENT_DER .
+    (26) asignacion -> VAR ID . ID ASIGNACION factor
+    (27) asignacion -> VAR ID . COMA ID ID ASIGNACION factor COMA factor
+    (65) map -> VAR ID . MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
 
-  ! reduce/reduce conflict for $end resolved using rule 13 (impresion -> PARENT_IZQ expression PARENT_DER .)
-  ! reduce/reduce conflict for LLAVE_DER resolved using rule 13 (impresion -> PARENT_IZQ expression PARENT_DER .)
-    $end            reduce using rule 13 (impresion -> PARENT_IZQ expression PARENT_DER .)
-    LLAVE_DER       reduce using rule 13 (impresion -> PARENT_IZQ expression PARENT_DER .)
-    MULTIPLICADOR   reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    DIVISOR         reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    MOD_DIVISION    reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    MAS             reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    MENOS           reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-
-  ! $end            [ reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .) ]
-  ! LLAVE_DER       [ reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .) ]
+    ID              shift and go to state 79
+    COMA            shift and go to state 80
+    MAP             shift and go to state 81
 
 
 state 54
 
-    (14) impresion -> PARENT_IZQ empty PARENT_DER .
+    (23) companum -> NUMERO comparacion . NUMERO
 
-    $end            reduce using rule 14 (impresion -> PARENT_IZQ empty PARENT_DER .)
-    LLAVE_DER       reduce using rule 14 (impresion -> PARENT_IZQ empty PARENT_DER .)
+    NUMERO          shift and go to state 82
 
 
 state 55
 
-    (42) sentencia -> IF factor comparacion . factor LLAVE_IZQ programa LLAVE_DER
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (28) sentenciafor -> FOR ID . ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    ASIGNACION      shift and go to state 83
 
-    factor                         shift and go to state 68
 
 state 56
 
-    (32) slice -> ID ASIGNACION ID . PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
-    (33) slice -> ID ASIGNACION ID . PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
-    (50) factor -> ID .
+    (59) switch -> SWITCH ID . LLAVE_IZQ cases LLAVE_DER
 
-    PARENT_IZQ      shift and go to state 69
-    $end            reduce using rule 50 (factor -> ID .)
-    LLAVE_DER       reduce using rule 50 (factor -> ID .)
+    LLAVE_IZQ       shift and go to state 84
 
 
 state 57
 
-    (19) asignacion -> ID ASIGNACION factor .
+    (80) eliminar_valor_map -> DELETE PARENT_IZQ . ID COMA valor PARENT_DER
 
-    $end            reduce using rule 19 (asignacion -> ID ASIGNACION factor .)
-    LLAVE_DER       reduce using rule 19 (asignacion -> ID ASIGNACION factor .)
+    ID              shift and go to state 85
 
 
 state 58
 
-    (26) arreglo -> ID ASIGNACION CORCHETE_IZQ . cantidad CORCHETE_DER ID
-    (27) arreglo -> ID ASIGNACION CORCHETE_IZQ . cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
-    (28) cantidad -> . NUMERO
-    (29) cantidad -> . ARRPUNTOS
+    (41) expression -> expression MAS term .
+    (44) term -> term . MULTIPLICADOR factor
+    (45) term -> term . DIVISOR factor
+    (46) term -> term . MOD_DIVISION factor
 
-    NUMERO          shift and go to state 71
-    ARRPUNTOS       shift and go to state 72
+    MAS             reduce using rule 41 (expression -> expression MAS term .)
+    MENOS           reduce using rule 41 (expression -> expression MAS term .)
+    $end            reduce using rule 41 (expression -> expression MAS term .)
+    PARENT_DER      reduce using rule 41 (expression -> expression MAS term .)
+    LLAVE_DER       reduce using rule 41 (expression -> expression MAS term .)
+    DEFAULT         reduce using rule 41 (expression -> expression MAS term .)
+    CASE            reduce using rule 41 (expression -> expression MAS term .)
+    MULTIPLICADOR   shift and go to state 32
+    DIVISOR         shift and go to state 33
+    MOD_DIVISION    shift and go to state 34
 
-    cantidad                       shift and go to state 70
 
 state 59
 
-    (34) capslice -> ID PARENT_IZQ ID . PARENT_DER
+    (42) expression -> expression MENOS term .
+    (44) term -> term . MULTIPLICADOR factor
+    (45) term -> term . DIVISOR factor
+    (46) term -> term . MOD_DIVISION factor
 
-    PARENT_DER      shift and go to state 73
+    MAS             reduce using rule 42 (expression -> expression MENOS term .)
+    MENOS           reduce using rule 42 (expression -> expression MENOS term .)
+    $end            reduce using rule 42 (expression -> expression MENOS term .)
+    PARENT_DER      reduce using rule 42 (expression -> expression MENOS term .)
+    LLAVE_DER       reduce using rule 42 (expression -> expression MENOS term .)
+    DEFAULT         reduce using rule 42 (expression -> expression MENOS term .)
+    CASE            reduce using rule 42 (expression -> expression MENOS term .)
+    MULTIPLICADOR   shift and go to state 32
+    DIVISOR         shift and go to state 33
+    MOD_DIVISION    shift and go to state 34
 
 
 state 60
 
-    (15) longcadena -> ID PARENT_IZQ CADENA . PARENT_DER
+    (44) term -> term MULTIPLICADOR factor .
 
-    PARENT_DER      shift and go to state 74
+    MULTIPLICADOR   reduce using rule 44 (term -> term MULTIPLICADOR factor .)
+    DIVISOR         reduce using rule 44 (term -> term MULTIPLICADOR factor .)
+    MOD_DIVISION    reduce using rule 44 (term -> term MULTIPLICADOR factor .)
+    MAS             reduce using rule 44 (term -> term MULTIPLICADOR factor .)
+    MENOS           reduce using rule 44 (term -> term MULTIPLICADOR factor .)
+    $end            reduce using rule 44 (term -> term MULTIPLICADOR factor .)
+    PARENT_DER      reduce using rule 44 (term -> term MULTIPLICADOR factor .)
+    LLAVE_DER       reduce using rule 44 (term -> term MULTIPLICADOR factor .)
+    DEFAULT         reduce using rule 44 (term -> term MULTIPLICADOR factor .)
+    CASE            reduce using rule 44 (term -> term MULTIPLICADOR factor .)
 
 
 state 61
 
-    (16) boolcadena -> ID PUNTO ID . PARENT_IZQ factor PARENT_DER
+    (45) term -> term DIVISOR factor .
 
-    PARENT_IZQ      shift and go to state 75
+    MULTIPLICADOR   reduce using rule 45 (term -> term DIVISOR factor .)
+    DIVISOR         reduce using rule 45 (term -> term DIVISOR factor .)
+    MOD_DIVISION    reduce using rule 45 (term -> term DIVISOR factor .)
+    MAS             reduce using rule 45 (term -> term DIVISOR factor .)
+    MENOS           reduce using rule 45 (term -> term DIVISOR factor .)
+    $end            reduce using rule 45 (term -> term DIVISOR factor .)
+    PARENT_DER      reduce using rule 45 (term -> term DIVISOR factor .)
+    LLAVE_DER       reduce using rule 45 (term -> term DIVISOR factor .)
+    DEFAULT         reduce using rule 45 (term -> term DIVISOR factor .)
+    CASE            reduce using rule 45 (term -> term DIVISOR factor .)
 
 
 state 62
 
-    (18) compaid -> ID comparacion ID .
+    (46) term -> term MOD_DIVISION factor .
 
-    $end            reduce using rule 18 (compaid -> ID comparacion ID .)
-    LLAVE_DER       reduce using rule 18 (compaid -> ID comparacion ID .)
+    MULTIPLICADOR   reduce using rule 46 (term -> term MOD_DIVISION factor .)
+    DIVISOR         reduce using rule 46 (term -> term MOD_DIVISION factor .)
+    MOD_DIVISION    reduce using rule 46 (term -> term MOD_DIVISION factor .)
+    MAS             reduce using rule 46 (term -> term MOD_DIVISION factor .)
+    MENOS           reduce using rule 46 (term -> term MOD_DIVISION factor .)
+    $end            reduce using rule 46 (term -> term MOD_DIVISION factor .)
+    PARENT_DER      reduce using rule 46 (term -> term MOD_DIVISION factor .)
+    LLAVE_DER       reduce using rule 46 (term -> term MOD_DIVISION factor .)
+    DEFAULT         reduce using rule 46 (term -> term MOD_DIVISION factor .)
+    CASE            reduce using rule 46 (term -> term MOD_DIVISION factor .)
 
 
 state 63
 
-    (20) asignacion -> VAR ID ID . ASIGNACION factor
+    (58) factor -> PARENT_IZQ expression . PARENT_DER
+    (41) expression -> expression . MAS term
+    (42) expression -> expression . MENOS term
 
-    ASIGNACION      shift and go to state 76
+    PARENT_DER      shift and go to state 86
+    MAS             shift and go to state 30
+    MENOS           shift and go to state 31
 
 
 state 64
 
-    (21) asignacion -> VAR ID COMA . ID ID ASIGNACION factor COMA factor
+    (18) impresion -> PARENT_IZQ expression PARENT_DER .
+    (58) factor -> PARENT_IZQ expression PARENT_DER .
 
-    ID              shift and go to state 77
+  ! reduce/reduce conflict for $end resolved using rule 18 (impresion -> PARENT_IZQ expression PARENT_DER .)
+  ! reduce/reduce conflict for LLAVE_DER resolved using rule 18 (impresion -> PARENT_IZQ expression PARENT_DER .)
+  ! reduce/reduce conflict for DEFAULT resolved using rule 18 (impresion -> PARENT_IZQ expression PARENT_DER .)
+  ! reduce/reduce conflict for CASE resolved using rule 18 (impresion -> PARENT_IZQ expression PARENT_DER .)
+    $end            reduce using rule 18 (impresion -> PARENT_IZQ expression PARENT_DER .)
+    LLAVE_DER       reduce using rule 18 (impresion -> PARENT_IZQ expression PARENT_DER .)
+    DEFAULT         reduce using rule 18 (impresion -> PARENT_IZQ expression PARENT_DER .)
+    CASE            reduce using rule 18 (impresion -> PARENT_IZQ expression PARENT_DER .)
+    MULTIPLICADOR   reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    DIVISOR         reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    MOD_DIVISION    reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    MAS             reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    MENOS           reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+
+  ! $end            [ reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .) ]
+  ! LLAVE_DER       [ reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .) ]
+  ! DEFAULT         [ reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .) ]
+  ! CASE            [ reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .) ]
 
 
 state 65
 
-    (17) companum -> NUMERO comparacion NUMERO .
+    (19) impresion -> PARENT_IZQ empty PARENT_DER .
 
-    $end            reduce using rule 17 (companum -> NUMERO comparacion NUMERO .)
-    LLAVE_DER       reduce using rule 17 (companum -> NUMERO comparacion NUMERO .)
+    $end            reduce using rule 19 (impresion -> PARENT_IZQ empty PARENT_DER .)
+    LLAVE_DER       reduce using rule 19 (impresion -> PARENT_IZQ empty PARENT_DER .)
+    DEFAULT         reduce using rule 19 (impresion -> PARENT_IZQ empty PARENT_DER .)
+    CASE            reduce using rule 19 (impresion -> PARENT_IZQ empty PARENT_DER .)
 
 
 state 66
 
-    (22) sentenciafor -> FOR ID ASIGNACION . factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (48) sentencia -> IF factor comparacion . factor LLAVE_IZQ programa LLAVE_DER
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
-    factor                         shift and go to state 78
+    factor                         shift and go to state 87
 
 state 67
 
-    (52) factor -> PARENT_IZQ expression PARENT_DER .
+    (38) slice -> ID ASIGNACION ID . PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (39) slice -> ID ASIGNACION ID . PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+    (56) factor -> ID .
 
-    MULTIPLICADOR   reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    DIVISOR         reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    MOD_DIVISION    reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    PARENT_DER      reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    MAS             reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    MENOS           reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    IGUALDAD        reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    MAYOR           reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    MENOR           reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    MAYOR_IGU       reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    MENOR_IGU       reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    DESIGUALDAD     reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    $end            reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    LLAVE_DER       reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    LLAVE_IZQ       reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    FIN_SENTENCIA   reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
-    COMA            reduce using rule 52 (factor -> PARENT_IZQ expression PARENT_DER .)
+    PARENT_IZQ      shift and go to state 88
+    $end            reduce using rule 56 (factor -> ID .)
+    LLAVE_DER       reduce using rule 56 (factor -> ID .)
+    DEFAULT         reduce using rule 56 (factor -> ID .)
+    CASE            reduce using rule 56 (factor -> ID .)
 
 
 state 68
 
-    (42) sentencia -> IF factor comparacion factor . LLAVE_IZQ programa LLAVE_DER
+    (25) asignacion -> ID ASIGNACION factor .
 
-    LLAVE_IZQ       shift and go to state 79
+    $end            reduce using rule 25 (asignacion -> ID ASIGNACION factor .)
+    LLAVE_DER       reduce using rule 25 (asignacion -> ID ASIGNACION factor .)
+    DEFAULT         reduce using rule 25 (asignacion -> ID ASIGNACION factor .)
+    CASE            reduce using rule 25 (asignacion -> ID ASIGNACION factor .)
 
 
 state 69
 
-    (32) slice -> ID ASIGNACION ID PARENT_IZQ . CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
-    (33) slice -> ID ASIGNACION ID PARENT_IZQ . CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+    (32) arreglo -> ID ASIGNACION CORCHETE_IZQ . cantidad CORCHETE_DER ID
+    (33) arreglo -> ID ASIGNACION CORCHETE_IZQ . cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
+    (34) cantidad -> . NUMERO
+    (35) cantidad -> . ARRPUNTOS
 
-    CORCHETE_IZQ    shift and go to state 80
+    NUMERO          shift and go to state 90
+    ARRPUNTOS       shift and go to state 91
 
+    cantidad                       shift and go to state 89
 
 state 70
 
-    (26) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad . CORCHETE_DER ID
-    (27) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad . CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
+    (67) map -> ID ASIGNACION MAP . CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
 
-    CORCHETE_DER    shift and go to state 81
+    CORCHETE_IZQ    shift and go to state 92
 
 
 state 71
 
-    (28) cantidad -> NUMERO .
+    (21) longvariable -> ID PARENT_IZQ ID . PARENT_DER
+    (40) capslice -> ID PARENT_IZQ ID . PARENT_DER
 
-    CORCHETE_DER    reduce using rule 28 (cantidad -> NUMERO .)
+    PARENT_DER      shift and go to state 93
 
 
 state 72
 
-    (29) cantidad -> ARRPUNTOS .
+    (20) longvariable -> ID PARENT_IZQ CADENA . PARENT_DER
 
-    CORCHETE_DER    reduce using rule 29 (cantidad -> ARRPUNTOS .)
+    PARENT_DER      shift and go to state 94
 
 
 state 73
 
-    (34) capslice -> ID PARENT_IZQ ID PARENT_DER .
+    (22) boolcadena -> ID PUNTO ID . PARENT_IZQ factor PARENT_DER
 
-    $end            reduce using rule 34 (capslice -> ID PARENT_IZQ ID PARENT_DER .)
-    LLAVE_DER       reduce using rule 34 (capslice -> ID PARENT_IZQ ID PARENT_DER .)
+    PARENT_IZQ      shift and go to state 95
 
 
 state 74
 
-    (15) longcadena -> ID PARENT_IZQ CADENA PARENT_DER .
+    (24) compaid -> ID comparacion ID .
 
-    $end            reduce using rule 15 (longcadena -> ID PARENT_IZQ CADENA PARENT_DER .)
-    LLAVE_DER       reduce using rule 15 (longcadena -> ID PARENT_IZQ CADENA PARENT_DER .)
+    $end            reduce using rule 24 (compaid -> ID comparacion ID .)
+    LLAVE_DER       reduce using rule 24 (compaid -> ID comparacion ID .)
+    DEFAULT         reduce using rule 24 (compaid -> ID comparacion ID .)
+    CASE            reduce using rule 24 (compaid -> ID comparacion ID .)
 
 
 state 75
 
-    (16) boolcadena -> ID PUNTO ID PARENT_IZQ . factor PARENT_DER
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (79) asignar_valor_map -> ID CORCHETE_IZQ valor . CORCHETE_DER IGUAL valor
+    (81) obtener_valor_map -> ID CORCHETE_IZQ valor . CORCHETE_DER
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    CORCHETE_DER    shift and go to state 96
 
-    factor                         shift and go to state 82
 
 state 76
 
-    (20) asignacion -> VAR ID ID ASIGNACION . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (77) valor -> CADENA .
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    CORCHETE_DER    reduce using rule 77 (valor -> CADENA .)
+    PARENT_DER      reduce using rule 77 (valor -> CADENA .)
+    $end            reduce using rule 77 (valor -> CADENA .)
+    LLAVE_DER       reduce using rule 77 (valor -> CADENA .)
+    DEFAULT         reduce using rule 77 (valor -> CADENA .)
+    CASE            reduce using rule 77 (valor -> CADENA .)
+    COMA            reduce using rule 77 (valor -> CADENA .)
 
-    factor                         shift and go to state 83
 
 state 77
 
-    (21) asignacion -> VAR ID COMA ID . ID ASIGNACION factor COMA factor
+    (78) valor -> NUMERO .
 
-    ID              shift and go to state 84
+    CORCHETE_DER    reduce using rule 78 (valor -> NUMERO .)
+    PARENT_DER      reduce using rule 78 (valor -> NUMERO .)
+    $end            reduce using rule 78 (valor -> NUMERO .)
+    LLAVE_DER       reduce using rule 78 (valor -> NUMERO .)
+    DEFAULT         reduce using rule 78 (valor -> NUMERO .)
+    CASE            reduce using rule 78 (valor -> NUMERO .)
+    COMA            reduce using rule 78 (valor -> NUMERO .)
 
 
 state 78
 
-    (22) sentenciafor -> FOR ID ASIGNACION factor . FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (66) map -> ID IGUAL MAKE . PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
 
-    FIN_SENTENCIA   shift and go to state 85
+    PARENT_IZQ      shift and go to state 97
 
 
 state 79
 
-    (42) sentencia -> IF factor comparacion factor LLAVE_IZQ . programa LLAVE_DER
-    (1) programa -> . expression
-    (2) programa -> . impresion
-    (3) programa -> . sentencia
-    (4) programa -> . asignacion
-    (5) programa -> . longcadena
-    (6) programa -> . boolcadena
-    (7) programa -> . companum
-    (8) programa -> . compaid
-    (9) programa -> . sentenciafor
-    (10) programa -> . arreglo
-    (11) programa -> . slice
-    (12) programa -> . capslice
-    (35) expression -> . expression MAS term
-    (36) expression -> . expression MENOS term
-    (37) expression -> . term
-    (13) impresion -> . PARENT_IZQ expression PARENT_DER
-    (14) impresion -> . PARENT_IZQ empty PARENT_DER
-    (42) sentencia -> . IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER
-    (19) asignacion -> . ID ASIGNACION factor
-    (20) asignacion -> . VAR ID ID ASIGNACION factor
-    (21) asignacion -> . VAR ID COMA ID ID ASIGNACION factor COMA factor
-    (15) longcadena -> . ID PARENT_IZQ CADENA PARENT_DER
-    (16) boolcadena -> . ID PUNTO ID PARENT_IZQ factor PARENT_DER
-    (17) companum -> . NUMERO comparacion NUMERO
-    (18) compaid -> . ID comparacion ID
-    (22) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
-    (26) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
-    (27) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
-    (32) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
-    (33) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
-    (34) capslice -> . ID PARENT_IZQ ID PARENT_DER
-    (38) term -> . term MULTIPLICADOR factor
-    (39) term -> . term DIVISOR factor
-    (40) term -> . term MOD_DIVISION factor
-    (41) term -> . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (26) asignacion -> VAR ID ID . ASIGNACION factor
 
-    PARENT_IZQ      shift and go to state 15
-    IF              shift and go to state 16
-    ID              shift and go to state 18
-    VAR             shift and go to state 19
-    NUMERO          shift and go to state 21
-    FOR             shift and go to state 22
-    CADENA          shift and go to state 20
+    ASIGNACION      shift and go to state 98
 
-    factor                         shift and go to state 17
-    programa                       shift and go to state 86
-    expression                     shift and go to state 2
-    impresion                      shift and go to state 3
-    sentencia                      shift and go to state 4
-    asignacion                     shift and go to state 5
-    longcadena                     shift and go to state 6
-    boolcadena                     shift and go to state 7
-    companum                       shift and go to state 8
-    compaid                        shift and go to state 9
-    sentenciafor                   shift and go to state 10
-    arreglo                        shift and go to state 11
-    slice                          shift and go to state 12
-    capslice                       shift and go to state 13
-    term                           shift and go to state 14
 
 state 80
 
-    (32) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ . CORCHETE_DER ID COMA NUMERO PARENT_DER
-    (33) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ . CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+    (27) asignacion -> VAR ID COMA . ID ID ASIGNACION factor COMA factor
 
-    CORCHETE_DER    shift and go to state 87
+    ID              shift and go to state 99
 
 
 state 81
 
-    (26) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER . ID
-    (27) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER . ID LLAVE_IZQ valores LLAVE_DER
+    (65) map -> VAR ID MAP . CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
 
-    ID              shift and go to state 88
+    CORCHETE_IZQ    shift and go to state 100
 
 
 state 82
 
-    (16) boolcadena -> ID PUNTO ID PARENT_IZQ factor . PARENT_DER
+    (23) companum -> NUMERO comparacion NUMERO .
 
-    PARENT_DER      shift and go to state 89
+    $end            reduce using rule 23 (companum -> NUMERO comparacion NUMERO .)
+    LLAVE_DER       reduce using rule 23 (companum -> NUMERO comparacion NUMERO .)
+    DEFAULT         reduce using rule 23 (companum -> NUMERO comparacion NUMERO .)
+    CASE            reduce using rule 23 (companum -> NUMERO comparacion NUMERO .)
 
 
 state 83
 
-    (20) asignacion -> VAR ID ID ASIGNACION factor .
+    (28) sentenciafor -> FOR ID ASIGNACION . factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    $end            reduce using rule 20 (asignacion -> VAR ID ID ASIGNACION factor .)
-    LLAVE_DER       reduce using rule 20 (asignacion -> VAR ID ID ASIGNACION factor .)
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
+    factor                         shift and go to state 101
 
 state 84
 
-    (21) asignacion -> VAR ID COMA ID ID . ASIGNACION factor COMA factor
+    (59) switch -> SWITCH ID LLAVE_IZQ . cases LLAVE_DER
+    (60) cases -> . case
+    (61) cases -> . case default
+    (62) cases -> . case cases
+    (63) case -> . CASE factor DOS_PUNTOS programa
 
-    ASIGNACION      shift and go to state 90
+    CASE            shift and go to state 104
 
+    cases                          shift and go to state 102
+    case                           shift and go to state 103
 
 state 85
 
-    (22) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA . ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (80) eliminar_valor_map -> DELETE PARENT_IZQ ID . COMA valor PARENT_DER
 
-    ID              shift and go to state 91
+    COMA            shift and go to state 105
 
 
 state 86
 
-    (42) sentencia -> IF factor comparacion factor LLAVE_IZQ programa . LLAVE_DER
+    (58) factor -> PARENT_IZQ expression PARENT_DER .
 
-    LLAVE_DER       shift and go to state 92
+    MULTIPLICADOR   reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    DIVISOR         reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    MOD_DIVISION    reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    PARENT_DER      reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    MAS             reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    MENOS           reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    IGUALDAD        reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    MAYOR           reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    MENOR           reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    MAYOR_IGU       reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    MENOR_IGU       reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    DESIGUALDAD     reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    $end            reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    LLAVE_DER       reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    DEFAULT         reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    CASE            reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    LLAVE_IZQ       reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    FIN_SENTENCIA   reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    DOS_PUNTOS      reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
+    COMA            reduce using rule 58 (factor -> PARENT_IZQ expression PARENT_DER .)
 
 
 state 87
 
-    (32) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER . ID COMA NUMERO PARENT_DER
-    (33) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER . ID COMA NUMERO COMA NUMERO PARENT_DER
+    (48) sentencia -> IF factor comparacion factor . LLAVE_IZQ programa LLAVE_DER
 
-    ID              shift and go to state 93
+    LLAVE_IZQ       shift and go to state 106
 
 
 state 88
 
-    (26) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID .
-    (27) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID . LLAVE_IZQ valores LLAVE_DER
+    (38) slice -> ID ASIGNACION ID PARENT_IZQ . CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (39) slice -> ID ASIGNACION ID PARENT_IZQ . CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
 
-    $end            reduce using rule 26 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID .)
-    LLAVE_DER       reduce using rule 26 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID .)
-    LLAVE_IZQ       shift and go to state 94
+    CORCHETE_IZQ    shift and go to state 107
 
 
 state 89
 
-    (16) boolcadena -> ID PUNTO ID PARENT_IZQ factor PARENT_DER .
+    (32) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad . CORCHETE_DER ID
+    (33) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad . CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
 
-    $end            reduce using rule 16 (boolcadena -> ID PUNTO ID PARENT_IZQ factor PARENT_DER .)
-    LLAVE_DER       reduce using rule 16 (boolcadena -> ID PUNTO ID PARENT_IZQ factor PARENT_DER .)
+    CORCHETE_DER    shift and go to state 108
 
 
 state 90
 
-    (21) asignacion -> VAR ID COMA ID ID ASIGNACION . factor COMA factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (34) cantidad -> NUMERO .
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    CORCHETE_DER    reduce using rule 34 (cantidad -> NUMERO .)
 
-    factor                         shift and go to state 95
 
 state 91
 
-    (22) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID . comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
-    (43) comparacion -> . IGUALDAD
-    (44) comparacion -> . MAYOR
-    (45) comparacion -> . MENOR
-    (46) comparacion -> . MAYOR_IGU
-    (47) comparacion -> . MENOR_IGU
-    (48) comparacion -> . DESIGUALDAD
+    (35) cantidad -> ARRPUNTOS .
 
-    IGUALDAD        shift and go to state 38
-    MAYOR           shift and go to state 39
-    MENOR           shift and go to state 40
-    MAYOR_IGU       shift and go to state 41
-    MENOR_IGU       shift and go to state 42
-    DESIGUALDAD     shift and go to state 43
+    CORCHETE_DER    reduce using rule 35 (cantidad -> ARRPUNTOS .)
 
-    comparacion                    shift and go to state 96
 
 state 92
 
-    (42) sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER .
+    (67) map -> ID ASIGNACION MAP CORCHETE_IZQ . tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (68) tipo_dato -> . INT
+    (69) tipo_dato -> . STRING
+    (70) tipo_dato -> . INT64
+    (71) tipo_dato -> . FLOAT32
+    (72) tipo_dato -> . FLOAT64
+    (73) tipo_dato -> . INT32
 
-    $end            reduce using rule 42 (sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER .)
-    LLAVE_DER       reduce using rule 42 (sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER .)
+    INT             shift and go to state 110
+    STRING          shift and go to state 111
+    INT64           shift and go to state 112
+    FLOAT32         shift and go to state 113
+    FLOAT64         shift and go to state 114
+    INT32           shift and go to state 115
 
+    tipo_dato                      shift and go to state 109
 
 state 93
 
-    (32) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID . COMA NUMERO PARENT_DER
-    (33) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID . COMA NUMERO COMA NUMERO PARENT_DER
+    (21) longvariable -> ID PARENT_IZQ ID PARENT_DER .
+    (40) capslice -> ID PARENT_IZQ ID PARENT_DER .
 
-    COMA            shift and go to state 97
+  ! reduce/reduce conflict for $end resolved using rule 21 (longvariable -> ID PARENT_IZQ ID PARENT_DER .)
+  ! reduce/reduce conflict for LLAVE_DER resolved using rule 21 (longvariable -> ID PARENT_IZQ ID PARENT_DER .)
+  ! reduce/reduce conflict for DEFAULT resolved using rule 21 (longvariable -> ID PARENT_IZQ ID PARENT_DER .)
+  ! reduce/reduce conflict for CASE resolved using rule 21 (longvariable -> ID PARENT_IZQ ID PARENT_DER .)
+    $end            reduce using rule 21 (longvariable -> ID PARENT_IZQ ID PARENT_DER .)
+    LLAVE_DER       reduce using rule 21 (longvariable -> ID PARENT_IZQ ID PARENT_DER .)
+    DEFAULT         reduce using rule 21 (longvariable -> ID PARENT_IZQ ID PARENT_DER .)
+    CASE            reduce using rule 21 (longvariable -> ID PARENT_IZQ ID PARENT_DER .)
+
+  ! $end            [ reduce using rule 40 (capslice -> ID PARENT_IZQ ID PARENT_DER .) ]
+  ! LLAVE_DER       [ reduce using rule 40 (capslice -> ID PARENT_IZQ ID PARENT_DER .) ]
+  ! DEFAULT         [ reduce using rule 40 (capslice -> ID PARENT_IZQ ID PARENT_DER .) ]
+  ! CASE            [ reduce using rule 40 (capslice -> ID PARENT_IZQ ID PARENT_DER .) ]
 
 
 state 94
 
-    (27) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ . valores LLAVE_DER
-    (30) valores -> . factor
-    (31) valores -> . factor COMA valores
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (20) longvariable -> ID PARENT_IZQ CADENA PARENT_DER .
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    $end            reduce using rule 20 (longvariable -> ID PARENT_IZQ CADENA PARENT_DER .)
+    LLAVE_DER       reduce using rule 20 (longvariable -> ID PARENT_IZQ CADENA PARENT_DER .)
+    DEFAULT         reduce using rule 20 (longvariable -> ID PARENT_IZQ CADENA PARENT_DER .)
+    CASE            reduce using rule 20 (longvariable -> ID PARENT_IZQ CADENA PARENT_DER .)
 
-    valores                        shift and go to state 98
-    factor                         shift and go to state 99
 
 state 95
 
-    (21) asignacion -> VAR ID COMA ID ID ASIGNACION factor . COMA factor
+    (22) boolcadena -> ID PUNTO ID PARENT_IZQ . factor PARENT_DER
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    COMA            shift and go to state 100
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
+    factor                         shift and go to state 116
 
 state 96
 
-    (22) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion . factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (79) asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER . IGUAL valor
+    (81) obtener_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER .
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    IGUAL           shift and go to state 117
+    $end            reduce using rule 81 (obtener_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER .)
+    LLAVE_DER       reduce using rule 81 (obtener_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER .)
+    DEFAULT         reduce using rule 81 (obtener_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER .)
+    CASE            reduce using rule 81 (obtener_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER .)
 
-    factor                         shift and go to state 101
 
 state 97
 
-    (32) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA . NUMERO PARENT_DER
-    (33) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA . NUMERO COMA NUMERO PARENT_DER
+    (66) map -> ID IGUAL MAKE PARENT_IZQ . MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
 
-    NUMERO          shift and go to state 102
+    MAP             shift and go to state 118
 
 
 state 98
 
-    (27) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores . LLAVE_DER
+    (26) asignacion -> VAR ID ID ASIGNACION . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    LLAVE_DER       shift and go to state 103
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
+    factor                         shift and go to state 119
 
 state 99
 
-    (30) valores -> factor .
-    (31) valores -> factor . COMA valores
+    (27) asignacion -> VAR ID COMA ID . ID ASIGNACION factor COMA factor
 
-    LLAVE_DER       reduce using rule 30 (valores -> factor .)
-    COMA            shift and go to state 104
+    ID              shift and go to state 120
 
 
 state 100
 
-    (21) asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (65) map -> VAR ID MAP CORCHETE_IZQ . tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (68) tipo_dato -> . INT
+    (69) tipo_dato -> . STRING
+    (70) tipo_dato -> . INT64
+    (71) tipo_dato -> . FLOAT32
+    (72) tipo_dato -> . FLOAT64
+    (73) tipo_dato -> . INT32
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    INT             shift and go to state 110
+    STRING          shift and go to state 111
+    INT64           shift and go to state 112
+    FLOAT32         shift and go to state 113
+    FLOAT64         shift and go to state 114
+    INT32           shift and go to state 115
 
-    factor                         shift and go to state 105
+    tipo_dato                      shift and go to state 121
 
 state 101
 
-    (22) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor . FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (28) sentenciafor -> FOR ID ASIGNACION factor . FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
 
-    FIN_SENTENCIA   shift and go to state 106
+    FIN_SENTENCIA   shift and go to state 122
 
 
 state 102
 
-    (32) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO . PARENT_DER
-    (33) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO . COMA NUMERO PARENT_DER
+    (59) switch -> SWITCH ID LLAVE_IZQ cases . LLAVE_DER
 
-    PARENT_DER      shift and go to state 108
-    COMA            shift and go to state 107
+    LLAVE_DER       shift and go to state 123
 
 
 state 103
 
-    (27) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER .
+    (60) cases -> case .
+    (61) cases -> case . default
+    (62) cases -> case . cases
+    (64) default -> . DEFAULT factor DOS_PUNTOS programa
+    (60) cases -> . case
+    (61) cases -> . case default
+    (62) cases -> . case cases
+    (63) case -> . CASE factor DOS_PUNTOS programa
 
-    $end            reduce using rule 27 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER .)
-    LLAVE_DER       reduce using rule 27 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER .)
+    LLAVE_DER       reduce using rule 60 (cases -> case .)
+    DEFAULT         shift and go to state 126
+    CASE            shift and go to state 104
 
+    case                           shift and go to state 103
+    default                        shift and go to state 124
+    cases                          shift and go to state 125
 
 state 104
 
-    (31) valores -> factor COMA . valores
-    (30) valores -> . factor
-    (31) valores -> . factor COMA valores
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (63) case -> CASE . factor DOS_PUNTOS programa
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    NUMERO          shift and go to state 31
-    ID              shift and go to state 32
-    CADENA          shift and go to state 20
-    PARENT_IZQ      shift and go to state 28
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
 
-    factor                         shift and go to state 99
-    valores                        shift and go to state 109
+    factor                         shift and go to state 127
 
 state 105
 
-    (21) asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA factor .
+    (80) eliminar_valor_map -> DELETE PARENT_IZQ ID COMA . valor PARENT_DER
+    (77) valor -> . CADENA
+    (78) valor -> . NUMERO
 
-    $end            reduce using rule 21 (asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA factor .)
-    LLAVE_DER       reduce using rule 21 (asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA factor .)
+    CADENA          shift and go to state 76
+    NUMERO          shift and go to state 77
 
+    valor                          shift and go to state 128
 
 state 106
 
-    (22) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA . incremento LLAVE_IZQ programa LLAVE_DER
-    (23) incremento -> . ID INCREMENTO
-    (24) incremento -> . ID ASIGNACION ID
-    (25) incremento -> . ID DECREMENTO
-
-    ID              shift and go to state 110
-
-    incremento                     shift and go to state 111
-
-state 107
-
-    (33) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA . NUMERO PARENT_DER
-
-    NUMERO          shift and go to state 112
-
-
-state 108
-
-    (32) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .
-
-    $end            reduce using rule 32 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .)
-    LLAVE_DER       reduce using rule 32 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .)
-
-
-state 109
-
-    (31) valores -> factor COMA valores .
-
-    LLAVE_DER       reduce using rule 31 (valores -> factor COMA valores .)
-
-
-state 110
-
-    (23) incremento -> ID . INCREMENTO
-    (24) incremento -> ID . ASIGNACION ID
-    (25) incremento -> ID . DECREMENTO
-
-    INCREMENTO      shift and go to state 113
-    ASIGNACION      shift and go to state 114
-    DECREMENTO      shift and go to state 115
-
-
-state 111
-
-    (22) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento . LLAVE_IZQ programa LLAVE_DER
-
-    LLAVE_IZQ       shift and go to state 116
-
-
-state 112
-
-    (33) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO . PARENT_DER
-
-    PARENT_DER      shift and go to state 117
-
-
-state 113
-
-    (23) incremento -> ID INCREMENTO .
-
-    LLAVE_IZQ       reduce using rule 23 (incremento -> ID INCREMENTO .)
-
-
-state 114
-
-    (24) incremento -> ID ASIGNACION . ID
-
-    ID              shift and go to state 118
-
-
-state 115
-
-    (25) incremento -> ID DECREMENTO .
-
-    LLAVE_IZQ       reduce using rule 25 (incremento -> ID DECREMENTO .)
-
-
-state 116
-
-    (22) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ . programa LLAVE_DER
+    (48) sentencia -> IF factor comparacion factor LLAVE_IZQ . programa LLAVE_DER
     (1) programa -> . expression
     (2) programa -> . impresion
     (3) programa -> . sentencia
     (4) programa -> . asignacion
-    (5) programa -> . longcadena
+    (5) programa -> . longvariable
     (6) programa -> . boolcadena
     (7) programa -> . companum
     (8) programa -> . compaid
@@ -1623,49 +1661,64 @@ state 116
     (10) programa -> . arreglo
     (11) programa -> . slice
     (12) programa -> . capslice
-    (35) expression -> . expression MAS term
-    (36) expression -> . expression MENOS term
-    (37) expression -> . term
-    (13) impresion -> . PARENT_IZQ expression PARENT_DER
-    (14) impresion -> . PARENT_IZQ empty PARENT_DER
-    (42) sentencia -> . IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER
-    (19) asignacion -> . ID ASIGNACION factor
-    (20) asignacion -> . VAR ID ID ASIGNACION factor
-    (21) asignacion -> . VAR ID COMA ID ID ASIGNACION factor COMA factor
-    (15) longcadena -> . ID PARENT_IZQ CADENA PARENT_DER
-    (16) boolcadena -> . ID PUNTO ID PARENT_IZQ factor PARENT_DER
-    (17) companum -> . NUMERO comparacion NUMERO
-    (18) compaid -> . ID comparacion ID
-    (22) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
-    (26) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
-    (27) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
-    (32) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
-    (33) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
-    (34) capslice -> . ID PARENT_IZQ ID PARENT_DER
-    (38) term -> . term MULTIPLICADOR factor
-    (39) term -> . term DIVISOR factor
-    (40) term -> . term MOD_DIVISION factor
-    (41) term -> . factor
-    (49) factor -> . NUMERO
-    (50) factor -> . ID
-    (51) factor -> . CADENA
-    (52) factor -> . PARENT_IZQ expression PARENT_DER
+    (13) programa -> . switch
+    (14) programa -> . map
+    (15) programa -> . asignar_valor_map
+    (16) programa -> . eliminar_valor_map
+    (17) programa -> . obtener_valor_map
+    (41) expression -> . expression MAS term
+    (42) expression -> . expression MENOS term
+    (43) expression -> . term
+    (18) impresion -> . PARENT_IZQ expression PARENT_DER
+    (19) impresion -> . PARENT_IZQ empty PARENT_DER
+    (48) sentencia -> . IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER
+    (25) asignacion -> . ID ASIGNACION factor
+    (26) asignacion -> . VAR ID ID ASIGNACION factor
+    (27) asignacion -> . VAR ID COMA ID ID ASIGNACION factor COMA factor
+    (20) longvariable -> . ID PARENT_IZQ CADENA PARENT_DER
+    (21) longvariable -> . ID PARENT_IZQ ID PARENT_DER
+    (22) boolcadena -> . ID PUNTO ID PARENT_IZQ factor PARENT_DER
+    (23) companum -> . NUMERO comparacion NUMERO
+    (24) compaid -> . ID comparacion ID
+    (28) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (32) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
+    (33) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
+    (38) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (39) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+    (40) capslice -> . ID PARENT_IZQ ID PARENT_DER
+    (59) switch -> . SWITCH ID LLAVE_IZQ cases LLAVE_DER
+    (65) map -> . VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (66) map -> . ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
+    (67) map -> . ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (79) asignar_valor_map -> . ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor
+    (80) eliminar_valor_map -> . DELETE PARENT_IZQ ID COMA valor PARENT_DER
+    (81) obtener_valor_map -> . ID CORCHETE_IZQ valor CORCHETE_DER
+    (44) term -> . term MULTIPLICADOR factor
+    (45) term -> . term DIVISOR factor
+    (46) term -> . term MOD_DIVISION factor
+    (47) term -> . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
 
-    PARENT_IZQ      shift and go to state 15
-    IF              shift and go to state 16
-    ID              shift and go to state 18
-    VAR             shift and go to state 19
-    NUMERO          shift and go to state 21
-    FOR             shift and go to state 22
-    CADENA          shift and go to state 20
+    PARENT_IZQ      shift and go to state 20
+    IF              shift and go to state 21
+    ID              shift and go to state 23
+    VAR             shift and go to state 24
+    NUMERO          shift and go to state 26
+    FOR             shift and go to state 27
+    SWITCH          shift and go to state 28
+    DELETE          shift and go to state 29
+    CADENA          shift and go to state 25
 
-    factor                         shift and go to state 17
-    programa                       shift and go to state 119
+    factor                         shift and go to state 22
+    programa                       shift and go to state 129
     expression                     shift and go to state 2
     impresion                      shift and go to state 3
     sentencia                      shift and go to state 4
     asignacion                     shift and go to state 5
-    longcadena                     shift and go to state 6
+    longvariable                   shift and go to state 6
     boolcadena                     shift and go to state 7
     companum                       shift and go to state 8
     compaid                        shift and go to state 9
@@ -1673,39 +1726,1143 @@ state 116
     arreglo                        shift and go to state 11
     slice                          shift and go to state 12
     capslice                       shift and go to state 13
-    term                           shift and go to state 14
+    switch                         shift and go to state 14
+    map                            shift and go to state 15
+    asignar_valor_map              shift and go to state 16
+    eliminar_valor_map             shift and go to state 17
+    obtener_valor_map              shift and go to state 18
+    term                           shift and go to state 19
+
+state 107
+
+    (38) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ . CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (39) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ . CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+
+    CORCHETE_DER    shift and go to state 130
+
+
+state 108
+
+    (32) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER . ID
+    (33) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER . ID LLAVE_IZQ valores LLAVE_DER
+
+    ID              shift and go to state 131
+
+
+state 109
+
+    (67) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato . CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+
+    CORCHETE_DER    shift and go to state 132
+
+
+state 110
+
+    (68) tipo_dato -> INT .
+
+    CORCHETE_DER    reduce using rule 68 (tipo_dato -> INT .)
+    LLAVE_IZQ       reduce using rule 68 (tipo_dato -> INT .)
+    PARENT_DER      reduce using rule 68 (tipo_dato -> INT .)
+
+
+state 111
+
+    (69) tipo_dato -> STRING .
+
+    CORCHETE_DER    reduce using rule 69 (tipo_dato -> STRING .)
+    LLAVE_IZQ       reduce using rule 69 (tipo_dato -> STRING .)
+    PARENT_DER      reduce using rule 69 (tipo_dato -> STRING .)
+
+
+state 112
+
+    (70) tipo_dato -> INT64 .
+
+    CORCHETE_DER    reduce using rule 70 (tipo_dato -> INT64 .)
+    LLAVE_IZQ       reduce using rule 70 (tipo_dato -> INT64 .)
+    PARENT_DER      reduce using rule 70 (tipo_dato -> INT64 .)
+
+
+state 113
+
+    (71) tipo_dato -> FLOAT32 .
+
+    CORCHETE_DER    reduce using rule 71 (tipo_dato -> FLOAT32 .)
+    LLAVE_IZQ       reduce using rule 71 (tipo_dato -> FLOAT32 .)
+    PARENT_DER      reduce using rule 71 (tipo_dato -> FLOAT32 .)
+
+
+state 114
+
+    (72) tipo_dato -> FLOAT64 .
+
+    CORCHETE_DER    reduce using rule 72 (tipo_dato -> FLOAT64 .)
+    LLAVE_IZQ       reduce using rule 72 (tipo_dato -> FLOAT64 .)
+    PARENT_DER      reduce using rule 72 (tipo_dato -> FLOAT64 .)
+
+
+state 115
+
+    (73) tipo_dato -> INT32 .
+
+    CORCHETE_DER    reduce using rule 73 (tipo_dato -> INT32 .)
+    LLAVE_IZQ       reduce using rule 73 (tipo_dato -> INT32 .)
+    PARENT_DER      reduce using rule 73 (tipo_dato -> INT32 .)
+
+
+state 116
+
+    (22) boolcadena -> ID PUNTO ID PARENT_IZQ factor . PARENT_DER
+
+    PARENT_DER      shift and go to state 133
+
 
 state 117
 
-    (33) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER .
+    (79) asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER IGUAL . valor
+    (77) valor -> . CADENA
+    (78) valor -> . NUMERO
 
-    $end            reduce using rule 33 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER .)
-    LLAVE_DER       reduce using rule 33 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER .)
+    CADENA          shift and go to state 76
+    NUMERO          shift and go to state 77
 
+    valor                          shift and go to state 134
 
 state 118
 
-    (24) incremento -> ID ASIGNACION ID .
+    (66) map -> ID IGUAL MAKE PARENT_IZQ MAP . CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
 
-    LLAVE_IZQ       reduce using rule 24 (incremento -> ID ASIGNACION ID .)
+    CORCHETE_DER    shift and go to state 135
 
 
 state 119
 
-    (22) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa . LLAVE_DER
+    (26) asignacion -> VAR ID ID ASIGNACION factor .
 
-    LLAVE_DER       shift and go to state 120
+    $end            reduce using rule 26 (asignacion -> VAR ID ID ASIGNACION factor .)
+    LLAVE_DER       reduce using rule 26 (asignacion -> VAR ID ID ASIGNACION factor .)
+    DEFAULT         reduce using rule 26 (asignacion -> VAR ID ID ASIGNACION factor .)
+    CASE            reduce using rule 26 (asignacion -> VAR ID ID ASIGNACION factor .)
 
 
 state 120
 
-    (22) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER .
+    (27) asignacion -> VAR ID COMA ID ID . ASIGNACION factor COMA factor
 
-    $end            reduce using rule 22 (sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER .)
-    LLAVE_DER       reduce using rule 22 (sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER .)
+    ASIGNACION      shift and go to state 136
+
+
+state 121
+
+    (65) map -> VAR ID MAP CORCHETE_IZQ tipo_dato . CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+
+    CORCHETE_DER    shift and go to state 137
+
+
+state 122
+
+    (28) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA . ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+
+    ID              shift and go to state 138
+
+
+state 123
+
+    (59) switch -> SWITCH ID LLAVE_IZQ cases LLAVE_DER .
+
+    $end            reduce using rule 59 (switch -> SWITCH ID LLAVE_IZQ cases LLAVE_DER .)
+    LLAVE_DER       reduce using rule 59 (switch -> SWITCH ID LLAVE_IZQ cases LLAVE_DER .)
+    DEFAULT         reduce using rule 59 (switch -> SWITCH ID LLAVE_IZQ cases LLAVE_DER .)
+    CASE            reduce using rule 59 (switch -> SWITCH ID LLAVE_IZQ cases LLAVE_DER .)
+
+
+state 124
+
+    (61) cases -> case default .
+
+    LLAVE_DER       reduce using rule 61 (cases -> case default .)
+
+
+state 125
+
+    (62) cases -> case cases .
+
+    LLAVE_DER       reduce using rule 62 (cases -> case cases .)
+
+
+state 126
+
+    (64) default -> DEFAULT . factor DOS_PUNTOS programa
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
+
+    factor                         shift and go to state 139
+
+state 127
+
+    (63) case -> CASE factor . DOS_PUNTOS programa
+
+    DOS_PUNTOS      shift and go to state 140
+
+
+state 128
+
+    (80) eliminar_valor_map -> DELETE PARENT_IZQ ID COMA valor . PARENT_DER
+
+    PARENT_DER      shift and go to state 141
+
+
+state 129
+
+    (48) sentencia -> IF factor comparacion factor LLAVE_IZQ programa . LLAVE_DER
+
+    LLAVE_DER       shift and go to state 142
+
+
+state 130
+
+    (38) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER . ID COMA NUMERO PARENT_DER
+    (39) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER . ID COMA NUMERO COMA NUMERO PARENT_DER
+
+    ID              shift and go to state 143
+
+
+state 131
+
+    (32) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID .
+    (33) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID . LLAVE_IZQ valores LLAVE_DER
+
+    $end            reduce using rule 32 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID .)
+    LLAVE_DER       reduce using rule 32 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID .)
+    DEFAULT         reduce using rule 32 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID .)
+    CASE            reduce using rule 32 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID .)
+    LLAVE_IZQ       shift and go to state 144
+
+
+state 132
+
+    (67) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER . tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (68) tipo_dato -> . INT
+    (69) tipo_dato -> . STRING
+    (70) tipo_dato -> . INT64
+    (71) tipo_dato -> . FLOAT32
+    (72) tipo_dato -> . FLOAT64
+    (73) tipo_dato -> . INT32
+
+    INT             shift and go to state 110
+    STRING          shift and go to state 111
+    INT64           shift and go to state 112
+    FLOAT32         shift and go to state 113
+    FLOAT64         shift and go to state 114
+    INT32           shift and go to state 115
+
+    tipo_dato                      shift and go to state 145
+
+state 133
+
+    (22) boolcadena -> ID PUNTO ID PARENT_IZQ factor PARENT_DER .
+
+    $end            reduce using rule 22 (boolcadena -> ID PUNTO ID PARENT_IZQ factor PARENT_DER .)
+    LLAVE_DER       reduce using rule 22 (boolcadena -> ID PUNTO ID PARENT_IZQ factor PARENT_DER .)
+    DEFAULT         reduce using rule 22 (boolcadena -> ID PUNTO ID PARENT_IZQ factor PARENT_DER .)
+    CASE            reduce using rule 22 (boolcadena -> ID PUNTO ID PARENT_IZQ factor PARENT_DER .)
+
+
+state 134
+
+    (79) asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor .
+
+    $end            reduce using rule 79 (asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor .)
+    LLAVE_DER       reduce using rule 79 (asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor .)
+    DEFAULT         reduce using rule 79 (asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor .)
+    CASE            reduce using rule 79 (asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor .)
+
+
+state 135
+
+    (66) map -> ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER . tipo_dato CORCHETE_DER tipo_dato PARENT_DER
+    (68) tipo_dato -> . INT
+    (69) tipo_dato -> . STRING
+    (70) tipo_dato -> . INT64
+    (71) tipo_dato -> . FLOAT32
+    (72) tipo_dato -> . FLOAT64
+    (73) tipo_dato -> . INT32
+
+    INT             shift and go to state 110
+    STRING          shift and go to state 111
+    INT64           shift and go to state 112
+    FLOAT32         shift and go to state 113
+    FLOAT64         shift and go to state 114
+    INT32           shift and go to state 115
+
+    tipo_dato                      shift and go to state 146
+
+state 136
+
+    (27) asignacion -> VAR ID COMA ID ID ASIGNACION . factor COMA factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
+
+    factor                         shift and go to state 147
+
+state 137
+
+    (65) map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER . tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (68) tipo_dato -> . INT
+    (69) tipo_dato -> . STRING
+    (70) tipo_dato -> . INT64
+    (71) tipo_dato -> . FLOAT32
+    (72) tipo_dato -> . FLOAT64
+    (73) tipo_dato -> . INT32
+
+    INT             shift and go to state 110
+    STRING          shift and go to state 111
+    INT64           shift and go to state 112
+    FLOAT32         shift and go to state 113
+    FLOAT64         shift and go to state 114
+    INT32           shift and go to state 115
+
+    tipo_dato                      shift and go to state 148
+
+state 138
+
+    (28) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID . comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (49) comparacion -> . IGUALDAD
+    (50) comparacion -> . MAYOR
+    (51) comparacion -> . MENOR
+    (52) comparacion -> . MAYOR_IGU
+    (53) comparacion -> . MENOR_IGU
+    (54) comparacion -> . DESIGUALDAD
+
+    IGUALDAD        shift and go to state 47
+    MAYOR           shift and go to state 48
+    MENOR           shift and go to state 49
+    MAYOR_IGU       shift and go to state 50
+    MENOR_IGU       shift and go to state 51
+    DESIGUALDAD     shift and go to state 52
+
+    comparacion                    shift and go to state 149
+
+state 139
+
+    (64) default -> DEFAULT factor . DOS_PUNTOS programa
+
+    DOS_PUNTOS      shift and go to state 150
+
+
+state 140
+
+    (63) case -> CASE factor DOS_PUNTOS . programa
+    (1) programa -> . expression
+    (2) programa -> . impresion
+    (3) programa -> . sentencia
+    (4) programa -> . asignacion
+    (5) programa -> . longvariable
+    (6) programa -> . boolcadena
+    (7) programa -> . companum
+    (8) programa -> . compaid
+    (9) programa -> . sentenciafor
+    (10) programa -> . arreglo
+    (11) programa -> . slice
+    (12) programa -> . capslice
+    (13) programa -> . switch
+    (14) programa -> . map
+    (15) programa -> . asignar_valor_map
+    (16) programa -> . eliminar_valor_map
+    (17) programa -> . obtener_valor_map
+    (41) expression -> . expression MAS term
+    (42) expression -> . expression MENOS term
+    (43) expression -> . term
+    (18) impresion -> . PARENT_IZQ expression PARENT_DER
+    (19) impresion -> . PARENT_IZQ empty PARENT_DER
+    (48) sentencia -> . IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER
+    (25) asignacion -> . ID ASIGNACION factor
+    (26) asignacion -> . VAR ID ID ASIGNACION factor
+    (27) asignacion -> . VAR ID COMA ID ID ASIGNACION factor COMA factor
+    (20) longvariable -> . ID PARENT_IZQ CADENA PARENT_DER
+    (21) longvariable -> . ID PARENT_IZQ ID PARENT_DER
+    (22) boolcadena -> . ID PUNTO ID PARENT_IZQ factor PARENT_DER
+    (23) companum -> . NUMERO comparacion NUMERO
+    (24) compaid -> . ID comparacion ID
+    (28) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (32) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
+    (33) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
+    (38) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (39) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+    (40) capslice -> . ID PARENT_IZQ ID PARENT_DER
+    (59) switch -> . SWITCH ID LLAVE_IZQ cases LLAVE_DER
+    (65) map -> . VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (66) map -> . ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
+    (67) map -> . ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (79) asignar_valor_map -> . ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor
+    (80) eliminar_valor_map -> . DELETE PARENT_IZQ ID COMA valor PARENT_DER
+    (81) obtener_valor_map -> . ID CORCHETE_IZQ valor CORCHETE_DER
+    (44) term -> . term MULTIPLICADOR factor
+    (45) term -> . term DIVISOR factor
+    (46) term -> . term MOD_DIVISION factor
+    (47) term -> . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+
+    PARENT_IZQ      shift and go to state 20
+    IF              shift and go to state 21
+    ID              shift and go to state 23
+    VAR             shift and go to state 24
+    NUMERO          shift and go to state 26
+    FOR             shift and go to state 27
+    SWITCH          shift and go to state 28
+    DELETE          shift and go to state 29
+    CADENA          shift and go to state 25
+
+    factor                         shift and go to state 22
+    programa                       shift and go to state 151
+    expression                     shift and go to state 2
+    impresion                      shift and go to state 3
+    sentencia                      shift and go to state 4
+    asignacion                     shift and go to state 5
+    longvariable                   shift and go to state 6
+    boolcadena                     shift and go to state 7
+    companum                       shift and go to state 8
+    compaid                        shift and go to state 9
+    sentenciafor                   shift and go to state 10
+    arreglo                        shift and go to state 11
+    slice                          shift and go to state 12
+    capslice                       shift and go to state 13
+    switch                         shift and go to state 14
+    map                            shift and go to state 15
+    asignar_valor_map              shift and go to state 16
+    eliminar_valor_map             shift and go to state 17
+    obtener_valor_map              shift and go to state 18
+    term                           shift and go to state 19
+
+state 141
+
+    (80) eliminar_valor_map -> DELETE PARENT_IZQ ID COMA valor PARENT_DER .
+
+    $end            reduce using rule 80 (eliminar_valor_map -> DELETE PARENT_IZQ ID COMA valor PARENT_DER .)
+    LLAVE_DER       reduce using rule 80 (eliminar_valor_map -> DELETE PARENT_IZQ ID COMA valor PARENT_DER .)
+    DEFAULT         reduce using rule 80 (eliminar_valor_map -> DELETE PARENT_IZQ ID COMA valor PARENT_DER .)
+    CASE            reduce using rule 80 (eliminar_valor_map -> DELETE PARENT_IZQ ID COMA valor PARENT_DER .)
+
+
+state 142
+
+    (48) sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER .
+
+    $end            reduce using rule 48 (sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER .)
+    LLAVE_DER       reduce using rule 48 (sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER .)
+    DEFAULT         reduce using rule 48 (sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER .)
+    CASE            reduce using rule 48 (sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER .)
+
+
+state 143
+
+    (38) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID . COMA NUMERO PARENT_DER
+    (39) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID . COMA NUMERO COMA NUMERO PARENT_DER
+
+    COMA            shift and go to state 152
+
+
+state 144
+
+    (33) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ . valores LLAVE_DER
+    (36) valores -> . factor
+    (37) valores -> . factor COMA valores
+    (74) valores -> . clave_valor
+    (75) valores -> . clave_valor COMA valores
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+    (76) clave_valor -> . valor DOS_PUNTOS valor
+    (77) valor -> . CADENA
+    (78) valor -> . NUMERO
+
+    NUMERO          shift and go to state 156
+    ID              shift and go to state 39
+    CADENA          shift and go to state 157
+    PARENT_IZQ      shift and go to state 35
+
+    valores                        shift and go to state 153
+    factor                         shift and go to state 154
+    clave_valor                    shift and go to state 155
+    valor                          shift and go to state 158
+
+state 145
+
+    (67) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato . LLAVE_IZQ valores LLAVE_DER
+
+    LLAVE_IZQ       shift and go to state 159
+
+
+state 146
+
+    (66) map -> ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato . CORCHETE_DER tipo_dato PARENT_DER
+
+    CORCHETE_DER    shift and go to state 160
+
+
+state 147
+
+    (27) asignacion -> VAR ID COMA ID ID ASIGNACION factor . COMA factor
+
+    COMA            shift and go to state 161
+
+
+state 148
+
+    (65) map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato . LLAVE_IZQ valores LLAVE_DER
+
+    LLAVE_IZQ       shift and go to state 162
+
+
+state 149
+
+    (28) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion . factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
+
+    factor                         shift and go to state 163
+
+state 150
+
+    (64) default -> DEFAULT factor DOS_PUNTOS . programa
+    (1) programa -> . expression
+    (2) programa -> . impresion
+    (3) programa -> . sentencia
+    (4) programa -> . asignacion
+    (5) programa -> . longvariable
+    (6) programa -> . boolcadena
+    (7) programa -> . companum
+    (8) programa -> . compaid
+    (9) programa -> . sentenciafor
+    (10) programa -> . arreglo
+    (11) programa -> . slice
+    (12) programa -> . capslice
+    (13) programa -> . switch
+    (14) programa -> . map
+    (15) programa -> . asignar_valor_map
+    (16) programa -> . eliminar_valor_map
+    (17) programa -> . obtener_valor_map
+    (41) expression -> . expression MAS term
+    (42) expression -> . expression MENOS term
+    (43) expression -> . term
+    (18) impresion -> . PARENT_IZQ expression PARENT_DER
+    (19) impresion -> . PARENT_IZQ empty PARENT_DER
+    (48) sentencia -> . IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER
+    (25) asignacion -> . ID ASIGNACION factor
+    (26) asignacion -> . VAR ID ID ASIGNACION factor
+    (27) asignacion -> . VAR ID COMA ID ID ASIGNACION factor COMA factor
+    (20) longvariable -> . ID PARENT_IZQ CADENA PARENT_DER
+    (21) longvariable -> . ID PARENT_IZQ ID PARENT_DER
+    (22) boolcadena -> . ID PUNTO ID PARENT_IZQ factor PARENT_DER
+    (23) companum -> . NUMERO comparacion NUMERO
+    (24) compaid -> . ID comparacion ID
+    (28) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (32) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
+    (33) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
+    (38) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (39) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+    (40) capslice -> . ID PARENT_IZQ ID PARENT_DER
+    (59) switch -> . SWITCH ID LLAVE_IZQ cases LLAVE_DER
+    (65) map -> . VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (66) map -> . ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
+    (67) map -> . ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (79) asignar_valor_map -> . ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor
+    (80) eliminar_valor_map -> . DELETE PARENT_IZQ ID COMA valor PARENT_DER
+    (81) obtener_valor_map -> . ID CORCHETE_IZQ valor CORCHETE_DER
+    (44) term -> . term MULTIPLICADOR factor
+    (45) term -> . term DIVISOR factor
+    (46) term -> . term MOD_DIVISION factor
+    (47) term -> . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+
+    PARENT_IZQ      shift and go to state 20
+    IF              shift and go to state 21
+    ID              shift and go to state 23
+    VAR             shift and go to state 24
+    NUMERO          shift and go to state 26
+    FOR             shift and go to state 27
+    SWITCH          shift and go to state 28
+    DELETE          shift and go to state 29
+    CADENA          shift and go to state 25
+
+    factor                         shift and go to state 22
+    programa                       shift and go to state 164
+    expression                     shift and go to state 2
+    impresion                      shift and go to state 3
+    sentencia                      shift and go to state 4
+    asignacion                     shift and go to state 5
+    longvariable                   shift and go to state 6
+    boolcadena                     shift and go to state 7
+    companum                       shift and go to state 8
+    compaid                        shift and go to state 9
+    sentenciafor                   shift and go to state 10
+    arreglo                        shift and go to state 11
+    slice                          shift and go to state 12
+    capslice                       shift and go to state 13
+    switch                         shift and go to state 14
+    map                            shift and go to state 15
+    asignar_valor_map              shift and go to state 16
+    eliminar_valor_map             shift and go to state 17
+    obtener_valor_map              shift and go to state 18
+    term                           shift and go to state 19
+
+state 151
+
+    (63) case -> CASE factor DOS_PUNTOS programa .
+
+    DEFAULT         reduce using rule 63 (case -> CASE factor DOS_PUNTOS programa .)
+    CASE            reduce using rule 63 (case -> CASE factor DOS_PUNTOS programa .)
+    LLAVE_DER       reduce using rule 63 (case -> CASE factor DOS_PUNTOS programa .)
+
+
+state 152
+
+    (38) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA . NUMERO PARENT_DER
+    (39) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA . NUMERO COMA NUMERO PARENT_DER
+
+    NUMERO          shift and go to state 165
+
+
+state 153
+
+    (33) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores . LLAVE_DER
+
+    LLAVE_DER       shift and go to state 166
+
+
+state 154
+
+    (36) valores -> factor .
+    (37) valores -> factor . COMA valores
+
+    LLAVE_DER       reduce using rule 36 (valores -> factor .)
+    COMA            shift and go to state 167
+
+
+state 155
+
+    (74) valores -> clave_valor .
+    (75) valores -> clave_valor . COMA valores
+
+    LLAVE_DER       reduce using rule 74 (valores -> clave_valor .)
+    COMA            shift and go to state 168
+
+
+state 156
+
+    (55) factor -> NUMERO .
+    (78) valor -> NUMERO .
+
+    COMA            reduce using rule 55 (factor -> NUMERO .)
+    LLAVE_DER       reduce using rule 55 (factor -> NUMERO .)
+    DOS_PUNTOS      reduce using rule 78 (valor -> NUMERO .)
+
+
+state 157
+
+    (57) factor -> CADENA .
+    (77) valor -> CADENA .
+
+    COMA            reduce using rule 57 (factor -> CADENA .)
+    LLAVE_DER       reduce using rule 57 (factor -> CADENA .)
+    DOS_PUNTOS      reduce using rule 77 (valor -> CADENA .)
+
+
+state 158
+
+    (76) clave_valor -> valor . DOS_PUNTOS valor
+
+    DOS_PUNTOS      shift and go to state 169
+
+
+state 159
+
+    (67) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ . valores LLAVE_DER
+    (36) valores -> . factor
+    (37) valores -> . factor COMA valores
+    (74) valores -> . clave_valor
+    (75) valores -> . clave_valor COMA valores
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+    (76) clave_valor -> . valor DOS_PUNTOS valor
+    (77) valor -> . CADENA
+    (78) valor -> . NUMERO
+
+    NUMERO          shift and go to state 156
+    ID              shift and go to state 39
+    CADENA          shift and go to state 157
+    PARENT_IZQ      shift and go to state 35
+
+    valores                        shift and go to state 170
+    factor                         shift and go to state 154
+    clave_valor                    shift and go to state 155
+    valor                          shift and go to state 158
+
+state 160
+
+    (66) map -> ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER . tipo_dato PARENT_DER
+    (68) tipo_dato -> . INT
+    (69) tipo_dato -> . STRING
+    (70) tipo_dato -> . INT64
+    (71) tipo_dato -> . FLOAT32
+    (72) tipo_dato -> . FLOAT64
+    (73) tipo_dato -> . INT32
+
+    INT             shift and go to state 110
+    STRING          shift and go to state 111
+    INT64           shift and go to state 112
+    FLOAT32         shift and go to state 113
+    FLOAT64         shift and go to state 114
+    INT32           shift and go to state 115
+
+    tipo_dato                      shift and go to state 171
+
+state 161
+
+    (27) asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+
+    NUMERO          shift and go to state 38
+    ID              shift and go to state 39
+    CADENA          shift and go to state 25
+    PARENT_IZQ      shift and go to state 35
+
+    factor                         shift and go to state 172
+
+state 162
+
+    (65) map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ . valores LLAVE_DER
+    (36) valores -> . factor
+    (37) valores -> . factor COMA valores
+    (74) valores -> . clave_valor
+    (75) valores -> . clave_valor COMA valores
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+    (76) clave_valor -> . valor DOS_PUNTOS valor
+    (77) valor -> . CADENA
+    (78) valor -> . NUMERO
+
+    NUMERO          shift and go to state 156
+    ID              shift and go to state 39
+    CADENA          shift and go to state 157
+    PARENT_IZQ      shift and go to state 35
+
+    valores                        shift and go to state 173
+    factor                         shift and go to state 154
+    clave_valor                    shift and go to state 155
+    valor                          shift and go to state 158
+
+state 163
+
+    (28) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor . FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+
+    FIN_SENTENCIA   shift and go to state 174
+
+
+state 164
+
+    (64) default -> DEFAULT factor DOS_PUNTOS programa .
+
+    LLAVE_DER       reduce using rule 64 (default -> DEFAULT factor DOS_PUNTOS programa .)
+
+
+state 165
+
+    (38) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO . PARENT_DER
+    (39) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO . COMA NUMERO PARENT_DER
+
+    PARENT_DER      shift and go to state 176
+    COMA            shift and go to state 175
+
+
+state 166
+
+    (33) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER .
+
+    $end            reduce using rule 33 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER .)
+    LLAVE_DER       reduce using rule 33 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER .)
+    DEFAULT         reduce using rule 33 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER .)
+    CASE            reduce using rule 33 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER .)
+
+
+state 167
+
+    (37) valores -> factor COMA . valores
+    (36) valores -> . factor
+    (37) valores -> . factor COMA valores
+    (74) valores -> . clave_valor
+    (75) valores -> . clave_valor COMA valores
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+    (76) clave_valor -> . valor DOS_PUNTOS valor
+    (77) valor -> . CADENA
+    (78) valor -> . NUMERO
+
+    NUMERO          shift and go to state 156
+    ID              shift and go to state 39
+    CADENA          shift and go to state 157
+    PARENT_IZQ      shift and go to state 35
+
+    factor                         shift and go to state 154
+    valores                        shift and go to state 177
+    clave_valor                    shift and go to state 155
+    valor                          shift and go to state 158
+
+state 168
+
+    (75) valores -> clave_valor COMA . valores
+    (36) valores -> . factor
+    (37) valores -> . factor COMA valores
+    (74) valores -> . clave_valor
+    (75) valores -> . clave_valor COMA valores
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+    (76) clave_valor -> . valor DOS_PUNTOS valor
+    (77) valor -> . CADENA
+    (78) valor -> . NUMERO
+
+    NUMERO          shift and go to state 156
+    ID              shift and go to state 39
+    CADENA          shift and go to state 157
+    PARENT_IZQ      shift and go to state 35
+
+    clave_valor                    shift and go to state 155
+    valores                        shift and go to state 178
+    factor                         shift and go to state 154
+    valor                          shift and go to state 158
+
+state 169
+
+    (76) clave_valor -> valor DOS_PUNTOS . valor
+    (77) valor -> . CADENA
+    (78) valor -> . NUMERO
+
+    CADENA          shift and go to state 76
+    NUMERO          shift and go to state 77
+
+    valor                          shift and go to state 179
+
+state 170
+
+    (67) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores . LLAVE_DER
+
+    LLAVE_DER       shift and go to state 180
+
+
+state 171
+
+    (66) map -> ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato . PARENT_DER
+
+    PARENT_DER      shift and go to state 181
+
+
+state 172
+
+    (27) asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA factor .
+
+    $end            reduce using rule 27 (asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA factor .)
+    LLAVE_DER       reduce using rule 27 (asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA factor .)
+    DEFAULT         reduce using rule 27 (asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA factor .)
+    CASE            reduce using rule 27 (asignacion -> VAR ID COMA ID ID ASIGNACION factor COMA factor .)
+
+
+state 173
+
+    (65) map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores . LLAVE_DER
+
+    LLAVE_DER       shift and go to state 182
+
+
+state 174
+
+    (28) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA . incremento LLAVE_IZQ programa LLAVE_DER
+    (29) incremento -> . ID INCREMENTO
+    (30) incremento -> . ID ASIGNACION ID
+    (31) incremento -> . ID DECREMENTO
+
+    ID              shift and go to state 183
+
+    incremento                     shift and go to state 184
+
+state 175
+
+    (39) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA . NUMERO PARENT_DER
+
+    NUMERO          shift and go to state 185
+
+
+state 176
+
+    (38) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .
+
+    $end            reduce using rule 38 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .)
+    LLAVE_DER       reduce using rule 38 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .)
+    DEFAULT         reduce using rule 38 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .)
+    CASE            reduce using rule 38 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .)
+
+
+state 177
+
+    (37) valores -> factor COMA valores .
+
+    LLAVE_DER       reduce using rule 37 (valores -> factor COMA valores .)
+
+
+state 178
+
+    (75) valores -> clave_valor COMA valores .
+
+    LLAVE_DER       reduce using rule 75 (valores -> clave_valor COMA valores .)
+
+
+state 179
+
+    (76) clave_valor -> valor DOS_PUNTOS valor .
+
+    COMA            reduce using rule 76 (clave_valor -> valor DOS_PUNTOS valor .)
+    LLAVE_DER       reduce using rule 76 (clave_valor -> valor DOS_PUNTOS valor .)
+
+
+state 180
+
+    (67) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .
+
+    $end            reduce using rule 67 (map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .)
+    LLAVE_DER       reduce using rule 67 (map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .)
+    DEFAULT         reduce using rule 67 (map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .)
+    CASE            reduce using rule 67 (map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .)
+
+
+state 181
+
+    (66) map -> ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER .
+
+    $end            reduce using rule 66 (map -> ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER .)
+    LLAVE_DER       reduce using rule 66 (map -> ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER .)
+    DEFAULT         reduce using rule 66 (map -> ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER .)
+    CASE            reduce using rule 66 (map -> ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER .)
+
+
+state 182
+
+    (65) map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .
+
+    $end            reduce using rule 65 (map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .)
+    LLAVE_DER       reduce using rule 65 (map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .)
+    DEFAULT         reduce using rule 65 (map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .)
+    CASE            reduce using rule 65 (map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .)
+
+
+state 183
+
+    (29) incremento -> ID . INCREMENTO
+    (30) incremento -> ID . ASIGNACION ID
+    (31) incremento -> ID . DECREMENTO
+
+    INCREMENTO      shift and go to state 186
+    ASIGNACION      shift and go to state 187
+    DECREMENTO      shift and go to state 188
+
+
+state 184
+
+    (28) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento . LLAVE_IZQ programa LLAVE_DER
+
+    LLAVE_IZQ       shift and go to state 189
+
+
+state 185
+
+    (39) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO . PARENT_DER
+
+    PARENT_DER      shift and go to state 190
+
+
+state 186
+
+    (29) incremento -> ID INCREMENTO .
+
+    LLAVE_IZQ       reduce using rule 29 (incremento -> ID INCREMENTO .)
+
+
+state 187
+
+    (30) incremento -> ID ASIGNACION . ID
+
+    ID              shift and go to state 191
+
+
+state 188
+
+    (31) incremento -> ID DECREMENTO .
+
+    LLAVE_IZQ       reduce using rule 31 (incremento -> ID DECREMENTO .)
+
+
+state 189
+
+    (28) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ . programa LLAVE_DER
+    (1) programa -> . expression
+    (2) programa -> . impresion
+    (3) programa -> . sentencia
+    (4) programa -> . asignacion
+    (5) programa -> . longvariable
+    (6) programa -> . boolcadena
+    (7) programa -> . companum
+    (8) programa -> . compaid
+    (9) programa -> . sentenciafor
+    (10) programa -> . arreglo
+    (11) programa -> . slice
+    (12) programa -> . capslice
+    (13) programa -> . switch
+    (14) programa -> . map
+    (15) programa -> . asignar_valor_map
+    (16) programa -> . eliminar_valor_map
+    (17) programa -> . obtener_valor_map
+    (41) expression -> . expression MAS term
+    (42) expression -> . expression MENOS term
+    (43) expression -> . term
+    (18) impresion -> . PARENT_IZQ expression PARENT_DER
+    (19) impresion -> . PARENT_IZQ empty PARENT_DER
+    (48) sentencia -> . IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER
+    (25) asignacion -> . ID ASIGNACION factor
+    (26) asignacion -> . VAR ID ID ASIGNACION factor
+    (27) asignacion -> . VAR ID COMA ID ID ASIGNACION factor COMA factor
+    (20) longvariable -> . ID PARENT_IZQ CADENA PARENT_DER
+    (21) longvariable -> . ID PARENT_IZQ ID PARENT_DER
+    (22) boolcadena -> . ID PUNTO ID PARENT_IZQ factor PARENT_DER
+    (23) companum -> . NUMERO comparacion NUMERO
+    (24) compaid -> . ID comparacion ID
+    (28) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (32) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID
+    (33) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER
+    (38) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (39) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
+    (40) capslice -> . ID PARENT_IZQ ID PARENT_DER
+    (59) switch -> . SWITCH ID LLAVE_IZQ cases LLAVE_DER
+    (65) map -> . VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (66) map -> . ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
+    (67) map -> . ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (79) asignar_valor_map -> . ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor
+    (80) eliminar_valor_map -> . DELETE PARENT_IZQ ID COMA valor PARENT_DER
+    (81) obtener_valor_map -> . ID CORCHETE_IZQ valor CORCHETE_DER
+    (44) term -> . term MULTIPLICADOR factor
+    (45) term -> . term DIVISOR factor
+    (46) term -> . term MOD_DIVISION factor
+    (47) term -> . factor
+    (55) factor -> . NUMERO
+    (56) factor -> . ID
+    (57) factor -> . CADENA
+    (58) factor -> . PARENT_IZQ expression PARENT_DER
+
+    PARENT_IZQ      shift and go to state 20
+    IF              shift and go to state 21
+    ID              shift and go to state 23
+    VAR             shift and go to state 24
+    NUMERO          shift and go to state 26
+    FOR             shift and go to state 27
+    SWITCH          shift and go to state 28
+    DELETE          shift and go to state 29
+    CADENA          shift and go to state 25
+
+    factor                         shift and go to state 22
+    programa                       shift and go to state 192
+    expression                     shift and go to state 2
+    impresion                      shift and go to state 3
+    sentencia                      shift and go to state 4
+    asignacion                     shift and go to state 5
+    longvariable                   shift and go to state 6
+    boolcadena                     shift and go to state 7
+    companum                       shift and go to state 8
+    compaid                        shift and go to state 9
+    sentenciafor                   shift and go to state 10
+    arreglo                        shift and go to state 11
+    slice                          shift and go to state 12
+    capslice                       shift and go to state 13
+    switch                         shift and go to state 14
+    map                            shift and go to state 15
+    asignar_valor_map              shift and go to state 16
+    eliminar_valor_map             shift and go to state 17
+    obtener_valor_map              shift and go to state 18
+    term                           shift and go to state 19
+
+state 190
+
+    (39) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER .
+
+    $end            reduce using rule 39 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER .)
+    LLAVE_DER       reduce using rule 39 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER .)
+    DEFAULT         reduce using rule 39 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER .)
+    CASE            reduce using rule 39 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER .)
+
+
+state 191
+
+    (30) incremento -> ID ASIGNACION ID .
+
+    LLAVE_IZQ       reduce using rule 30 (incremento -> ID ASIGNACION ID .)
+
+
+state 192
+
+    (28) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa . LLAVE_DER
+
+    LLAVE_DER       shift and go to state 193
+
+
+state 193
+
+    (28) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER .
+
+    $end            reduce using rule 28 (sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER .)
+    LLAVE_DER       reduce using rule 28 (sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER .)
+    DEFAULT         reduce using rule 28 (sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER .)
+    CASE            reduce using rule 28 (sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: reduce/reduce conflict in state 53 resolved using rule (impresion -> PARENT_IZQ expression PARENT_DER)
-WARNING: rejected rule (factor -> PARENT_IZQ expression PARENT_DER) in state 53
+WARNING: reduce/reduce conflict in state 64 resolved using rule (impresion -> PARENT_IZQ expression PARENT_DER)
+WARNING: rejected rule (factor -> PARENT_IZQ expression PARENT_DER) in state 64
+WARNING: reduce/reduce conflict in state 93 resolved using rule (longvariable -> ID PARENT_IZQ ID PARENT_DER)
+WARNING: rejected rule (capslice -> ID PARENT_IZQ ID PARENT_DER) in state 93
+WARNING: Rule (capslice -> ID PARENT_IZQ ID PARENT_DER) is never reduced
