@@ -27,7 +27,8 @@ def p_programa(p):
                 | map
                 | asignar_valor_map
                 | eliminar_valor_map
-                | obtener_valor_map'''
+                | obtener_valor_map
+                | funcion'''
 
 
 def p_impresion(p):
@@ -54,8 +55,8 @@ def p_comparacion_id(p):
 
 def p_asignacion_var(p):
     '''asignacion : ID ASIGNACION factor
-                    | VAR ID ID ASIGNACION factor
-                    | VAR ID COMA ID ID ASIGNACION factor COMA factor'''
+                    | VAR ID tipo_dato ASIGNACION factor
+                    | VAR ID COMA ID tipo_dato ASIGNACION factor COMA factor'''
 
 
 def p_sentencia_for(p):
@@ -175,11 +176,11 @@ def p_case(p):
     'case : CASE factor DOS_PUNTOS programa'
 
 def p_default(p):
-    'default : DEFAULT factor DOS_PUNTOS programa'
+    'default : DEFAULT DOS_PUNTOS programa'
 
 def p_definir_map(p):
     '''map : VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER 
-                | ID IGUAL MAKE PARENT_IZQ MAP CORCHETE_DER tipo_dato CORCHETE_DER tipo_dato PARENT_DER
+                | ID ASIGNACION MAKE PARENT_IZQ MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato PARENT_DER
                 | ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER'''
 
 def p_tipo_dato(p):
@@ -202,13 +203,21 @@ def p_valor(p):
                 | NUMERO'''
 
 def p_asignar_valor_map(p):
-    'asignar_valor_map : ID CORCHETE_IZQ valor CORCHETE_DER IGUAL valor'
+    'asignar_valor_map : ID CORCHETE_IZQ valor CORCHETE_DER ASIGNACION valor'
 
 def p_eliminar_valor_map(p):
     'eliminar_valor_map : DELETE PARENT_IZQ ID COMA valor PARENT_DER'
 
 def p_obtener_valor_map(p):
     'obtener_valor_map : ID CORCHETE_IZQ valor CORCHETE_DER'
+
+def p_funcion(p):
+    '''funcion : FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa LLAVE_DER 
+                    | FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa RETURN ID LLAVE_DER'''
+
+def p_argumentos(p):
+    '''argumentos : ID tipo_dato 
+                    | ID tipo_dato COMA argumentos'''
 
 def p_empty(p):
     'empty : '

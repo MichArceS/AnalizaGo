@@ -4,7 +4,7 @@ tokens = ("NUMERO", "CADENA", "MAS", "MENOS", "MULTIPLICADOR", "DIVISOR", "MOD_D
           "CORCHETE_IZQ", "CORCHETE_DER", "LLAVE_IZQ", "LLAVE_DER", "PUNTO", "DOS_PUNTOS", "COMA", "COMILLA",
           "DOBLE_COMILLA", "COMMENT_BLOQUE_IZQ", "COMMENT_BLOQUE_DER", "COMMENT_LINEA", "FIN_SENTENCIA", "ID", "ASIGNACION",
           "ESPACIADO", "MENOR", "MAYOR", "IGUALDAD", "VACIO", "MENOR_IGU", "MAYOR_IGU", "BOOLEAN", "DESIGUALDAD", "INCREMENTO", 
-          "DECREMENTO", "PIPE", "AMPERSAND", "FMT", "PRINT", "IGUAL", "LEN", "VAR", "ARRPUNTOS","MAKE","INT","INT64","STRING",
+          "DECREMENTO", "PIPE", "AMPERSAND", "FMT", "PRINT", "IGUAL", "LEN", "ARRPUNTOS","MAKE","INT","INT64","STRING",
           "FLOAT32","FLOAT64","INT32","DELETE")
 print(len(tokens))  # 31
 
@@ -32,7 +32,15 @@ reservada = {
     'for': 'FOR',
     'import': 'IMPORT',
     'return': 'RETURN',
-    'var': 'VAR'
+    'var': 'VAR',
+    'delete': 'DELETE',
+    'make': 'MAKE',
+    'int': 'INT',
+    'int32': 'INT32',
+    'int64': 'INT64',
+    'float32': 'FLOAT32',
+    'float64': 'FLOAT64',
+    'string': 'STRING'
 }
 print(len(reservada))  # 30
 
@@ -72,14 +80,6 @@ t_DECREMENTO = r'\-{2}'
 t_PIPE = r'\|'
 t_AMPERSAND = '\&'
 t_ARRPUNTOS = '\.\.\.'
-t_MAKE = "make"
-t_INT = "int"
-t_STRING = "string"
-t_INT64 = "int64"
-t_FLOAT32 = "float32"
-t_FLOAT64 = "float64"
-t_INT32 = "int32"
-t_DELETE = "delete"
 
 # funcion para reconocer identificadores
 
@@ -108,7 +108,7 @@ def t_NUMERO(t):
 
 
 def t_CADENA(t):
-    r'(\'.*\')|(".*")'
+    r'(\'.*\')|(\".*\")'
     return t
 
 # función para reconocer boolean
