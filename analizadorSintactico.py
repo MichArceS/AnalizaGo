@@ -32,9 +32,11 @@ def p_programa(p):
 
 
 def p_impresion(p):
-    """impresion :  PARENT_IZQ expression PARENT_DER
-                | PARENT_IZQ empty PARENT_DER"""
-
+    """impresion : FMT PUNTO PRINTF PARENT_IZQ CADENA COMA NUMERO PARENT_DER
+                | FMT PUNTO PRINTF PARENT_IZQ empty PARENT_DER
+                | FMT PUNTO PRINTLN PARENT_IZQ CADENA COMA NUMERO PARENT_DER
+                | FMT PUNTO PRINTLN PARENT_IZQ empty PARENT_DER
+                """
 
 def p_longitud_variables(p):
     '''longvariable : ID PARENT_IZQ CADENA PARENT_DER
@@ -42,8 +44,22 @@ def p_longitud_variables(p):
 
 
 def p_bool_cadena(p):
-    'boolcadena : ID PUNTO ID PARENT_IZQ factor PARENT_DER'
+    'boolcadena : STRCONV PUNTO FORMATBOOL PARENT_IZQ BOOLEAN PARENT_DER'
 
+def p_cadena_bool(p):
+    'cadenabool : STRCONV PUNTO PARSEBOOL PARENT_IZQ CADENA PARENT_DER'
+
+def p_flotante_cadena(p):
+    'cadenabool : STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA NUMERO PARENT_DER'
+
+def p_cadena_flotante(p):
+    'cadenabool : STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA NUMERO PARENT_DER'
+
+def p_entero_cadena(p):
+    'cadenabool : STRCONV PUNTO FORMATINT PARENT_IZQ CADENA PARENT_DER'
+
+def p_cadena_entero(p):
+    'cadenabool : STRCONV PUNTO PARSEINT PARENT_IZQ CADENA PARENT_DER'
 
 def p_comparacion_num(p):
     'companum : NUMERO comparacion NUMERO'
