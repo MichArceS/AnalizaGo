@@ -173,8 +173,8 @@ def getTokens(lexer):
 # Build the lexer
 lexer = lex.lex()
 
-# linea = " "
-# while linea != "":
-#     linea = input("Go >>")
-#     lexer.input(linea)
-#     getTokens(lexer)
+linea = " "
+while linea != "":
+    linea = input("Go >>")
+    lexer.input(linea)
+    getTokens(lexer)
