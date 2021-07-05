@@ -1,12 +1,11 @@
 import ply.lex as lex
 # lista de tokens
-tokens = ("NUMERO", "CADENA", "MAS", "MENOS", "MULTIPLICADOR", "DIVISOR", "MOD_DIVISION", "PARENT_IZQ", "PARENT_DER",
+tokens = ("NUMERO", "CADENA", "FLOAT", "MAS", "MENOS", "MULTIPLICADOR", "DIVISOR", "MOD_DIVISION", "PARENT_IZQ", "PARENT_DER",
           "CORCHETE_IZQ", "CORCHETE_DER", "LLAVE_IZQ", "LLAVE_DER", "PUNTO", "DOS_PUNTOS", "COMA", "COMILLA",
           "DOBLE_COMILLA", "COMMENT_BLOQUE_IZQ", "COMMENT_BLOQUE_DER", "COMMENT_LINEA", "FIN_SENTENCIA", "ID", "ASIGNACION",
           "ESPACIADO", "MENOR", "MAYOR", "IGUALDAD", "VACIO", "MENOR_IGU", "MAYOR_IGU", "BOOLEAN", "DESIGUALDAD", "INCREMENTO", 
-          "DECREMENTO", "PIPE", "AMPERSAND", "FMT", "PRINT", "IGUAL", "LEN", "ARRPUNTOS","MAKE","INT","INT64","STRING",
-          "FLOAT32","FLOAT64","INT32","DELETE")
-print(len(tokens))  # 31
+          "DECREMENTO", "PIPE", "AMPERSAND", "FMT", "PRINT", "IGUAL", "LEN", "ARRPUNTOS","MAKE","INT","DELETE")
+#print(len(tokens))
 
 # lista de palabras reservadas
 reservada = {
@@ -25,7 +24,7 @@ reservada = {
     'map': 'MAP',
     'struct': 'STRUCT',
     'const': 'CONST',
-    'package': 'Package',
+    'package': 'PACKAGE',
     'fallthrough': 'FALLTHROUGH',
     'range': 'RANGE',
     'type': 'TYPE',
@@ -36,16 +35,19 @@ reservada = {
     'delete': 'DELETE',
     'make': 'MAKE',
     'int': 'INT',
+    'float' : 'FLOAT',
     'int32': 'INT32',
     'int64': 'INT64',
     'float32': 'FLOAT32',
     'float64': 'FLOAT64',
-    'string': 'STRING'
+    'string' : 'STRING',
+    'true' : 'TRUE',
+    'false' : 'FALSE'
 }
-print(len(reservada))  # 30
+#print(len(reservada))
 
 tokens = tokens + tuple(reservada.values())
-print(len(tokens))  # 61
+#print(len(tokens))
 
 # expresiones regulares para tokens simples
 t_ignore = ' \t'
@@ -81,6 +83,14 @@ t_PIPE = r'\|'
 t_AMPERSAND = '\&'
 t_ARRPUNTOS = '\.\.\.'
 
+
+# función para reconocer boolean
+
+
+def t_BOOLEAN(t):
+    r'true|false'
+    return t
+
 # funcion para reconocer identificadores
 
 
@@ -89,12 +99,20 @@ def t_ID(t):
     t.type = reservada.get(t.value, 'ID')
     return t
 
+
 # funcion para reconocer comentarios y no tomarlos en cuenta
 
 
 def t_COMMENT(t):
     r'(\/\/.*)|(\/\*.*\*\/)'
     pass
+
+
+# función para reconocer flotantes
+def t_FLOAT(t):
+    r"[0-9]+\.[0-9]+"
+    t.value = float(t.value)
+    return t
 
 # función para reconocer número
 
@@ -104,6 +122,7 @@ def t_NUMERO(t):
     t.value = int(t.value)
     return t
 
+
 # función para reconocer cadena
 
 
@@ -111,18 +130,6 @@ def t_CADENA(t):
     r'(\'.*\')|(\".*\")'
     return t
 
-# función para reconocer boolean
-
-
-def t_BOOLEAN(t):
-    r'true|false'
-    return t
-
-
-# función para reconocer flotantes
-def t_FLOAT(t):
-    r'[0-9]+\.[0-9]+'
-    return t
 
 # función para conocer el número de linea donde me encuentro
 

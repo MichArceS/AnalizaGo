@@ -225,7 +225,6 @@ def p_empty(p):
 
 # Error rule for syntax errors
 
-
 def p_error(p):
     if p:
         print("Error de sintaxis en el token", p.type)
