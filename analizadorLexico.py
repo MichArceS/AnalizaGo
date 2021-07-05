@@ -3,8 +3,9 @@ import ply.lex as lex
 tokens = ("NUMERO", "CADENA", "FLOAT", "MAS", "MENOS", "MULTIPLICADOR", "DIVISOR", "MOD_DIVISION", "PARENT_IZQ", "PARENT_DER",
           "CORCHETE_IZQ", "CORCHETE_DER", "LLAVE_IZQ", "LLAVE_DER", "PUNTO", "DOS_PUNTOS", "COMA", "COMILLA",
           "DOBLE_COMILLA", "COMMENT_BLOQUE_IZQ", "COMMENT_BLOQUE_DER", "COMMENT_LINEA", "FIN_SENTENCIA", "ID", "ASIGNACION",
-          "ESPACIADO", "MENOR", "MAYOR", "IGUALDAD", "VACIO", "MENOR_IGU", "MAYOR_IGU", "BOOLEAN", "DESIGUALDAD", "INCREMENTO", 
-          "DECREMENTO", "PIPE", "AMPERSAND", "FMT", "PRINT", "IGUAL", "LEN", "ARRPUNTOS","MAKE","INT","DELETE")
+          "ESPACIADO", "MENOR", "MAYOR", "IGUALDAD", "VACIO", "MENOR_IGU", "MAYOR_IGU", "BOOLEAN", "DESIGUALDAD", "INCREMENTO",
+          "FMT", "ARRPUNTOS","MAKE","INT","DECREMENTO", "PIPE", "AMPERSAND", "PRINT", "IGUAL", "LEN", "ARRPUNTOS","MAKE",
+          "INT","INT64","STRING","FLOAT32","FLOAT64","INT32","DELETE", "PRINTF", "PRINTLN", "SPLIT", "CONTAINS", "STRCONV")
 #print(len(tokens))
 
 # lista de palabras reservadas
@@ -40,9 +41,22 @@ reservada = {
     'int64': 'INT64',
     'float32': 'FLOAT32',
     'float64': 'FLOAT64',
-    'string' : 'STRING',
     'true' : 'TRUE',
-    'false' : 'FALSE'
+    'false' : 'FALSE',
+    'string': 'STRING',
+    'strings': 'STRINGS',
+    'fmt': 'FMT',
+    'Printf': 'PRINTF',
+    'Println': 'PRINTLN',
+    'Split': 'SPLIT',
+    'contains': 'CONTAINS',
+    'strconv': 'STRCONV',
+    'FormatBool': 'FORMATBOOL',
+    'ParseBool': 'PARSEBOOL',
+    'FormatInt': 'FORMATINT',
+    'ParseInt': 'PARSEINT',
+    'FormatFloat': 'FORMATFLOAT',
+    'ParseFloat': 'PARSEFLOAT'
 }
 #print(len(reservada))
 
