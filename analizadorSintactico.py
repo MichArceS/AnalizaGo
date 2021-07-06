@@ -254,6 +254,20 @@ def p_error(p):
     else:
         print("Error de sintaxis en EOF")
 
+#Reglas Semanticas.
+
+def p_seman_operacion(p):
+    '''seman_operacion: NUMERO MAS NUMERO 
+                        | NUMERO MENOS NUMERO
+                        | NUMERO MULTIPLICADOR NUMERO
+                        | NUMERO DIVISOR NUMERO
+                        | NUMERO MOD_DIVISION NUMERO
+                        | FLOAT MENOS NUMERO
+                        | FLOAT MULTIPLICADOR NUMERO
+                        | FLOAT DIVISOR NUMERO
+                        | NUMERO MENOS FLOAT
+                        | NUMERO MULTIPLICADOR FLOAT
+                        | NUMERO DIVISOR FLOAT'''
 
 # Build the parser
 parser = yacc.yacc()
