@@ -56,7 +56,7 @@ def p_cadena_flotante(p):
     'cadenabool : STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA NUMERO PARENT_DER'
 
 def p_entero_cadena(p):
-    'cadenabool : STRCONV PUNTO FORMATINT PARENT_IZQ CADENA PARENT_DER'
+    'cadenabool : STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA NUMERO PARENT_DER'
 
 def p_cadena_entero(p):
     'cadenabool : STRCONV PUNTO PARSEINT PARENT_IZQ CADENA PARENT_DER'
