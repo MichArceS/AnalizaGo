@@ -81,7 +81,7 @@ Rule 42    cantidad -> NUMERO
 Rule 43    cantidad -> ARRPUNTOS
 Rule 44    valores -> factor
 Rule 45    valores -> factor COMA valores
-Rule 46    slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+Rule 46    slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
 Rule 47    slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
 Rule 48    capslice -> ID PARENT_IZQ ID PARENT_DER
 Rule 49    expression -> expression MAS term
@@ -196,7 +196,7 @@ FORMATFLOAT          : 114
 FORMATINT            : 116
 FUNC                 : 90 91
 GO                   : 
-ID                   : 29 30 30 32 32 33 34 35 35 36 36 37 38 38 39 40 41 46 46 46 47 47 47 48 48 64 67 73 74 75 87 88 89 90 91 91 92 93
+ID                   : 29 30 30 32 32 33 34 35 35 36 36 37 38 38 39 40 41 46 47 47 47 48 48 64 67 73 74 75 87 88 89 90 91 91 92 93
 IF                   : 56
 IGUAL                : 
 IGUALDAD             : 57
@@ -209,7 +209,7 @@ INTERFACE            :
 LEN                  : 
 LLAVE_DER            : 36 41 56 67 73 75 90 91
 LLAVE_IZQ            : 36 41 56 67 73 75 90 91
-MAKE                 : 74
+MAKE                 : 46 74
 MAP                  : 73 74 75
 MAS                  : 49 95 100 104 108
 MAYOR                : 58
@@ -283,7 +283,7 @@ sentenciafor         : 9
 slice                : 11
 switch               : 13
 term                 : 49 50 51 52 53 54
-tipo_dato            : 34 35 40 41 73 73 74 74 75 75 90 91 92 93
+tipo_dato            : 34 35 40 41 46 73 73 74 74 75 75 90 91 92 93
 valor                : 84 84 87 87 88 89
 valores              : 41 45 73 75 83
 
@@ -335,7 +335,7 @@ state 0
     (36) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
     (40) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato
     (41) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
-    (46) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (46) slice -> . ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
     (47) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
     (48) capslice -> . ID PARENT_IZQ ID PARENT_DER
     (67) switch -> . SWITCH ID LLAVE_IZQ cases LLAVE_DER
@@ -865,7 +865,7 @@ state 33
     (32) compaid -> ID . comparacion ID
     (40) arreglo -> ID . ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato
     (41) arreglo -> ID . ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
-    (46) slice -> ID . ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (46) slice -> ID . ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
     (47) slice -> ID . ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
     (48) capslice -> ID . PARENT_IZQ ID PARENT_DER
     (74) map -> ID . ASIGNACION MAKE PARENT_IZQ MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato PARENT_DER
@@ -1264,7 +1264,7 @@ state 63
     (33) asignacion -> ID ASIGNACION . factor
     (40) arreglo -> ID ASIGNACION . CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato
     (41) arreglo -> ID ASIGNACION . CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
-    (46) slice -> ID ASIGNACION . ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (46) slice -> ID ASIGNACION . MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
     (47) slice -> ID ASIGNACION . ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
     (74) map -> ID ASIGNACION . MAKE PARENT_IZQ MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato PARENT_DER
     (75) map -> ID ASIGNACION . MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
@@ -1274,8 +1274,8 @@ state 63
     (66) factor -> . PARENT_IZQ expression PARENT_DER
 
     CORCHETE_IZQ    shift and go to state 98
-    ID              shift and go to state 96
     MAKE            shift and go to state 99
+    ID              shift and go to state 96
     MAP             shift and go to state 100
     NUMERO          shift and go to state 48
     CADENA          shift and go to state 29
@@ -1678,7 +1678,6 @@ state 95
 
 state 96
 
-    (46) slice -> ID ASIGNACION ID . PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
     (47) slice -> ID ASIGNACION ID . PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
     (64) factor -> ID .
 
@@ -1715,6 +1714,7 @@ state 98
 
 state 99
 
+    (46) slice -> ID ASIGNACION MAKE . PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
     (74) map -> ID ASIGNACION MAKE . PARENT_IZQ MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato PARENT_DER
 
     PARENT_IZQ      shift and go to state 141
@@ -2113,7 +2113,6 @@ state 136
 
 state 137
 
-    (46) slice -> ID ASIGNACION ID PARENT_IZQ . CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
     (47) slice -> ID ASIGNACION ID PARENT_IZQ . CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
 
     CORCHETE_IZQ    shift and go to state 167
@@ -2143,9 +2142,11 @@ state 140
 
 state 141
 
+    (46) slice -> ID ASIGNACION MAKE PARENT_IZQ . CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
     (74) map -> ID ASIGNACION MAKE PARENT_IZQ . MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato PARENT_DER
 
-    MAP             shift and go to state 169
+    CORCHETE_IZQ    shift and go to state 169
+    MAP             shift and go to state 170
 
 
 state 142
@@ -2165,7 +2166,7 @@ state 142
     FLOAT64         shift and go to state 114
     INT32           shift and go to state 115
 
-    tipo_dato                      shift and go to state 170
+    tipo_dato                      shift and go to state 171
 
 state 143
 
@@ -2206,7 +2207,7 @@ state 145
     (87) asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER . ASIGNACION valor
     (89) obtener_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER .
 
-    ASIGNACION      shift and go to state 171
+    ASIGNACION      shift and go to state 172
     $end            reduce using rule 89 (obtener_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER .)
     LLAVE_DER       reduce using rule 89 (obtener_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER .)
     DEFAULT         reduce using rule 89 (obtener_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER .)
@@ -2227,7 +2228,7 @@ state 146
     CADENA          shift and go to state 29
     PARENT_IZQ      shift and go to state 28
 
-    factor                         shift and go to state 172
+    factor                         shift and go to state 173
 
 state 147
 
@@ -2246,7 +2247,7 @@ state 147
     FLOAT64         shift and go to state 114
     INT32           shift and go to state 115
 
-    tipo_dato                      shift and go to state 173
+    tipo_dato                      shift and go to state 174
 
 state 148
 
@@ -2265,62 +2266,62 @@ state 148
     FLOAT64         shift and go to state 114
     INT32           shift and go to state 115
 
-    tipo_dato                      shift and go to state 174
+    tipo_dato                      shift and go to state 175
 
 state 149
 
     (112) boolcadena -> STRCONV PUNTO FORMATBOOL PARENT_IZQ . BOOLEAN PARENT_DER
 
-    BOOLEAN         shift and go to state 175
+    BOOLEAN         shift and go to state 176
 
 
 state 150
 
     (113) cadenabool -> STRCONV PUNTO PARSEBOOL PARENT_IZQ . CADENA PARENT_DER
 
-    CADENA          shift and go to state 176
+    CADENA          shift and go to state 177
 
 
 state 151
 
     (116) enterocadena -> STRCONV PUNTO FORMATINT PARENT_IZQ . CADENA COMA NUMERO PARENT_DER
 
-    CADENA          shift and go to state 177
+    CADENA          shift and go to state 178
 
 
 state 152
 
     (117) cadenaentero -> STRCONV PUNTO PARSEINT PARENT_IZQ . CADENA COMA NUMERO COMA NUMERO PARENT_DER
 
-    CADENA          shift and go to state 178
+    CADENA          shift and go to state 179
 
 
 state 153
 
     (114) flotantecadena -> STRCONV PUNTO FORMATFLOAT PARENT_IZQ . FLOAT COMA CADENA COMA NUMERO PARENT_DER
 
-    FLOAT           shift and go to state 179
+    FLOAT           shift and go to state 180
 
 
 state 154
 
     (115) cadenaflotante -> STRCONV PUNTO PARSEFLOAT PARENT_IZQ . FLOAT COMA NUMERO PARENT_DER
 
-    FLOAT           shift and go to state 180
+    FLOAT           shift and go to state 181
 
 
 state 155
 
     (36) sentenciafor -> FOR ID ASIGNACION factor . FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
 
-    FIN_SENTENCIA   shift and go to state 181
+    FIN_SENTENCIA   shift and go to state 182
 
 
 state 156
 
     (67) switch -> SWITCH ID LLAVE_IZQ cases . LLAVE_DER
 
-    LLAVE_DER       shift and go to state 182
+    LLAVE_DER       shift and go to state 183
 
 
 state 157
@@ -2335,12 +2336,12 @@ state 157
     (71) case -> . CASE factor DOS_PUNTOS programa
 
     LLAVE_DER       reduce using rule 68 (cases -> case .)
-    DEFAULT         shift and go to state 185
+    DEFAULT         shift and go to state 186
     CASE            shift and go to state 158
 
     case                           shift and go to state 157
-    default                        shift and go to state 183
-    cases                          shift and go to state 184
+    default                        shift and go to state 184
+    cases                          shift and go to state 185
 
 state 158
 
@@ -2355,7 +2356,7 @@ state 158
     CADENA          shift and go to state 29
     PARENT_IZQ      shift and go to state 28
 
-    factor                         shift and go to state 186
+    factor                         shift and go to state 187
 
 state 159
 
@@ -2366,7 +2367,7 @@ state 159
     CADENA          shift and go to state 105
     NUMERO          shift and go to state 106
 
-    valor                          shift and go to state 187
+    valor                          shift and go to state 188
 
 state 160
 
@@ -2386,42 +2387,42 @@ state 160
     FLOAT64         shift and go to state 114
     INT32           shift and go to state 115
 
-    tipo_dato                      shift and go to state 188
+    tipo_dato                      shift and go to state 189
 
 state 161
 
     (90) funcion -> FUNC ID PARENT_IZQ argumentos . PARENT_DER tipo_dato LLAVE_IZQ programa LLAVE_DER
     (91) funcion -> FUNC ID PARENT_IZQ argumentos . PARENT_DER tipo_dato LLAVE_IZQ programa RETURN ID LLAVE_DER
 
-    PARENT_DER      shift and go to state 189
+    PARENT_DER      shift and go to state 190
 
 
 state 162
 
     (25) impresion -> FMT PUNTO PRINTF PARENT_IZQ CADENA . COMA NUMERO PARENT_DER
 
-    COMA            shift and go to state 190
+    COMA            shift and go to state 191
 
 
 state 163
 
     (26) impresion -> FMT PUNTO PRINTF PARENT_IZQ empty . PARENT_DER
 
-    PARENT_DER      shift and go to state 191
+    PARENT_DER      shift and go to state 192
 
 
 state 164
 
     (27) impresion -> FMT PUNTO PRINTLN PARENT_IZQ CADENA . COMA NUMERO PARENT_DER
 
-    COMA            shift and go to state 192
+    COMA            shift and go to state 193
 
 
 state 165
 
     (28) impresion -> FMT PUNTO PRINTLN PARENT_IZQ empty . PARENT_DER
 
-    PARENT_DER      shift and go to state 193
+    PARENT_DER      shift and go to state 194
 
 
 state 166
@@ -2470,7 +2471,7 @@ state 166
     (36) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
     (40) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato
     (41) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
-    (46) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (46) slice -> . ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
     (47) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
     (48) capslice -> . ID PARENT_IZQ ID PARENT_DER
     (67) switch -> . SWITCH ID LLAVE_IZQ cases LLAVE_DER
@@ -2528,7 +2529,7 @@ state 166
     PARENT_IZQ      shift and go to state 28
 
     factor                         shift and go to state 32
-    programa                       shift and go to state 194
+    programa                       shift and go to state 195
     expression                     shift and go to state 2
     impresion                      shift and go to state 3
     sentencia                      shift and go to state 4
@@ -2557,10 +2558,9 @@ state 166
 
 state 167
 
-    (46) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ . CORCHETE_DER ID COMA NUMERO PARENT_DER
     (47) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ . CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
 
-    CORCHETE_DER    shift and go to state 195
+    CORCHETE_DER    shift and go to state 196
 
 
 state 168
@@ -2581,23 +2581,30 @@ state 168
     FLOAT64         shift and go to state 114
     INT32           shift and go to state 115
 
-    tipo_dato                      shift and go to state 196
+    tipo_dato                      shift and go to state 197
 
 state 169
 
-    (74) map -> ID ASIGNACION MAKE PARENT_IZQ MAP . CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato PARENT_DER
-
-    CORCHETE_IZQ    shift and go to state 197
-
-
-state 170
-
-    (75) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato . CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+    (46) slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ . CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
 
     CORCHETE_DER    shift and go to state 198
 
 
+state 170
+
+    (74) map -> ID ASIGNACION MAKE PARENT_IZQ MAP . CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato PARENT_DER
+
+    CORCHETE_IZQ    shift and go to state 199
+
+
 state 171
+
+    (75) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato . CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+
+    CORCHETE_DER    shift and go to state 200
+
+
+state 172
 
     (87) asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER ASIGNACION . valor
     (85) valor -> . CADENA
@@ -2606,9 +2613,9 @@ state 171
     CADENA          shift and go to state 105
     NUMERO          shift and go to state 106
 
-    valor                          shift and go to state 199
+    valor                          shift and go to state 201
 
-state 172
+state 173
 
     (34) asignacion -> VAR ID tipo_dato ASIGNACION factor .
 
@@ -2619,70 +2626,70 @@ state 172
     RETURN          reduce using rule 34 (asignacion -> VAR ID tipo_dato ASIGNACION factor .)
 
 
-state 173
+state 174
 
     (35) asignacion -> VAR ID COMA ID tipo_dato . ASIGNACION factor COMA factor
 
-    ASIGNACION      shift and go to state 200
-
-
-state 174
-
-    (73) map -> VAR ID MAP CORCHETE_IZQ tipo_dato . CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
-
-    CORCHETE_DER    shift and go to state 201
+    ASIGNACION      shift and go to state 202
 
 
 state 175
 
-    (112) boolcadena -> STRCONV PUNTO FORMATBOOL PARENT_IZQ BOOLEAN . PARENT_DER
+    (73) map -> VAR ID MAP CORCHETE_IZQ tipo_dato . CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
 
-    PARENT_DER      shift and go to state 202
+    CORCHETE_DER    shift and go to state 203
 
 
 state 176
 
-    (113) cadenabool -> STRCONV PUNTO PARSEBOOL PARENT_IZQ CADENA . PARENT_DER
+    (112) boolcadena -> STRCONV PUNTO FORMATBOOL PARENT_IZQ BOOLEAN . PARENT_DER
 
-    PARENT_DER      shift and go to state 203
+    PARENT_DER      shift and go to state 204
 
 
 state 177
 
-    (116) enterocadena -> STRCONV PUNTO FORMATINT PARENT_IZQ CADENA . COMA NUMERO PARENT_DER
+    (113) cadenabool -> STRCONV PUNTO PARSEBOOL PARENT_IZQ CADENA . PARENT_DER
 
-    COMA            shift and go to state 204
+    PARENT_DER      shift and go to state 205
 
 
 state 178
 
-    (117) cadenaentero -> STRCONV PUNTO PARSEINT PARENT_IZQ CADENA . COMA NUMERO COMA NUMERO PARENT_DER
-
-    COMA            shift and go to state 205
-
-
-state 179
-
-    (114) flotantecadena -> STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT . COMA CADENA COMA NUMERO PARENT_DER
+    (116) enterocadena -> STRCONV PUNTO FORMATINT PARENT_IZQ CADENA . COMA NUMERO PARENT_DER
 
     COMA            shift and go to state 206
 
 
-state 180
+state 179
 
-    (115) cadenaflotante -> STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT . COMA NUMERO PARENT_DER
+    (117) cadenaentero -> STRCONV PUNTO PARSEINT PARENT_IZQ CADENA . COMA NUMERO COMA NUMERO PARENT_DER
 
     COMA            shift and go to state 207
 
 
+state 180
+
+    (114) flotantecadena -> STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT . COMA CADENA COMA NUMERO PARENT_DER
+
+    COMA            shift and go to state 208
+
+
 state 181
 
-    (36) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA . ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+    (115) cadenaflotante -> STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT . COMA NUMERO PARENT_DER
 
-    ID              shift and go to state 208
+    COMA            shift and go to state 209
 
 
 state 182
+
+    (36) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA . ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
+
+    ID              shift and go to state 210
+
+
+state 183
 
     (67) switch -> SWITCH ID LLAVE_IZQ cases LLAVE_DER .
 
@@ -2693,51 +2700,51 @@ state 182
     RETURN          reduce using rule 67 (switch -> SWITCH ID LLAVE_IZQ cases LLAVE_DER .)
 
 
-state 183
+state 184
 
     (69) cases -> case default .
 
     LLAVE_DER       reduce using rule 69 (cases -> case default .)
 
 
-state 184
+state 185
 
     (70) cases -> case cases .
 
     LLAVE_DER       reduce using rule 70 (cases -> case cases .)
 
 
-state 185
+state 186
 
     (72) default -> DEFAULT . DOS_PUNTOS programa
 
-    DOS_PUNTOS      shift and go to state 209
-
-
-state 186
-
-    (71) case -> CASE factor . DOS_PUNTOS programa
-
-    DOS_PUNTOS      shift and go to state 210
+    DOS_PUNTOS      shift and go to state 211
 
 
 state 187
 
-    (88) eliminar_valor_map -> DELETE PARENT_IZQ ID COMA valor . PARENT_DER
+    (71) case -> CASE factor . DOS_PUNTOS programa
 
-    PARENT_DER      shift and go to state 211
+    DOS_PUNTOS      shift and go to state 212
 
 
 state 188
+
+    (88) eliminar_valor_map -> DELETE PARENT_IZQ ID COMA valor . PARENT_DER
+
+    PARENT_DER      shift and go to state 213
+
+
+state 189
 
     (92) argumentos -> ID tipo_dato .
     (93) argumentos -> ID tipo_dato . COMA argumentos
 
     PARENT_DER      reduce using rule 92 (argumentos -> ID tipo_dato .)
-    COMA            shift and go to state 212
+    COMA            shift and go to state 214
 
 
-state 189
+state 190
 
     (90) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER . tipo_dato LLAVE_IZQ programa LLAVE_DER
     (91) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER . tipo_dato LLAVE_IZQ programa RETURN ID LLAVE_DER
@@ -2755,16 +2762,16 @@ state 189
     FLOAT64         shift and go to state 114
     INT32           shift and go to state 115
 
-    tipo_dato                      shift and go to state 213
+    tipo_dato                      shift and go to state 215
 
-state 190
+state 191
 
     (25) impresion -> FMT PUNTO PRINTF PARENT_IZQ CADENA COMA . NUMERO PARENT_DER
 
-    NUMERO          shift and go to state 214
+    NUMERO          shift and go to state 216
 
 
-state 191
+state 192
 
     (26) impresion -> FMT PUNTO PRINTF PARENT_IZQ empty PARENT_DER .
 
@@ -2775,14 +2782,14 @@ state 191
     RETURN          reduce using rule 26 (impresion -> FMT PUNTO PRINTF PARENT_IZQ empty PARENT_DER .)
 
 
-state 192
+state 193
 
     (27) impresion -> FMT PUNTO PRINTLN PARENT_IZQ CADENA COMA . NUMERO PARENT_DER
 
-    NUMERO          shift and go to state 215
+    NUMERO          shift and go to state 217
 
 
-state 193
+state 194
 
     (28) impresion -> FMT PUNTO PRINTLN PARENT_IZQ empty PARENT_DER .
 
@@ -2793,22 +2800,21 @@ state 193
     RETURN          reduce using rule 28 (impresion -> FMT PUNTO PRINTLN PARENT_IZQ empty PARENT_DER .)
 
 
-state 194
+state 195
 
     (56) sentencia -> IF factor comparacion factor LLAVE_IZQ programa . LLAVE_DER
 
-    LLAVE_DER       shift and go to state 216
-
-
-state 195
-
-    (46) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER . ID COMA NUMERO PARENT_DER
-    (47) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER . ID COMA NUMERO COMA NUMERO PARENT_DER
-
-    ID              shift and go to state 217
+    LLAVE_DER       shift and go to state 218
 
 
 state 196
+
+    (47) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER . ID COMA NUMERO COMA NUMERO PARENT_DER
+
+    ID              shift and go to state 219
+
+
+state 197
 
     (40) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato .
     (41) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato . LLAVE_IZQ valores LLAVE_DER
@@ -2818,10 +2824,29 @@ state 196
     DEFAULT         reduce using rule 40 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato .)
     CASE            reduce using rule 40 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato .)
     RETURN          reduce using rule 40 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato .)
-    LLAVE_IZQ       shift and go to state 218
+    LLAVE_IZQ       shift and go to state 220
 
 
-state 197
+state 198
+
+    (46) slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER . tipo_dato COMA NUMERO PARENT_DER
+    (76) tipo_dato -> . INT
+    (77) tipo_dato -> . STRING
+    (78) tipo_dato -> . INT64
+    (79) tipo_dato -> . FLOAT32
+    (80) tipo_dato -> . FLOAT64
+    (81) tipo_dato -> . INT32
+
+    INT             shift and go to state 110
+    STRING          shift and go to state 111
+    INT64           shift and go to state 112
+    FLOAT32         shift and go to state 113
+    FLOAT64         shift and go to state 114
+    INT32           shift and go to state 115
+
+    tipo_dato                      shift and go to state 221
+
+state 199
 
     (74) map -> ID ASIGNACION MAKE PARENT_IZQ MAP CORCHETE_IZQ . tipo_dato CORCHETE_DER tipo_dato PARENT_DER
     (76) tipo_dato -> . INT
@@ -2838,9 +2863,9 @@ state 197
     FLOAT64         shift and go to state 114
     INT32           shift and go to state 115
 
-    tipo_dato                      shift and go to state 219
+    tipo_dato                      shift and go to state 222
 
-state 198
+state 200
 
     (75) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER . tipo_dato LLAVE_IZQ valores LLAVE_DER
     (76) tipo_dato -> . INT
@@ -2857,9 +2882,9 @@ state 198
     FLOAT64         shift and go to state 114
     INT32           shift and go to state 115
 
-    tipo_dato                      shift and go to state 220
+    tipo_dato                      shift and go to state 223
 
-state 199
+state 201
 
     (87) asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER ASIGNACION valor .
 
@@ -2870,7 +2895,7 @@ state 199
     RETURN          reduce using rule 87 (asignar_valor_map -> ID CORCHETE_IZQ valor CORCHETE_DER ASIGNACION valor .)
 
 
-state 200
+state 202
 
     (35) asignacion -> VAR ID COMA ID tipo_dato ASIGNACION . factor COMA factor
     (63) factor -> . NUMERO
@@ -2883,9 +2908,9 @@ state 200
     CADENA          shift and go to state 29
     PARENT_IZQ      shift and go to state 28
 
-    factor                         shift and go to state 221
+    factor                         shift and go to state 224
 
-state 201
+state 203
 
     (73) map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER . tipo_dato LLAVE_IZQ valores LLAVE_DER
     (76) tipo_dato -> . INT
@@ -2902,9 +2927,9 @@ state 201
     FLOAT64         shift and go to state 114
     INT32           shift and go to state 115
 
-    tipo_dato                      shift and go to state 222
+    tipo_dato                      shift and go to state 225
 
-state 202
+state 204
 
     (112) boolcadena -> STRCONV PUNTO FORMATBOOL PARENT_IZQ BOOLEAN PARENT_DER .
 
@@ -2915,7 +2940,7 @@ state 202
     RETURN          reduce using rule 112 (boolcadena -> STRCONV PUNTO FORMATBOOL PARENT_IZQ BOOLEAN PARENT_DER .)
 
 
-state 203
+state 205
 
     (113) cadenabool -> STRCONV PUNTO PARSEBOOL PARENT_IZQ CADENA PARENT_DER .
 
@@ -2926,35 +2951,35 @@ state 203
     RETURN          reduce using rule 113 (cadenabool -> STRCONV PUNTO PARSEBOOL PARENT_IZQ CADENA PARENT_DER .)
 
 
-state 204
-
-    (116) enterocadena -> STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA . NUMERO PARENT_DER
-
-    NUMERO          shift and go to state 223
-
-
-state 205
-
-    (117) cadenaentero -> STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA . NUMERO COMA NUMERO PARENT_DER
-
-    NUMERO          shift and go to state 224
-
-
 state 206
 
-    (114) flotantecadena -> STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA . CADENA COMA NUMERO PARENT_DER
-
-    CADENA          shift and go to state 225
-
-
-state 207
-
-    (115) cadenaflotante -> STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA . NUMERO PARENT_DER
+    (116) enterocadena -> STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA . NUMERO PARENT_DER
 
     NUMERO          shift and go to state 226
 
 
+state 207
+
+    (117) cadenaentero -> STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA . NUMERO COMA NUMERO PARENT_DER
+
+    NUMERO          shift and go to state 227
+
+
 state 208
+
+    (114) flotantecadena -> STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA . CADENA COMA NUMERO PARENT_DER
+
+    CADENA          shift and go to state 228
+
+
+state 209
+
+    (115) cadenaflotante -> STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA . NUMERO PARENT_DER
+
+    NUMERO          shift and go to state 229
+
+
+state 210
 
     (36) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID . comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
     (57) comparacion -> . IGUALDAD
@@ -2971,9 +2996,9 @@ state 208
     MENOR_IGU       shift and go to state 60
     DESIGUALDAD     shift and go to state 61
 
-    comparacion                    shift and go to state 227
+    comparacion                    shift and go to state 230
 
-state 209
+state 211
 
     (72) default -> DEFAULT DOS_PUNTOS . programa
     (1) programa -> . expression
@@ -3019,7 +3044,7 @@ state 209
     (36) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
     (40) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato
     (41) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
-    (46) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (46) slice -> . ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
     (47) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
     (48) capslice -> . ID PARENT_IZQ ID PARENT_DER
     (67) switch -> . SWITCH ID LLAVE_IZQ cases LLAVE_DER
@@ -3076,7 +3101,7 @@ state 209
     CADENA          shift and go to state 29
     PARENT_IZQ      shift and go to state 28
 
-    programa                       shift and go to state 228
+    programa                       shift and go to state 231
     expression                     shift and go to state 2
     impresion                      shift and go to state 3
     sentencia                      shift and go to state 4
@@ -3104,7 +3129,7 @@ state 209
     term                           shift and go to state 26
     factor                         shift and go to state 32
 
-state 210
+state 212
 
     (71) case -> CASE factor DOS_PUNTOS . programa
     (1) programa -> . expression
@@ -3150,7 +3175,7 @@ state 210
     (36) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
     (40) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato
     (41) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
-    (46) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (46) slice -> . ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
     (47) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
     (48) capslice -> . ID PARENT_IZQ ID PARENT_DER
     (67) switch -> . SWITCH ID LLAVE_IZQ cases LLAVE_DER
@@ -3208,7 +3233,7 @@ state 210
     PARENT_IZQ      shift and go to state 28
 
     factor                         shift and go to state 32
-    programa                       shift and go to state 229
+    programa                       shift and go to state 232
     expression                     shift and go to state 2
     impresion                      shift and go to state 3
     sentencia                      shift and go to state 4
@@ -3235,7 +3260,7 @@ state 210
     seman_operacion                shift and go to state 25
     term                           shift and go to state 26
 
-state 211
+state 213
 
     (88) eliminar_valor_map -> DELETE PARENT_IZQ ID COMA valor PARENT_DER .
 
@@ -3246,7 +3271,7 @@ state 211
     RETURN          reduce using rule 88 (eliminar_valor_map -> DELETE PARENT_IZQ ID COMA valor PARENT_DER .)
 
 
-state 212
+state 214
 
     (93) argumentos -> ID tipo_dato COMA . argumentos
     (92) argumentos -> . ID tipo_dato
@@ -3254,31 +3279,31 @@ state 212
 
     ID              shift and go to state 160
 
-    argumentos                     shift and go to state 230
+    argumentos                     shift and go to state 233
 
-state 213
+state 215
 
     (90) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato . LLAVE_IZQ programa LLAVE_DER
     (91) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato . LLAVE_IZQ programa RETURN ID LLAVE_DER
 
-    LLAVE_IZQ       shift and go to state 231
-
-
-state 214
-
-    (25) impresion -> FMT PUNTO PRINTF PARENT_IZQ CADENA COMA NUMERO . PARENT_DER
-
-    PARENT_DER      shift and go to state 232
-
-
-state 215
-
-    (27) impresion -> FMT PUNTO PRINTLN PARENT_IZQ CADENA COMA NUMERO . PARENT_DER
-
-    PARENT_DER      shift and go to state 233
+    LLAVE_IZQ       shift and go to state 234
 
 
 state 216
+
+    (25) impresion -> FMT PUNTO PRINTF PARENT_IZQ CADENA COMA NUMERO . PARENT_DER
+
+    PARENT_DER      shift and go to state 235
+
+
+state 217
+
+    (27) impresion -> FMT PUNTO PRINTLN PARENT_IZQ CADENA COMA NUMERO . PARENT_DER
+
+    PARENT_DER      shift and go to state 236
+
+
+state 218
 
     (56) sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER .
 
@@ -3289,15 +3314,14 @@ state 216
     RETURN          reduce using rule 56 (sentencia -> IF factor comparacion factor LLAVE_IZQ programa LLAVE_DER .)
 
 
-state 217
+state 219
 
-    (46) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID . COMA NUMERO PARENT_DER
     (47) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID . COMA NUMERO COMA NUMERO PARENT_DER
 
-    COMA            shift and go to state 234
+    COMA            shift and go to state 237
 
 
-state 218
+state 220
 
     (41) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ . valores LLAVE_DER
     (44) valores -> . factor
@@ -3312,73 +3336,80 @@ state 218
     (85) valor -> . CADENA
     (86) valor -> . NUMERO
 
-    NUMERO          shift and go to state 238
+    NUMERO          shift and go to state 241
     ID              shift and go to state 49
-    CADENA          shift and go to state 239
+    CADENA          shift and go to state 242
     PARENT_IZQ      shift and go to state 28
 
-    valores                        shift and go to state 235
-    factor                         shift and go to state 236
-    clave_valor                    shift and go to state 237
-    valor                          shift and go to state 240
-
-state 219
-
-    (74) map -> ID ASIGNACION MAKE PARENT_IZQ MAP CORCHETE_IZQ tipo_dato . CORCHETE_DER tipo_dato PARENT_DER
-
-    CORCHETE_DER    shift and go to state 241
-
-
-state 220
-
-    (75) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato . LLAVE_IZQ valores LLAVE_DER
-
-    LLAVE_IZQ       shift and go to state 242
-
+    valores                        shift and go to state 238
+    factor                         shift and go to state 239
+    clave_valor                    shift and go to state 240
+    valor                          shift and go to state 243
 
 state 221
 
-    (35) asignacion -> VAR ID COMA ID tipo_dato ASIGNACION factor . COMA factor
+    (46) slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato . COMA NUMERO PARENT_DER
 
-    COMA            shift and go to state 243
+    COMA            shift and go to state 244
 
 
 state 222
 
-    (73) map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato . LLAVE_IZQ valores LLAVE_DER
+    (74) map -> ID ASIGNACION MAKE PARENT_IZQ MAP CORCHETE_IZQ tipo_dato . CORCHETE_DER tipo_dato PARENT_DER
 
-    LLAVE_IZQ       shift and go to state 244
+    CORCHETE_DER    shift and go to state 245
 
 
 state 223
 
-    (116) enterocadena -> STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA NUMERO . PARENT_DER
+    (75) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato . LLAVE_IZQ valores LLAVE_DER
 
-    PARENT_DER      shift and go to state 245
+    LLAVE_IZQ       shift and go to state 246
 
 
 state 224
 
-    (117) cadenaentero -> STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA NUMERO . COMA NUMERO PARENT_DER
-
-    COMA            shift and go to state 246
-
-
-state 225
-
-    (114) flotantecadena -> STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA . COMA NUMERO PARENT_DER
+    (35) asignacion -> VAR ID COMA ID tipo_dato ASIGNACION factor . COMA factor
 
     COMA            shift and go to state 247
 
 
+state 225
+
+    (73) map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato . LLAVE_IZQ valores LLAVE_DER
+
+    LLAVE_IZQ       shift and go to state 248
+
+
 state 226
 
-    (115) cadenaflotante -> STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA NUMERO . PARENT_DER
+    (116) enterocadena -> STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA NUMERO . PARENT_DER
 
-    PARENT_DER      shift and go to state 248
+    PARENT_DER      shift and go to state 249
 
 
 state 227
+
+    (117) cadenaentero -> STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA NUMERO . COMA NUMERO PARENT_DER
+
+    COMA            shift and go to state 250
+
+
+state 228
+
+    (114) flotantecadena -> STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA . COMA NUMERO PARENT_DER
+
+    COMA            shift and go to state 251
+
+
+state 229
+
+    (115) cadenaflotante -> STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA NUMERO . PARENT_DER
+
+    PARENT_DER      shift and go to state 252
+
+
+state 230
 
     (36) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion . factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
     (63) factor -> . NUMERO
@@ -3391,16 +3422,16 @@ state 227
     CADENA          shift and go to state 29
     PARENT_IZQ      shift and go to state 28
 
-    factor                         shift and go to state 249
+    factor                         shift and go to state 253
 
-state 228
+state 231
 
     (72) default -> DEFAULT DOS_PUNTOS programa .
 
     LLAVE_DER       reduce using rule 72 (default -> DEFAULT DOS_PUNTOS programa .)
 
 
-state 229
+state 232
 
     (71) case -> CASE factor DOS_PUNTOS programa .
 
@@ -3409,14 +3440,14 @@ state 229
     LLAVE_DER       reduce using rule 71 (case -> CASE factor DOS_PUNTOS programa .)
 
 
-state 230
+state 233
 
     (93) argumentos -> ID tipo_dato COMA argumentos .
 
     PARENT_DER      reduce using rule 93 (argumentos -> ID tipo_dato COMA argumentos .)
 
 
-state 231
+state 234
 
     (90) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ . programa LLAVE_DER
     (91) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ . programa RETURN ID LLAVE_DER
@@ -3463,7 +3494,7 @@ state 231
     (36) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
     (40) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato
     (41) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
-    (46) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (46) slice -> . ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
     (47) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
     (48) capslice -> . ID PARENT_IZQ ID PARENT_DER
     (67) switch -> . SWITCH ID LLAVE_IZQ cases LLAVE_DER
@@ -3520,7 +3551,7 @@ state 231
     CADENA          shift and go to state 29
     PARENT_IZQ      shift and go to state 28
 
-    programa                       shift and go to state 250
+    programa                       shift and go to state 254
     expression                     shift and go to state 2
     impresion                      shift and go to state 3
     sentencia                      shift and go to state 4
@@ -3548,7 +3579,7 @@ state 231
     term                           shift and go to state 26
     factor                         shift and go to state 32
 
-state 232
+state 235
 
     (25) impresion -> FMT PUNTO PRINTF PARENT_IZQ CADENA COMA NUMERO PARENT_DER .
 
@@ -3559,7 +3590,7 @@ state 232
     RETURN          reduce using rule 25 (impresion -> FMT PUNTO PRINTF PARENT_IZQ CADENA COMA NUMERO PARENT_DER .)
 
 
-state 233
+state 236
 
     (27) impresion -> FMT PUNTO PRINTLN PARENT_IZQ CADENA COMA NUMERO PARENT_DER .
 
@@ -3570,40 +3601,39 @@ state 233
     RETURN          reduce using rule 27 (impresion -> FMT PUNTO PRINTLN PARENT_IZQ CADENA COMA NUMERO PARENT_DER .)
 
 
-state 234
+state 237
 
-    (46) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA . NUMERO PARENT_DER
     (47) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA . NUMERO COMA NUMERO PARENT_DER
 
-    NUMERO          shift and go to state 251
+    NUMERO          shift and go to state 255
 
 
-state 235
+state 238
 
     (41) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores . LLAVE_DER
 
-    LLAVE_DER       shift and go to state 252
+    LLAVE_DER       shift and go to state 256
 
 
-state 236
+state 239
 
     (44) valores -> factor .
     (45) valores -> factor . COMA valores
 
     LLAVE_DER       reduce using rule 44 (valores -> factor .)
-    COMA            shift and go to state 253
+    COMA            shift and go to state 257
 
 
-state 237
+state 240
 
     (82) valores -> clave_valor .
     (83) valores -> clave_valor . COMA valores
 
     LLAVE_DER       reduce using rule 82 (valores -> clave_valor .)
-    COMA            shift and go to state 254
+    COMA            shift and go to state 258
 
 
-state 238
+state 241
 
     (63) factor -> NUMERO .
     (86) valor -> NUMERO .
@@ -3613,7 +3643,7 @@ state 238
     DOS_PUNTOS      reduce using rule 86 (valor -> NUMERO .)
 
 
-state 239
+state 242
 
     (65) factor -> CADENA .
     (85) valor -> CADENA .
@@ -3623,14 +3653,21 @@ state 239
     DOS_PUNTOS      reduce using rule 85 (valor -> CADENA .)
 
 
-state 240
+state 243
 
     (84) clave_valor -> valor . DOS_PUNTOS valor
 
-    DOS_PUNTOS      shift and go to state 255
+    DOS_PUNTOS      shift and go to state 259
 
 
-state 241
+state 244
+
+    (46) slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA . NUMERO PARENT_DER
+
+    NUMERO          shift and go to state 260
+
+
+state 245
 
     (74) map -> ID ASIGNACION MAKE PARENT_IZQ MAP CORCHETE_IZQ tipo_dato CORCHETE_DER . tipo_dato PARENT_DER
     (76) tipo_dato -> . INT
@@ -3647,9 +3684,9 @@ state 241
     FLOAT64         shift and go to state 114
     INT32           shift and go to state 115
 
-    tipo_dato                      shift and go to state 256
+    tipo_dato                      shift and go to state 261
 
-state 242
+state 246
 
     (75) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ . valores LLAVE_DER
     (44) valores -> . factor
@@ -3664,17 +3701,17 @@ state 242
     (85) valor -> . CADENA
     (86) valor -> . NUMERO
 
-    NUMERO          shift and go to state 238
+    NUMERO          shift and go to state 241
     ID              shift and go to state 49
-    CADENA          shift and go to state 239
+    CADENA          shift and go to state 242
     PARENT_IZQ      shift and go to state 28
 
-    valores                        shift and go to state 257
-    factor                         shift and go to state 236
-    clave_valor                    shift and go to state 237
-    valor                          shift and go to state 240
+    valores                        shift and go to state 262
+    factor                         shift and go to state 239
+    clave_valor                    shift and go to state 240
+    valor                          shift and go to state 243
 
-state 243
+state 247
 
     (35) asignacion -> VAR ID COMA ID tipo_dato ASIGNACION factor COMA . factor
     (63) factor -> . NUMERO
@@ -3687,9 +3724,9 @@ state 243
     CADENA          shift and go to state 29
     PARENT_IZQ      shift and go to state 28
 
-    factor                         shift and go to state 258
+    factor                         shift and go to state 263
 
-state 244
+state 248
 
     (73) map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ . valores LLAVE_DER
     (44) valores -> . factor
@@ -3704,17 +3741,17 @@ state 244
     (85) valor -> . CADENA
     (86) valor -> . NUMERO
 
-    NUMERO          shift and go to state 238
+    NUMERO          shift and go to state 241
     ID              shift and go to state 49
-    CADENA          shift and go to state 239
+    CADENA          shift and go to state 242
     PARENT_IZQ      shift and go to state 28
 
-    valores                        shift and go to state 259
-    factor                         shift and go to state 236
-    clave_valor                    shift and go to state 237
-    valor                          shift and go to state 240
+    valores                        shift and go to state 264
+    factor                         shift and go to state 239
+    clave_valor                    shift and go to state 240
+    valor                          shift and go to state 243
 
-state 245
+state 249
 
     (116) enterocadena -> STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA NUMERO PARENT_DER .
 
@@ -3725,21 +3762,21 @@ state 245
     RETURN          reduce using rule 116 (enterocadena -> STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA NUMERO PARENT_DER .)
 
 
-state 246
+state 250
 
     (117) cadenaentero -> STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA NUMERO COMA . NUMERO PARENT_DER
 
-    NUMERO          shift and go to state 260
+    NUMERO          shift and go to state 265
 
 
-state 247
+state 251
 
     (114) flotantecadena -> STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA COMA . NUMERO PARENT_DER
 
-    NUMERO          shift and go to state 261
+    NUMERO          shift and go to state 266
 
 
-state 248
+state 252
 
     (115) cadenaflotante -> STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA NUMERO PARENT_DER .
 
@@ -3750,32 +3787,30 @@ state 248
     RETURN          reduce using rule 115 (cadenaflotante -> STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA NUMERO PARENT_DER .)
 
 
-state 249
+state 253
 
     (36) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor . FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
 
-    FIN_SENTENCIA   shift and go to state 262
+    FIN_SENTENCIA   shift and go to state 267
 
 
-state 250
+state 254
 
     (90) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa . LLAVE_DER
     (91) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa . RETURN ID LLAVE_DER
 
-    LLAVE_DER       shift and go to state 263
-    RETURN          shift and go to state 264
+    LLAVE_DER       shift and go to state 268
+    RETURN          shift and go to state 269
 
 
-state 251
+state 255
 
-    (46) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO . PARENT_DER
     (47) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO . COMA NUMERO PARENT_DER
 
-    PARENT_DER      shift and go to state 266
-    COMA            shift and go to state 265
+    COMA            shift and go to state 270
 
 
-state 252
+state 256
 
     (41) arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .
 
@@ -3786,7 +3821,7 @@ state 252
     RETURN          reduce using rule 41 (arreglo -> ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .)
 
 
-state 253
+state 257
 
     (45) valores -> factor COMA . valores
     (44) valores -> . factor
@@ -3801,17 +3836,17 @@ state 253
     (85) valor -> . CADENA
     (86) valor -> . NUMERO
 
-    NUMERO          shift and go to state 238
+    NUMERO          shift and go to state 241
     ID              shift and go to state 49
-    CADENA          shift and go to state 239
+    CADENA          shift and go to state 242
     PARENT_IZQ      shift and go to state 28
 
-    factor                         shift and go to state 236
-    valores                        shift and go to state 267
-    clave_valor                    shift and go to state 237
-    valor                          shift and go to state 240
+    factor                         shift and go to state 239
+    valores                        shift and go to state 271
+    clave_valor                    shift and go to state 240
+    valor                          shift and go to state 243
 
-state 254
+state 258
 
     (83) valores -> clave_valor COMA . valores
     (44) valores -> . factor
@@ -3826,17 +3861,17 @@ state 254
     (85) valor -> . CADENA
     (86) valor -> . NUMERO
 
-    NUMERO          shift and go to state 238
+    NUMERO          shift and go to state 241
     ID              shift and go to state 49
-    CADENA          shift and go to state 239
+    CADENA          shift and go to state 242
     PARENT_IZQ      shift and go to state 28
 
-    clave_valor                    shift and go to state 237
-    valores                        shift and go to state 268
-    factor                         shift and go to state 236
-    valor                          shift and go to state 240
+    clave_valor                    shift and go to state 240
+    valores                        shift and go to state 272
+    factor                         shift and go to state 239
+    valor                          shift and go to state 243
 
-state 255
+state 259
 
     (84) clave_valor -> valor DOS_PUNTOS . valor
     (85) valor -> . CADENA
@@ -3845,23 +3880,30 @@ state 255
     CADENA          shift and go to state 105
     NUMERO          shift and go to state 106
 
-    valor                          shift and go to state 269
+    valor                          shift and go to state 273
 
-state 256
+state 260
+
+    (46) slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO . PARENT_DER
+
+    PARENT_DER      shift and go to state 274
+
+
+state 261
 
     (74) map -> ID ASIGNACION MAKE PARENT_IZQ MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato . PARENT_DER
 
-    PARENT_DER      shift and go to state 270
+    PARENT_DER      shift and go to state 275
 
 
-state 257
+state 262
 
     (75) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores . LLAVE_DER
 
-    LLAVE_DER       shift and go to state 271
+    LLAVE_DER       shift and go to state 276
 
 
-state 258
+state 263
 
     (35) asignacion -> VAR ID COMA ID tipo_dato ASIGNACION factor COMA factor .
 
@@ -3872,39 +3914,39 @@ state 258
     RETURN          reduce using rule 35 (asignacion -> VAR ID COMA ID tipo_dato ASIGNACION factor COMA factor .)
 
 
-state 259
+state 264
 
     (73) map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores . LLAVE_DER
 
-    LLAVE_DER       shift and go to state 272
+    LLAVE_DER       shift and go to state 277
 
 
-state 260
+state 265
 
     (117) cadenaentero -> STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA NUMERO COMA NUMERO . PARENT_DER
 
-    PARENT_DER      shift and go to state 273
+    PARENT_DER      shift and go to state 278
 
 
-state 261
+state 266
 
     (114) flotantecadena -> STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA COMA NUMERO . PARENT_DER
 
-    PARENT_DER      shift and go to state 274
+    PARENT_DER      shift and go to state 279
 
 
-state 262
+state 267
 
     (36) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA . incremento LLAVE_IZQ programa LLAVE_DER
     (37) incremento -> . ID INCREMENTO
     (38) incremento -> . ID ASIGNACION ID
     (39) incremento -> . ID DECREMENTO
 
-    ID              shift and go to state 275
+    ID              shift and go to state 280
 
-    incremento                     shift and go to state 276
+    incremento                     shift and go to state 281
 
-state 263
+state 268
 
     (90) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa LLAVE_DER .
 
@@ -3915,46 +3957,35 @@ state 263
     RETURN          reduce using rule 90 (funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa LLAVE_DER .)
 
 
-state 264
+state 269
 
     (91) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa RETURN . ID LLAVE_DER
 
-    ID              shift and go to state 277
+    ID              shift and go to state 282
 
 
-state 265
+state 270
 
     (47) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA . NUMERO PARENT_DER
 
-    NUMERO          shift and go to state 278
+    NUMERO          shift and go to state 283
 
 
-state 266
-
-    (46) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .
-
-    $end            reduce using rule 46 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .)
-    LLAVE_DER       reduce using rule 46 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .)
-    DEFAULT         reduce using rule 46 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .)
-    CASE            reduce using rule 46 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .)
-    RETURN          reduce using rule 46 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER .)
-
-
-state 267
+state 271
 
     (45) valores -> factor COMA valores .
 
     LLAVE_DER       reduce using rule 45 (valores -> factor COMA valores .)
 
 
-state 268
+state 272
 
     (83) valores -> clave_valor COMA valores .
 
     LLAVE_DER       reduce using rule 83 (valores -> clave_valor COMA valores .)
 
 
-state 269
+state 273
 
     (84) clave_valor -> valor DOS_PUNTOS valor .
 
@@ -3962,7 +3993,18 @@ state 269
     LLAVE_DER       reduce using rule 84 (clave_valor -> valor DOS_PUNTOS valor .)
 
 
-state 270
+state 274
+
+    (46) slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER .
+
+    $end            reduce using rule 46 (slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER .)
+    LLAVE_DER       reduce using rule 46 (slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER .)
+    DEFAULT         reduce using rule 46 (slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER .)
+    CASE            reduce using rule 46 (slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER .)
+    RETURN          reduce using rule 46 (slice -> ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER .)
+
+
+state 275
 
     (74) map -> ID ASIGNACION MAKE PARENT_IZQ MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato PARENT_DER .
 
@@ -3973,7 +4015,7 @@ state 270
     RETURN          reduce using rule 74 (map -> ID ASIGNACION MAKE PARENT_IZQ MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato PARENT_DER .)
 
 
-state 271
+state 276
 
     (75) map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .
 
@@ -3984,7 +4026,7 @@ state 271
     RETURN          reduce using rule 75 (map -> ID ASIGNACION MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .)
 
 
-state 272
+state 277
 
     (73) map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .
 
@@ -3995,7 +4037,7 @@ state 272
     RETURN          reduce using rule 73 (map -> VAR ID MAP CORCHETE_IZQ tipo_dato CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER .)
 
 
-state 273
+state 278
 
     (117) cadenaentero -> STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA NUMERO COMA NUMERO PARENT_DER .
 
@@ -4006,7 +4048,7 @@ state 273
     RETURN          reduce using rule 117 (cadenaentero -> STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA NUMERO COMA NUMERO PARENT_DER .)
 
 
-state 274
+state 279
 
     (114) flotantecadena -> STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA COMA NUMERO PARENT_DER .
 
@@ -4017,60 +4059,60 @@ state 274
     RETURN          reduce using rule 114 (flotantecadena -> STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA COMA NUMERO PARENT_DER .)
 
 
-state 275
+state 280
 
     (37) incremento -> ID . INCREMENTO
     (38) incremento -> ID . ASIGNACION ID
     (39) incremento -> ID . DECREMENTO
 
-    INCREMENTO      shift and go to state 279
-    ASIGNACION      shift and go to state 280
-    DECREMENTO      shift and go to state 281
+    INCREMENTO      shift and go to state 284
+    ASIGNACION      shift and go to state 285
+    DECREMENTO      shift and go to state 286
 
 
-state 276
+state 281
 
     (36) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento . LLAVE_IZQ programa LLAVE_DER
 
-    LLAVE_IZQ       shift and go to state 282
+    LLAVE_IZQ       shift and go to state 287
 
 
-state 277
+state 282
 
     (91) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa RETURN ID . LLAVE_DER
 
-    LLAVE_DER       shift and go to state 283
+    LLAVE_DER       shift and go to state 288
 
 
-state 278
+state 283
 
     (47) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO . PARENT_DER
 
-    PARENT_DER      shift and go to state 284
+    PARENT_DER      shift and go to state 289
 
 
-state 279
+state 284
 
     (37) incremento -> ID INCREMENTO .
 
     LLAVE_IZQ       reduce using rule 37 (incremento -> ID INCREMENTO .)
 
 
-state 280
+state 285
 
     (38) incremento -> ID ASIGNACION . ID
 
-    ID              shift and go to state 285
+    ID              shift and go to state 290
 
 
-state 281
+state 286
 
     (39) incremento -> ID DECREMENTO .
 
     LLAVE_IZQ       reduce using rule 39 (incremento -> ID DECREMENTO .)
 
 
-state 282
+state 287
 
     (36) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ . programa LLAVE_DER
     (1) programa -> . expression
@@ -4116,7 +4158,7 @@ state 282
     (36) sentenciafor -> . FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER
     (40) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato
     (41) arreglo -> . ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
-    (46) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO PARENT_DER
+    (46) slice -> . ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
     (47) slice -> . ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER
     (48) capslice -> . ID PARENT_IZQ ID PARENT_DER
     (67) switch -> . SWITCH ID LLAVE_IZQ cases LLAVE_DER
@@ -4174,7 +4216,7 @@ state 282
     PARENT_IZQ      shift and go to state 28
 
     factor                         shift and go to state 32
-    programa                       shift and go to state 286
+    programa                       shift and go to state 291
     expression                     shift and go to state 2
     impresion                      shift and go to state 3
     sentencia                      shift and go to state 4
@@ -4201,7 +4243,7 @@ state 282
     seman_operacion                shift and go to state 25
     term                           shift and go to state 26
 
-state 283
+state 288
 
     (91) funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa RETURN ID LLAVE_DER .
 
@@ -4212,7 +4254,7 @@ state 283
     RETURN          reduce using rule 91 (funcion -> FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa RETURN ID LLAVE_DER .)
 
 
-state 284
+state 289
 
     (47) slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER .
 
@@ -4223,21 +4265,21 @@ state 284
     RETURN          reduce using rule 47 (slice -> ID ASIGNACION ID PARENT_IZQ CORCHETE_IZQ CORCHETE_DER ID COMA NUMERO COMA NUMERO PARENT_DER .)
 
 
-state 285
+state 290
 
     (38) incremento -> ID ASIGNACION ID .
 
     LLAVE_IZQ       reduce using rule 38 (incremento -> ID ASIGNACION ID .)
 
 
-state 286
+state 291
 
     (36) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa . LLAVE_DER
 
-    LLAVE_DER       shift and go to state 287
+    LLAVE_DER       shift and go to state 292
 
 
-state 287
+state 292
 
     (36) sentenciafor -> FOR ID ASIGNACION factor FIN_SENTENCIA ID comparacion factor FIN_SENTENCIA incremento LLAVE_IZQ programa LLAVE_DER .
 
