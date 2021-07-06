@@ -269,6 +269,7 @@ def p_seman_operacion(p):
                         | NUMERO MULTIPLICADOR FLOAT
                         | NUMERO DIVISOR FLOAT'''
 
+
 # Build the parser
 parser = yacc.yacc()
 while True:
