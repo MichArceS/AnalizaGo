@@ -28,7 +28,13 @@ def p_programa(p):
                 | asignar_valor_map
                 | eliminar_valor_map
                 | obtener_valor_map
-                | funcion'''
+                | funcion
+                | boolcadena
+                | cadenabool
+                | enterocadena
+                | cadenaentero
+                | flotantecadena
+                | cadenaflotante'''
 
 
 def p_impresion(p):
@@ -50,16 +56,16 @@ def p_cadena_bool(p):
     'cadenabool : STRCONV PUNTO PARSEBOOL PARENT_IZQ CADENA PARENT_DER'
 
 def p_flotante_cadena(p):
-    'cadenabool : STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA NUMERO PARENT_DER'
+    'flotantecadena : STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA COMA NUMERO PARENT_DER'
 
 def p_cadena_flotante(p):
-    'cadenabool : STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA NUMERO PARENT_DER'
+    'cadenaflotante : STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA NUMERO PARENT_DER'
 
 def p_entero_cadena(p):
-    'cadenabool : STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA NUMERO PARENT_DER'
+    'enterocadena : STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA NUMERO PARENT_DER'
 
 def p_cadena_entero(p):
-    'cadenabool : STRCONV PUNTO PARSEINT PARENT_IZQ CADENA PARENT_DER'
+    'cadenaentero : STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA NUMERO COMA NUMERO PARENT_DER'
 
 def p_comparacion_num(p):
     'companum : NUMERO comparacion NUMERO'
