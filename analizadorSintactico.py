@@ -29,12 +29,12 @@ def p_programa(p):
                 | eliminar_valor_map
                 | obtener_valor_map
                 | funcion
-                | boolcadena
                 | cadenabool
                 | enterocadena
                 | cadenaentero
                 | flotantecadena
-                | cadenaflotante'''
+                | cadenaflotante
+                | seman_operacion'''
 
 
 def p_impresion(p):
@@ -257,17 +257,23 @@ def p_error(p):
 #Reglas Semanticas.
 
 def p_seman_operacion(p):
-    '''seman_operacion: NUMERO MAS NUMERO 
+    '''seman_operacion : NUMERO MAS NUMERO 
                         | NUMERO MENOS NUMERO
                         | NUMERO MULTIPLICADOR NUMERO
                         | NUMERO DIVISOR NUMERO
                         | NUMERO MOD_DIVISION NUMERO
+                        | FLOAT MAS NUMERO
                         | FLOAT MENOS NUMERO
                         | FLOAT MULTIPLICADOR NUMERO
                         | FLOAT DIVISOR NUMERO
+                        | NUMERO MAS FLOAT
                         | NUMERO MENOS FLOAT
                         | NUMERO MULTIPLICADOR FLOAT
-                        | NUMERO DIVISOR FLOAT'''
+                        | NUMERO DIVISOR FLOAT
+                        | FLOAT MAS FLOAT
+                        | FLOAT MENOS FLOAT
+                        | FLOAT MULTIPLICADOR FLOAT
+                        | FLOAT DIVISOR FLOAT'''
 
 
 # Build the parser
