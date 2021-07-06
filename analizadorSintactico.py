@@ -48,25 +48,6 @@ def p_longitud_variables(p):
     '''longvariable : ID PARENT_IZQ CADENA PARENT_DER
                         | ID PARENT_IZQ ID PARENT_DER'''
 
-
-def p_bool_cadena(p):
-    'boolcadena : STRCONV PUNTO FORMATBOOL PARENT_IZQ BOOLEAN PARENT_DER'
-
-def p_cadena_bool(p):
-    'cadenabool : STRCONV PUNTO PARSEBOOL PARENT_IZQ CADENA PARENT_DER'
-
-def p_flotante_cadena(p):
-    'flotantecadena : STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA COMA NUMERO PARENT_DER'
-
-def p_cadena_flotante(p):
-    'cadenaflotante : STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA NUMERO PARENT_DER'
-
-def p_entero_cadena(p):
-    'enterocadena : STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA NUMERO PARENT_DER'
-
-def p_cadena_entero(p):
-    'cadenaentero : STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA NUMERO COMA NUMERO PARENT_DER'
-
 def p_comparacion_num(p):
     'companum : NUMERO comparacion NUMERO'
 
@@ -92,8 +73,8 @@ def p_incremento(p):
 
 
 def p_definir_arreglo(p):
-    '''arreglo : ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID 
-                    | ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER ID LLAVE_IZQ valores LLAVE_DER'''
+    '''arreglo : ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato 
+                    | ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER'''
 
 
 def p_cantidad_arreglo(p):
@@ -275,6 +256,24 @@ def p_seman_operacion(p):
                         | FLOAT MULTIPLICADOR FLOAT
                         | FLOAT DIVISOR FLOAT'''
 
+
+def p_bool_cadena(p):
+    'boolcadena : STRCONV PUNTO FORMATBOOL PARENT_IZQ BOOLEAN PARENT_DER'
+
+def p_cadena_bool(p):
+    'cadenabool : STRCONV PUNTO PARSEBOOL PARENT_IZQ CADENA PARENT_DER'
+
+def p_flotante_cadena(p):
+    'flotantecadena : STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA COMA NUMERO PARENT_DER'
+
+def p_cadena_flotante(p):
+    'cadenaflotante : STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA NUMERO PARENT_DER'
+
+def p_entero_cadena(p):
+    'enterocadena : STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA NUMERO PARENT_DER'
+
+def p_cadena_entero(p):
+    'cadenaentero : STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA NUMERO COMA NUMERO PARENT_DER'
 
 # Build the parser
 parser = yacc.yacc()
