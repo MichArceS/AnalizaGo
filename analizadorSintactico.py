@@ -230,10 +230,10 @@ def p_empty(p):
 
 def p_error(p):
     if p:
-        print("Error de sintaxis en el token", p.type)
+        raise SyntaxError("Error de sintaxis en el token "+str(p.type))
         # Just discard the token and tell the parser it's okay.
     else:
-        print("Error de sintaxis en EOF")
+        raise SyntaxError("Error de sintaxis en EOF")
 
 #Reglas Semanticas.
 
@@ -277,7 +277,8 @@ def p_cadena_entero(p):
 
 # Build the parser
 parser = yacc.yacc()
-while True:
+
+"""while True:
     try:
         s = input('Go >> ')
     except EOFError:
@@ -285,4 +286,4 @@ while True:
     if not s:
         continue
     result = parser.parse(s)
-    print(result)
+    print(result)"""
