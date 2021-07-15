@@ -34,7 +34,8 @@ def p_programa(p):
                 | cadenaentero
                 | flotantecadena
                 | cadenaflotante
-                | seman_operacion'''
+                | seman_operacion
+                | incremento'''
 
 
 def p_impresion(p):
@@ -42,6 +43,7 @@ def p_impresion(p):
                 | FMT PUNTO PRINTF PARENT_IZQ empty PARENT_DER
                 | FMT PUNTO PRINTLN PARENT_IZQ CADENA COMA NUMERO PARENT_DER
                 | FMT PUNTO PRINTLN PARENT_IZQ empty PARENT_DER
+                | FMT PUNTO PRINTLN PARENT_IZQ CADENA PARENT_DER
                 """
 
 def p_longitud_variables(p):
@@ -163,6 +165,8 @@ def p_factor_id(p):
 def p_factor_cadena(p):
     'factor : CADENA'
 
+def p_factor_float(p):
+    'factor : FLOAT'
 
 def p_factor_expr(p):
     'factor : PARENT_IZQ expression PARENT_DER'
@@ -216,7 +220,8 @@ def p_obtener_valor_map(p):
 
 def p_funcion(p):
     '''funcion : FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa LLAVE_DER 
-                    | FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa RETURN ID LLAVE_DER'''
+                    | FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ programa RETURN ID LLAVE_DER
+                    | FUNC ID PARENT_IZQ argumentos PARENT_DER tipo_dato LLAVE_IZQ RETURN ID LLAVE_DER'''
 
 def p_argumentos(p):
     '''argumentos : ID tipo_dato 
@@ -267,10 +272,10 @@ def p_flotante_cadena(p):
     'flotantecadena : STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA COMA NUMERO PARENT_DER'
 
 def p_cadena_flotante(p):
-    'cadenaflotante : STRCONV PUNTO PARSEFLOAT PARENT_IZQ FLOAT COMA NUMERO PARENT_DER'
+    'cadenaflotante : STRCONV PUNTO PARSEFLOAT PARENT_IZQ CADENA COMA NUMERO PARENT_DER'
 
 def p_entero_cadena(p):
-    'enterocadena : STRCONV PUNTO FORMATINT PARENT_IZQ CADENA COMA NUMERO PARENT_DER'
+    'enterocadena : STRCONV PUNTO FORMATINT PARENT_IZQ NUMERO COMA NUMERO PARENT_DER'
 
 def p_cadena_entero(p):
     'cadenaentero : STRCONV PUNTO PARSEINT PARENT_IZQ CADENA COMA NUMERO COMA NUMERO PARENT_DER'
