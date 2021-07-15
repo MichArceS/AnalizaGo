@@ -35,6 +35,8 @@ def clicked():
         messagebox.showinfo('Correcto', 'Analisis completo - Sin problemas')
     except SyntaxError as e:
         messagebox.showerror('ERROR!', e.msg)
+    except Exception as e:
+        messagebox.showerror('ERROR!', e)
 
 def clear():
     txt.delete(1.0,END)

@@ -35,7 +35,9 @@ def p_programa(p):
                 | flotantecadena
                 | cadenaflotante
                 | seman_operacion
-                | incremento'''
+                | incremento
+                | errorflotantecadena
+                | errorcadenaflotante'''
 
 
 def p_impresion(p):
@@ -78,6 +80,9 @@ def p_definir_arreglo(p):
     '''arreglo : ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato 
                     | ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER'''
 
+def p_error_arreglo(p):
+    'arreglo : ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER'
+    raise Exception("Error de sintaxis. Falta el tipo de dato.")
 
 def p_cantidad_arreglo(p):
     '''cantidad : NUMERO 
@@ -271,8 +276,16 @@ def p_cadena_bool(p):
 def p_flotante_cadena(p):
     'flotantecadena : STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA CADENA COMA NUMERO PARENT_DER'
 
+def p_error_flotantecadena(p):
+    'errorflotantecadena : STRCONV PUNTO FORMATFLOAT PARENT_IZQ FLOAT COMA NUMERO PARENT_DER'
+    raise Exception("Error de sintaxis. Falta un argumento: Formato de Conversion.")
+
 def p_cadena_flotante(p):
     'cadenaflotante : STRCONV PUNTO PARSEFLOAT PARENT_IZQ CADENA COMA NUMERO PARENT_DER'
+
+def p_error_cadenaflotante(p):
+    'errorcadenaflotante : STRCONV PUNTO FORMATFLOAT PARENT_IZQ CADENA PARENT_DER'
+    raise Exception("Error de sintaxis. Falta un argumento: Precision del Flotante.")
 
 def p_entero_cadena(p):
     'enterocadena : STRCONV PUNTO FORMATINT PARENT_IZQ NUMERO COMA NUMERO PARENT_DER'
