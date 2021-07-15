@@ -13,7 +13,7 @@ precedence = (
 def p_programa(p):
     '''programa : expression
                 | impresion
-                | sentencia 
+                | sentencia
                 | asignacion
                 | longvariable
                 | boolcadena
@@ -37,7 +37,8 @@ def p_programa(p):
                 | seman_operacion
                 | incremento
                 | errorflotantecadena
-                | errorcadenaflotante'''
+                | errorcadenaflotante
+                | error_arr'''
 
 
 def p_impresion(p):
@@ -77,8 +78,19 @@ def p_incremento(p):
 
 
 def p_definir_arreglo(p):
-    '''arreglo : ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato 
-                    | ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER'''
+    '''arreglo : ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato
+                | ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER tipo_dato LLAVE_IZQ valores LLAVE_DER
+                | ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER INT LLAVE_IZQ enteros LLAVE_DER'''
+
+def p_error_arr_entero(p):
+    '''error_arr : ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER INT LLAVE_IZQ noenteros LLAVE_DER'''
+    raise Exception("Error de sintaxis. Elementos del arreglo no enteros.")
+
+def p_noEnteros(p):
+    '''noenteros : ID
+                | CADENA
+                | FLOAT
+                | noenteros COMA noenteros'''
 
 def p_error_arreglo(p):
     'arreglo : ID ASIGNACION CORCHETE_IZQ cantidad CORCHETE_DER'
@@ -93,6 +105,9 @@ def p_valores_arreglo(p):
     '''valores : factor
                     | factor COMA valores'''
 
+def p_numeros_arreglo(p):
+    '''enteros : NUMERO
+                | NUMERO COMA enteros'''
 
 def p_definir_slice(p):
     '''slice : ID ASIGNACION MAKE PARENT_IZQ CORCHETE_IZQ CORCHETE_DER tipo_dato COMA NUMERO PARENT_DER
